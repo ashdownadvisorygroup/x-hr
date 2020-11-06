@@ -1,0 +1,19 @@
+<mat-card class="example-card mat-elevation-z3">
+  <mat-card-content class="d-flex align-items-start">
+    <div>
+      <img [src]="environment+call.employer.picture" alt="Photo of {{call.employer.first_name}}">
+    </div>
+    <div style="color: white; ">
+      <div class="info-last-name">{{call.employer.last_name}}</div>
+      <div class="info-first-name">{{call.employer.first_name}}</div>
+      <div>
+        <!-- <strong>Time: </strong> -->
+        <div class="info-last-name">{{call.created_at | date:'medium'}}</div>
+      </div>
+      <div class="info-last-name">{{call.checker.first_name+''+call.checker.last_name}}</div>
+      <!-- <p>{{call.employer.first_name}}<strong>{{' '+ call.employer.last_name}}</strong></p>
+      <strong>Time: </strong>{{call.created_at | date:'medium'}}
+      <h5>Guaradian</h5> -->
+    </div>
+  </mat-card-content>
+</mat-card>

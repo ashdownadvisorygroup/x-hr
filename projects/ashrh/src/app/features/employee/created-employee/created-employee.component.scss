@@ -1,0 +1,59 @@
+@import '../../../../styles-variables';
+:host {
+  padding: 1em;
+  display: block;
+  height: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.block-grip {
+  display: grid;
+  padding: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 0.5em 5em;
+  @media (max-width: map-get($grid-breakpoints, sm)) {
+    grid-template-columns: repeat(auto-fit, minmax(188px, 1fr));
+  }
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.col:last-child {
+  margin-right: 0;
+}
+
+.avatar {
+  display: inline-block;
+  img {
+    width: 130px;
+    height: 130px;
+    border: 5px solid rgb(66 165 245);
+    transition: all 1s;
+  }
+  button {
+    bottom: 8px;
+    right: 8px;
+    background: #a0d2fa;
+  }
+}
+
+.avatar-container {
+  @media (max-width: map-get($grid-breakpoints, sm)) {
+    width: 100%;
+  }
+}
+
+.form-group-title {
+  text-align: center;
+}

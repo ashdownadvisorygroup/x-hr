@@ -1,0 +1,17 @@
+:host {
+  display: block;
+  height: 100%;
+  padding: 15px;
+  ::ng-deep .mat-tab-label .mat-tab-label-content {
+    // display: inline-flex;
+    // justify-content: center;
+    // align-items: center;
+    // white-space: nowrap;
+    color: white;
+    text-transform: uppercase;
+  }
+}
+::ng-deep .mat-tab-label .mat-tab-label-content {
+  color: white;
+  text-transform: uppercase;
+}

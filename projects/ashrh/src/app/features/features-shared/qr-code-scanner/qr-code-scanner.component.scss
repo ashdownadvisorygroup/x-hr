@@ -1,0 +1,46 @@
+:host {
+  display: inline-block;
+  min-width: 250px;
+  min-height: 250px;
+  .ripple {
+    top: 0;
+    bottom: 1px;
+    right: 0;
+    left: 0;
+  }
+  .coin_1 {
+    position: absolute;
+    top: 0;
+  }
+  .coin_2 {
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: rotate(90deg);
+  }
+  .coin_3 {
+    position: absolute;
+    right: 0;
+    bottom: 6px;
+    transform: rotate(180deg);
+  }
+  .coin_4 {
+    position: absolute;
+    bottom: 6px;
+    transform: rotate(-90deg);
+  }
+  .line {
+    position: absolute;
+    animation: lineMove 2s infinite;
+    animation-direction: alternate;
+    animation-timing-function: linear;
+  }
+}
+@keyframes lineMove {
+  from {
+    top: 15px;
+  }
+  to {
+    top: calc(100% - 21px);
+  }
+}

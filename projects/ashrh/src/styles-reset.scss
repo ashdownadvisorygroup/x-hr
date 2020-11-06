@@ -1,0 +1,113 @@
+@import "./styles-variables";
+//Fonts
+@font-face {
+  src: url('../src/assets/fonts/Roboto/Roboto-Regular.ttf');
+  font-family: Roboto;
+}
+//
+* {
+  &:active,
+  :focus {
+    outline: none !important;
+  }
+}
+
+code {
+  white-space: nowrap;
+  border-radius: 10px;
+  padding: 0 8px 1px 8px;
+}
+
+.mat-menu-content {
+  fa-icon {
+    position: relative;
+    top: 2px;
+    left: 4px;
+  }
+}
+
+p {
+  a {
+    border-bottom: 3px solid;
+  }
+}
+
+//button
+@each $var in 30, 25 {
+  .btn-#{$var},
+  .btn-h-#{$var},
+  .resize-button-#{$var} {
+    height: #{$var}px !important;
+    line-height: #{$var}px !important;
+  }
+  .btn-#{$var},
+  .resize-button-#{$var} {
+    width: #{$var}px !important;
+  }
+}
+
+//table
+//Table
+.ashrh-table {
+  width: 100%;
+  overflow: auto;
+  tr:hover {
+    background-color: #ddd;
+  }
+  th {
+    text-align: left;
+    font-weight: Bold;
+    color: #000;
+    font-size: 1em;
+    letter-spacing: 0;
+    //background-color: #ddd;
+    text-transform: capitalize;
+    &:not(:last-child) {
+      padding-right: 1em;
+    }
+  }
+  td:not(:last-child) {
+    padding-right: 15px;
+  }
+  & td.min-cell,
+  & th.min-cell {
+    min-width: 190px;
+    white-space: nowrap;
+    //padding: 0 !important;
+    //background-color: white;
+  }
+  tr.mat-row,
+  tr.mat-header-row {
+    height: 50px;
+  }
+}
+
+//paginator
+.resp-paginator {
+  .mat-paginator-container {
+    flex-wrap: nowrap;
+  }
+  .mat-paginator-range-label {
+    margin: 0;
+  }
+  .mat-paginator-page-size-label {
+    margin: 0;
+  }
+  @media (max-width: map-get($grid-breakpoints, sm)) {
+    font-size: 0.8em;
+    .mat-paginator-page-size-select {
+      font-size: 0em;
+      align-self: center;
+      width: 39px;
+    }
+    .mat-paginator-page-size-label {
+      display: none;
+    }
+     .paginator .mat-paginator-range-actions {
+      transform: scale(0.8);
+    }
+    .mat-paginator-page-size{
+      margin-top: -6px;
+    }
+  }
+}

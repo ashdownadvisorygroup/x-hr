@@ -1,0 +1,124 @@
+@import '.~@angular/material/theming';
+
+@mixin anms-styles-reset-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $foreground: map-get($theme, foreground);
+
+  a {
+    color: mat-color($foreground, text);
+
+    &:hover {
+      color: mat-color($accent);
+    }
+  }
+
+  //bg opacity
+  //button
+  .bg-p-o-50{
+    background-color: rgba(mat-color($primary), .5);
+  }
+
+  //theme
+  .bg-p{
+    background-color: mat-color($primary);
+  }
+  .bg-p-d{
+    background-color: mat-color($primary,default);
+  }
+  .c-p{
+    color: mat-color($primary);
+  }
+  .c-p-d{
+    color: mat-color($primary,default);
+  }
+
+
+
+  .bg-a{
+    background-color: mat-color($accent);
+  }
+  .bg-a-d{
+    background-color: mat-color($accent,default);
+  }
+  .c-a{
+    color: mat-color($accent);
+  }
+  .c-a-d{
+    color: mat-color($accent,default);
+  }
+
+  .bg-w{
+    background-color: mat-color($warn);
+  }
+  .bg-w-d{
+    background-color: mat-color($warn,default);
+  }
+  .c-w{
+    color: mat-color($warn);
+  }
+  .c-w-d{
+    color: mat-color($warn,default);
+  }
+  //
+  code {
+    color: mat-color($accent, lighter-contrast);
+    background-color: mat-color($accent, lighter);
+  }
+
+  p {
+    a {
+      color: mat-color($accent);
+
+      &:hover {
+        color: mat-color($accent, darker);
+      }
+    }
+  }
+
+  //Style table
+  .ashrh-table{
+    & tr {
+      @include mat-elevation-transition;
+    }
+    & tbody tr:hover {
+      @include mat-elevation(3);
+      td.mat-cell,
+      td.mat-footer-cell {
+        border: none;
+      }
+    }
+
+    tr.mat-header-row:first-child {
+      background: mat-color($primary) 0% 0% no-repeat padding-box;
+    }
+  }
+
+  //*************************************************************************************
+  /*
+  style scroll
+  */
+  /* width */
+  //::-webkit-scrollbar {
+  //  width: 0.8em;
+  //  height: 0.8em;
+  //}
+
+  /* Track */
+  //::-webkit-scrollbar-track {
+  //  box-shadow: inset 0 0 5px mat-color($accent);
+  //  border-radius: 10px;
+  //}
+
+  /* Handle */
+  //::-webkit-scrollbar-thumb {
+  //  background: mat-color($primary);
+  //  border-radius: 10px;
+  //}
+
+  ///* Handle on hover */
+  //::-webkit-scrollbar-thumb:hover {
+  //  background: mat-color($primary);
+  //}
+}

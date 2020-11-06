@@ -1,0 +1,14 @@
+@import '~@angular/material/theming';
+
+@mixin ashrh-login-component-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $foreground: map-get($theme, foreground);
+  $background: map-get($theme, background);
+
+  ashrh-login {
+    .card {
+      background: rgba(mat-color($primary), 0.5) 0% 0% no-repeat padding-box;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+<h4 style="text-align: center; margin-top: 20px;">Payments</h4><hr>
+
+<!-- <div *ngFor="let element of posts">
+  <p>{{element.name}} is a post</p>
+</div> -->
+<div *ngIf = "posts !== null">
+  <mat-tab-group >
+
+    <mat-tab   *ngFor="let element of posts" [label]="element.name" >
+      <ash-table-editable #tb  [dataSource]="dataSource" [colDistribution]="colDistribution" [filter]="false">
+      </ash-table-editable>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
+
+

@@ -1,0 +1,35 @@
+:host {
+  display: inline-block;
+  mat-card {
+    max-width: 100%;
+    padding: 4em;
+  }
+  mat-card-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1em;
+  }
+
+  .info-last-name {
+    font: normal normal 300 20px/35px Roboto;
+    color: #acc6e0;
+  }
+  .info-first-name {
+    font: normal normal bold 24px/35px Roboto;
+    color: white;
+    text-transform: capitalize;
+  }
+}
+.example-card {
+  margin: auto;
+  display: flex;
+  max-width: 500px;
+  max-height: 400px;
+  background-color: #4e86bd;
+}
+img {
+  border-radius: 50%;
+  width: 165px;
+  height: 165px;
+  border: 5px solid #ffffff;
+}

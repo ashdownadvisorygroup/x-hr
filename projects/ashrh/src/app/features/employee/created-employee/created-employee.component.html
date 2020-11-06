@@ -1,0 +1,124 @@
+<form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()" class="d-flex flex-column h-100">
+
+  <div class="flex-fill overflow-auto p-2">
+    <mat-card class="p-0">
+      <mat-card-header class="bg-p-o-50 rounded-top">
+        <mat-card-title style="padding: 5px; margin: auto 0">{{'Personal Information' | translate}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="d-flex flex-wrap">
+        <div style="padding: 16px" class="d-flex flex-column align-items-center avatar-container">
+          <div class="avatar position-relative">
+            <img [src]="url_user_image" class="rounded-circle user-image">
+            <button (click)="inputFile.click()" mat-icon-button color="primary" type="button" class="position-absolute btn-25 mat-elevation-z2">
+              <fa-icon icon="plus"></fa-icon>
+            </button>
+            <input #inputFile type="file" class="d-none" accept="image/*" (change)="setImage($event)" >
+          </div>
+          <div class="d-flex align-items-center" style="margin-top: 14px;">
+            {{"Activate" | translate}} &nbsp;<mat-slide-toggle color="primary" class="mr-2" formControlName="activate"></mat-slide-toggle>
+            {{"Create Account" | translate}} &nbsp;<mat-checkbox color="primary" (change)="addCreateAccount($event.checked);create_account = $event.checked"></mat-checkbox>
+          </div>
+        </div>
+        <div class="block-grip flex-fill">
+          <ng-container *ngFor="let item of informationPerso">
+            <mat-form-field class="full-width">
+              <input matInput [placeholder]="(item.key | translate)" [formControlName]="item.key" [type]="item.type">
+              <mat-error *ngIf="addressForm.controls[item.key].hasError('required')">
+                {{item.key | translate}} is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </ng-container>
+          <div class="row align-items-center">
+            <div class="col">
+              <mat-radio-group formControlName="genre" class="d-flex">
+                <mat-radio-button color="primary" value="M" class="mr-2">{{'Man' | translate}}</mat-radio-button>
+                <mat-radio-button color="primary" value="F">{{'Woman' | translate}}</mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="p-0 mt-3" @fade *ngIf="create_account" formGroupName="compte">
+      <mat-card-header class="bg-p-o-50 rounded-top">
+        <mat-card-title>{{'User profile' | translate}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="block-grip">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="username" formControlName="username" type="text">
+            <mat-error *ngIf="addressForm.get('compte').get('username').hasError('required')">
+              {{ 'username' | translate }} is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="password" formControlName="password" type="{{passeye?'password':'text'}}">
+            <button (click)="passeye = !passeye" matSuffix mat-icon-button class="btn-25" type="button">
+              <fa-icon icon="{{passeye?'eye-slash':'eye'}}"></fa-icon>
+            </button>
+            <mat-error *ngIf="addressForm.get('compte').get('password').hasError('required')">
+              {{ 'password' | translate }} is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="confirm_password" formControlName="confirm_password" type="{{confipasseye?'password':'text'}}">
+            <button (click)="confipasseye = !confipasseye" matSuffix mat-icon-button class="btn-25" type="button">
+              <fa-icon icon="{{confipasseye?'eye-slash':'eye'}}"></fa-icon>
+            </button>
+            <mat-error *ngIf="addressForm.get('compte').get('confirm_password').hasError('required')">
+              {{ 'confirm_password' | translate }} is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="addressForm.get('compte').get('confirm_password').hasError('different')">
+              password are <strong>different</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="p-0 mt-3">
+      <mat-card-header class="bg-p-o-50 rounded-top">
+        <mat-card-title style="padding: 5px; margin: auto 0">{{'Post' | translate}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="block-grip">
+          <ng-container *ngFor="let item of poste">
+            <mat-form-field class="full-width">
+                <mat-select [placeholder]="(item.key | translate)" [formControlName]="item.key">
+                  <mat-option *ngFor="let state of item.options" [value]="state">
+                    {{ state?.name || '----!----' }}
+                  </mat-option>
+                </mat-select>
+              <mat-error *ngIf="addressForm.controls[item.key].hasError('required')">
+                {{ item.key | translate }} is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </ng-container>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="p-0 mt-3">
+      <mat-card-header class="bg-p-o-50 rounded-top">
+        <mat-card-title style="padding: 5px; margin: auto 0">{{'Emergency Contact' | translate}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="block-grip">
+          <ng-container *ngFor="let item of urgent_phone">
+            <mat-form-field class="full-width">
+              <input matInput [placeholder]="(item.key | translate)" [formControlName]="item.key">
+              <mat-error *ngIf="addressForm.controls[item.key].hasError('required')">
+                {{ item.key | translate }} is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </ng-container>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="mt-2 text-right">
+    <button mat-raised-button [disabled]="!addressForm.valid" color="primary" type="submit" class="text-white ml-2">{{ "Submit" | translate}}</button>
+  </div>
+</form>

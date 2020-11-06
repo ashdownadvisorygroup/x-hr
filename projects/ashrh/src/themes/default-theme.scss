@@ -1,0 +1,5 @@
+$anms-primary: mat-palette($mat-blue, 400, 300, 900);
+$anms-accent: mat-palette($mat-blue-grey,900);
+$anms-warn: mat-palette($mat-red);
+
+$anms-theme: mat-light-theme($anms-primary, $anms-accent, $anms-warn);

@@ -1,0 +1,9 @@
+:host {
+  display: block;
+  max-height: 100%;
+  overflow: auto;
+  padding-bottom: 0.5em;
+}
+tr:nth-child(even) {
+  background-color: rgb(245, 244, 244);
+}

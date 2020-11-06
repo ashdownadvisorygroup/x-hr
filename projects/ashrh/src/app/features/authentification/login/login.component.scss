@@ -1,0 +1,72 @@
+@import '../../../../styles-variables';
+
+::ng-deep ashrh-login {
+   .mat-checkbox-frame {
+    border-color: white!important;
+  }
+
+  .mat-form-field-appearance-legacy .mat-form-field-underline {
+    background-color: white!important;
+  }
+}
+
+.background {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background: transparent url('../../../../assets/ashrh_fond.jpg') 0% 0% no-repeat
+  padding-box;
+  background-size: cover;
+}
+
+.login-card{
+  position: absolute;
+  bottom: 20%;
+  left: 10%;
+}
+@media (max-width: map-get($grid-breakpoints, sm)) {
+  .background{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .login-card{
+      position: static;
+    }
+  }
+}
+
+.attach {
+  left: -35px;
+}
+.center-text {
+  text-align: center;
+}
+.log-btn {
+  font-family: Roboto;
+  letter-spacing: 0;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  //border: 1px solid green;
+  -webkit-text-fill-color: white;
+  //-webkit-box-shadow: 0 0 0px 1000px #000 inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+:host
+::ng-deep
+.light-theme
+.mat-form-field-appearance-legacy
+.mat-form-field-underline {
+  /* background-color: rgba(0, 0, 0, 0.42); */
+  background-color: white;
+}
+
+@media (max-width: map-get($grid-breakpoints, sm)) {
+  .background {
+    h1 {
+      line-height: 1em;
+    }
+  }
+}

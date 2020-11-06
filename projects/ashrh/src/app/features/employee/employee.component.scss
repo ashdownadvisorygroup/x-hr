@@ -1,0 +1,68 @@
+:host{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 15px;
+}
+.filter-input{
+  max-height: 2em;
+  height: 65%;
+  width: 80%;
+  min-width: 150px;
+}
+tr.filter-row{
+  height: 0;
+}
+.circular--portrait {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.circular--portrait img {
+  width: 100%;
+  height: auto;
+}
+
+.parent {
+  column-count: 3;
+}
+
+.child {
+  column-span: 1;
+  display: block;
+  height: 250px;
+  padding: 10px;
+  border: 1px solid #999;
+  border-radius: 8px;
+  background-color: rgba(173, 224, 241, 0.233);
+}
+
+.delete {
+  background-color: darkred; /* Green */
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.update {
+  background-color: darkblue; /* Green */
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+}

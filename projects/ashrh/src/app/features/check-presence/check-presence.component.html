@@ -1,0 +1,22 @@
+<!-- <div class="m-a">
+<button mat-raised-button style="border: 1px solid; border-color: #42a5f5; border-radius: 4px; margin: 8px 1px 8px 4px; color:#42a5f5 " [routerLink]="['check-arrive']" >{{"Arrival" | translate}}</button>
+<button mat-raised-button style="border: 1px solid; border-color: #42a5f5; border-radius: 4px; margin: 8px 0px 8px 0; color:#42a5f5 " [routerLink]="['check-depart']">{{"Departure" | translate}}</button>
+</div> -->
+
+<div class="flex-fill d-flex justify-content-center align-items-center overflow-hidden p-2" style="height: 95%">
+  <div class="modules-container p-2">
+    <ng-container *ngFor="let module of sections" >
+      <div class="module-container mat-elevation-z4" matRipple matTooltipPosition="above" [matTooltip]="module.description" [routerLink]="[module.route]">
+        <div style="height: 80px;background-color: white;" class="rounded-top w-80 d-flex justify-content-center align-items-center">
+          <img [src]="module.image" >
+        </div>
+        <div class="p-2 rounded-bottom overflow-hidden text-white module-name text-uppercase d-flex justify-content-center align-items-center" [style.background]="module.textBgColor">
+          {{module.name | translate}}
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+
+

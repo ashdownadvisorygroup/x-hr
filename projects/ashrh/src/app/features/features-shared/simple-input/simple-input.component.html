@@ -1,0 +1,25 @@
+<!-- <input (keyup.enter)="enterPress.emit($event)" [type]="type" class="form-control filter-input"
+  [placeholder]="placeholder" [formControl]="formControl"> -->
+
+<ng-container [ngSwitch]="type">
+  <ng-container *ngSwitchCase="'date'">
+    <input (click)="matTog._open($event)" [matDatepicker]="picker" class="form-control filter-input"
+      [placeholder]="placeholder" [formControl]="formControl" readonly>
+    <mat-datepicker-toggle #matTog class="d-none" [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </ng-container>
+  <ng-container *ngSwitchCase="'action'" class="index-delete-form">
+    <input name="delete" type="text" class="inputField" placeholder="&#xf002; Enter 1 to delete" >
+    <button mat-icon-button class="btn-30" color="warn" type="submit"><fa-icon icon="trash"></fa-icon></button>
+  </ng-container>
+  <ng-container *ngSwitchDefault>
+    <input (keyup.enter)="enterPress.emit(formControl.value)" [type]="type" class="form-control filter-input"
+      [placeholder]="placeholder" [formControl]="formControl">
+  </ng-container>
+</ng-container>
+
+<!-- <mat-select >
+  <mat-option *ngFor="let option of optionSelect" [value]="option.value">
+    {{option.viewValue}}
+  </mat-option>
+</mat-select> -->

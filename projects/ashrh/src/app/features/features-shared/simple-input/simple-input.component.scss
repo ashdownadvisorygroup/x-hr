@@ -1,0 +1,15 @@
+:host {
+  display: inline-block;
+
+  input {
+    height: 100%;
+    max-height: calc(1.5em + 0.75rem + 2px);
+  }
+}
+.index-delete-form {
+  display: flex;
+}
+
+.inputField {
+  flex: 1;
+}

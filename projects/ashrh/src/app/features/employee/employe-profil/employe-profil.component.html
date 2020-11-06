@@ -1,0 +1,56 @@
+<div class="profile-left">
+  <div class="card c-p bg-a radius">
+    <canvas class="header-bg" width="250" height="70" id="header-blur"></canvas>
+    <div class="avatar">
+      <img [src]="picture" alt="" (error)="picture = defaultImage"/>
+    </div>
+    <div>
+      <p><span class="text-uppercase">{{user.first_name}}</span> {{user.last_name}}<br>{{user.post?.name}}</p>
+      <p>Tel: {{user.phone}}</p>
+    </div>
+  </div>
+</div>
+<!--profile detaillé-->
+<div class="mat-elevation-z2 flex-grow-1 radius overflow-hidden">
+  <div class="d-flex justify-content-between p-2 bg-p-o-50">
+    <span class="text-large">About</span>
+    <div>
+      <button mat-button class="bg-a text-white mr-2" [routerLink]="[update_employee,id]">
+        <fa-icon icon="pencil-alt"></fa-icon>
+        Edit
+      </button>
+      <button (click)="deleteEmployee()" mat-button class="bg-w text-white">
+        <fa-icon icon="trash"></fa-icon>
+        Delete
+      </button>
+    </div>
+  </div>
+  <div class="p-2 parent justify-content-between">
+      <div class="child">
+        <h3 style="font-size: 1.4em;">{{about[0].title}}</h3>
+        <div class="child-content">
+          <ng-container *ngFor="let item of about[0].keys">
+            <span>{{item.key}}:</span>  <span>{{user[item.key]}}</span>
+          </ng-container>
+          <span>{{'Start date'}}:</span>  <span>{{user['created_at']|date}}</span>
+        </div>
+      </div>
+    <div class="child">
+      <h3 style="font-size: 1.4em;">{{about[1].title}}</h3>
+      <div class="child-content">
+        <ng-container *ngFor="let item of about[1].keys">
+          <span>{{item.key}}:</span>  <span>{{user[item.key]?.name || '--'}}</span>
+        </ng-container>
+      </div>
+    </div>
+    <div class="child">
+      <h3 style="font-size: 1.4em;">{{about[2].title}}</h3>
+      <div class="child-content" >
+        <!-- *ngIf="user.emergency_contact" -->
+        <ng-container *ngFor="let item of about[2].keys">
+          <span>{{item.key.substring(10)}}:</span>  <span>{{user[item.key]? user[item.key] : '--'}}</span>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
