@@ -12,7 +12,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatSortModule} from '@angular/material/sort';
 
-import {MatSortModule} from '@angular/material/sort';
 
 @NgModule({
   declarations: [
