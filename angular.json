@@ -1,0 +1,161 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "ashrh": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "changeDetection": "OnPush",
+          "style": "scss"
+        }
+      },
+      "root": "projects/ashrh",
+      "sourceRoot": "projects/ashrh/src",
+      "prefix": "ash",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/ashrh",
+            "index": "projects/ashrh/src/index.html",
+            "main": "projects/ashrh/src/main.ts",
+            "polyfills": "projects/ashrh/src/polyfills.ts",
+            "tsConfig": "projects/ashrh/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/ashrh/src/favicon.ico",
+              "projects/ashrh/src/assets"
+            ],
+            "styles": [
+              "projects/ashrh/src/styles-app-loading.scss",
+              "projects/ashrh/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/ashrh/src/environments/environment.ts",
+                  "with": "projects/ashrh/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "bundle",
+                  "name": "polyfills",
+                  "baseline": "150kb",
+                  "maximumWarning": "50kb",
+                  "maximumError": "100kb"
+                },
+                {
+                  "type": "bundle",
+                  "name": "styles",
+                  "baseline": "380kb",
+                  "maximumWarning": "50kb",
+                  "maximumError": "100kb"
+                },
+                {
+                  "type": "bundle",
+                  "name": "main",
+                  "baseline": "1024kb",
+                  "maximumWarning": "100kb",
+                  "maximumError": "200kb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "ashrh:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ashrh:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ashrh:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ashrh/src/test.ts",
+            "polyfills": "projects/ashrh/src/polyfills.ts",
+            "tsConfig": "projects/ashrh/tsconfig.spec.json",
+            "karmaConfig": "projects/ashrh/karma.conf.js",
+            "assets": [
+              "projects/ashrh/src/favicon.ico",
+              "projects/ashrh/src/assets"
+            ],
+            "styles": [
+              "projects/ashrh/src/styles-app-loading.scss",
+              "projects/ashrh/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "test": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/ashrh/src/environments/environment.ts",
+                  "with": "projects/ashrh/src/environments/environment.test.ts"
+                }
+              ]
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ashrh/tsconfig.app.json",
+              "projects/ashrh/tsconfig.spec.json",
+              "projects/ashrh/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/ashrh/e2e/protractor.conf.js",
+            "devServerTarget": "ashrh:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ashrh:serve:production"
+            }
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "ashrh",
+  "cli": {
+    "analytics": false,
+    "defaultCollection": "@ngrx/schematics"
+  }
+}

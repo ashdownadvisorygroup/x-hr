@@ -1,0 +1,46 @@
+<div class="overflow-auto">
+  <div class="d-flex justify-content-center">
+    <ashrh-search (searchValueChange)="searchChange($event)"></ashrh-search>
+  </div>
+  <div style="font-style: italic; font-weight:bold; ">
+    {{todayDate | date:'fullDate'}}
+  </div>
+  <hr style="margin: 5px 0;" />
+  <div class="align-items-center"
+    style="display: inline-grid;grid-auto-flow: column;grid-gap: 0.5em;align-self: baseline;">
+    <mat-form-field [floatLabel]="'never'">
+      <mat-label> Choose Atelier</mat-label>
+      <mat-select (selectionChange)="getEmployees($event.value.name)">
+        <mat-option *ngFor="let atelier of ateliers" [value]="atelier">
+          {{atelier.name + ' by ' + atelier.responsible.first_name.toUpperCase()}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-button color="primary" style="border: 1px solid;" [ashTableFilterToogle]="tb">
+      <fa-icon icon="filter"></fa-icon>
+      Filter
+    </button>
+    <button mat-raised-button color="primary" style="color: white;">
+      <fa-icon icon="save" style="margin-right: 3px;"></fa-icon>
+      Save
+    </button>
+  </div>
+  <ash-table-editable #tb [dataSource]="dataSource" [colDistribution]="colDistribution" [filter]="true">
+  </ash-table-editable>
+  <div class="d-flex justify-content-end">
+    <mat-paginator [pageSizeOptions]="pageSizeOption" [length]="lengh" [pageSize]="pageSize" (page)="setPage($event)"
+      showFirstLastButtons style="background-color: transparent" class="resp-paginator">
+    </mat-paginator>
+  </div>
+  <!-- <div *ngFor="let atelier of ateliers">
+    <div *ngFor="let employee of getEmployees(atelier)">
+      {{employee.firstname}}
+    </div>
+  </div> -->
+  <h4>Group Output</h4>
+  <hr>
+  <ash-table class="flex-fill" #tb [dataSource]="dataSource2" [colDistribution]="colDistributionOutputs"
+    [filter]="true">
+  </ash-table>
+
+</div>

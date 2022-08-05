@@ -1,0 +1,18 @@
+<section class="h-100 w-100 d-flex justify-content-center align-items-center" *ngIf="!onResult">
+  <!-- <mat-spinner style="margin: auto; margin-top: 200px;" *ngIf="setSpinner">
+  </mat-spinner> -->
+  <ash-qr-code-scanner class="scanner" (result)="onCodeResult($event)" (camerasFound)="onCamerasFound($event)">
+  </ash-qr-code-scanner>
+</section>
+<ng-container *ngIf="onResult && reset">
+  <ng-container *ngIf="employer; else checking">
+    <section class="h-100 d-flex flex-column justify-content-center align-items-center">
+      <ashrh-call-presentation [call]="employer"></ashrh-call-presentation>
+      <button style="margin-top: -48px;color: white;" mat-raised-button color="primary"
+        (click)="onResult = false">{{"Reset" | translate}}</button>
+    </section>
+  </ng-container>
+  <ng-template  #checking>
+  <div class="checking"> Please wait for checking</div>
+  </ng-template>
+</ng-container>
