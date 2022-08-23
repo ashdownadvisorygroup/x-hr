@@ -19,6 +19,7 @@ import { AppRoutes } from '../../../modeles/app-routes';
 import { NotificationService } from '../../../core/core.module';
 import { TranslateService } from '@ngx-translate/core';
 import { DbDepartmentsService } from '../../../core/services/db-departments.service';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'ashrh-update',
@@ -219,7 +220,7 @@ export class UpdateComponent implements OnInit {
 
       console.log(`ligne 216`);
       if (this.addressForm.controls[info.key].value !== 'none') {
-        // formdata.append(`${info.key}`, this.addressForm.controls[info.key].value);
+        //  formdata.append(`${info.key}`, this.addressForm.controls[info.key].value);
         data[`${info.key}`] = this.addressForm.controls[info.key].value;
       }
     }
@@ -230,11 +231,14 @@ export class UpdateComponent implements OnInit {
     // formdata.append('genre', this.addressForm.controls['genre'].value);
     data['genre'] = this.addressForm.controls['genre'].value;
     if (this.userimage !== null) {
-      console.log('!---------------------!', this.userimage);
-     // formdata.append('picture', this.userimage);
+      console.log(
+        'that is image where i upload !---------------------!',
+        this.userimage
+      );
+      formdata.append('picture', this.userimage);
       // console.log('this.userimage',this.userimage);
       this.employeeDbService
-        .updateEmployee(this.id, formdata.append('picture', this.userimage))
+        .updateEmployee(this.id, formdata)
         .pipe(take(1))
         .subscribe(
           (resp) => {
@@ -278,7 +282,7 @@ export class UpdateComponent implements OnInit {
         const post = item.options.find(
           (option) => option?.id == this.addressForm.controls[item.key].value
         );
-        console.log(`ligne 252`);
+        //  console.log(`ligne 252`);
         //  formdata.append(`${item.key}`, post?.id);
         data[`${item.key}`] = post?.id;
         //  console.log(`${item.key} +++++++`,post);
@@ -289,12 +293,11 @@ export class UpdateComponent implements OnInit {
     //
     for (const item of this.urgent_phone) {
       if (this.addressForm.controls[item.key].value) {
-        console.log(`ligne 263`);
+        //  console.log(`ligne 263`);
         //  formdata.append(`${item.key}`, this.addressForm.controls[item.key].value);
         data[`${item.key}`] = this.addressForm.controls[item.key].value;
       }
     }
-
 
     this.employeeDbService
       .updateEmployee(this.id, data)

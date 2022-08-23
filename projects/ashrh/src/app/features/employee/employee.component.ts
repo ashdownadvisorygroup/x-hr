@@ -79,7 +79,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.query(this.paramSearch);
+    this.query(this.paramSearch); //query renvoie les elements qui se trouve a un numero de page et un nombre d'element a recupere contenu dans paramSearch
   }
 
   ngOnDestroy(): void {
@@ -123,8 +123,9 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     );
   }
   setUser(element: any) {
+    console.log('element when i check', element);
     this.employeeDbService
-      .updateEmployee(element.id, element)
+      .updateEmployee(element.id, { activate: element.activate })
       .pipe(take(1))
       .subscribe(
         (resp) => {
@@ -147,7 +148,6 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     this.query(this.paramSearch);
   }
 
-
   queryFactory(params: string | string[], val: any) {
     if (typeof params === 'string') {
       params = [params];
@@ -159,10 +159,11 @@ export class EmployeeComponent implements OnInit, OnDestroy {
         delete this.paramSearch[param];
       }
     }
+    console.log('this.paramSearch[param] = val;', this.paramSearch);
     this.query(this.paramSearch);
   }
   queryByPassFactory(params: string[], val: any) {
-   // console.log('')
+    // console.log('')
     for (const param of params) {
       this.paramSearch[param] = val;
     }
@@ -170,17 +171,20 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   }
 
   private query(params) {
+    console.log('that is params of query function', params);
     this.employeeDbService
       .queryEmployees(params)
       .pipe(take(1))
       .subscribe((emp: any) => {
-        console.log('these are the employees:');
-        console.log(emp);
+        console.log('these are the employees: :( ):', emp);
+        // console.log(emp);
         this.dataSource = emp?.results.map((elt) => ({
           ...elt,
           select: false
         }));
+
         this.lengh = emp.total;
+        console.log('that is total', emp);
         this.cd.detectChanges();
       });
   }
@@ -197,6 +201,65 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   }
 
   open(name: string) {}
+
+  public activateAll() {
+    //  console.log('this.dataSource',this.dataSource);
+
+    this.dataSource.map((elt) => {
+      if (elt.select) {
+        //  console.log('element',elt.first_name);
+
+        this.employeeDbService
+          .updateEmployee(elt.id, { activate: elt.select })
+          .pipe(take(1))
+          .subscribe(
+            (resp) => {
+              this.notiSelect.success('Activation succefully');
+              this.query(this.paramSearch);
+            },
+            (err) => {}
+          );
+      }
+    });
+  }
+
+  public deactivateAll() {
+    //  console.log('this.dataSource',this.dataSource);
+
+    this.dataSource.map((elt) => {
+      if (elt.select) {
+        //  console.log('element',elt.first_name);
+
+        this.employeeDbService
+          .updateEmployee(elt.id, { activate: false })
+          .pipe(take(1))
+          .subscribe(
+            (resp) => {
+              this.notiSelect.success('deactivation succefully');
+              this.query(this.paramSearch);
+            },
+            (err) => {}
+          );
+      }
+    });
+  }
+
+  public deleteAll() {
+    this.dataSource.map((elt) => {
+      if (elt.select) {
+        this.employeeDbService
+          .deleteEmployee(elt.id)
+          .pipe(take(1))
+          .subscribe(
+            (resp) => {
+              this.notiSelect.success('Suppression succefully');
+              this.query(this.paramSearch);
+            },
+            (err) => {}
+          );
+      }
+    });
+  }
 
   private notiSelectBeforeAction() {
     this.notiSelect.info(

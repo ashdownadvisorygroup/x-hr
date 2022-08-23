@@ -5,7 +5,7 @@
 <!--  Liste des employés-->
 <!--</div>-->
 <div class="d-flex justify-content-center">
-  <ashrh-search (searchValueChange)="queryFactory(['search'],$event)"></ashrh-search>
+  <ashrh-search [placeholder]="'first name, last name, email, phone'" (searchValueChange)="queryFactory(['search'],$event)"></ashrh-search>
 </div>
 <div class="action mb-2">
   <button mat-raised-button color="primary" class="text-white mr-2" [routerLink]="new_employee">
@@ -16,10 +16,18 @@
     <fa-icon icon="filter"></fa-icon>
     Filter
   </button>
-  <button color="primary" [disabled]="moreOneSelect" mat-button style="background: white;border: 1px solid;"
-    class="mr-2">{{"Activate" | translate}}</button>
-  <button color="warn" [disabled]="moreOneSelect" (click)="deleUsers()" mat-button
-    style="background: white;border: 1px solid;">{{"Disable" | translate}}</button>
+
+  <button color="primary" (click)="activateAll()" [disabled]="moreOneSelect" mat-button
+    style="background: white;border: 1px solid;" class="mr-2">{{"Activate" | translate}}</button>
+
+  <button color="warn" [disabled]="moreOneSelect" (click)="deactivateAll()"  mat-button
+    style="background: white;border: 1px solid;">{{"Deactivate" | translate}}</button>
+
+
+    <button color="warn" [disabled]="moreOneSelect"  (click)="deleteAll()" mat-button
+    style="background: white;border: 1px solid;margin-left: 10px;">{{"Delete" | translate}}</button>
+
+
 </div>
 
 <div class="table-responsive flex-fill rounded-top">

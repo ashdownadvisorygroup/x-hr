@@ -12,7 +12,7 @@
             <button (click)="inputFile.click()" mat-icon-button color="primary" type="button" class="position-absolute btn-25 mat-elevation-z2">
               <fa-icon icon="plus"></fa-icon>
             </button>
-            <input #inputFile type="file" class="d-none" accept="image/*" (change)="setImage($event)" >
+            <input #inputFile type="file" class="d-none" enctype="multipart/form-data" accept="image/*" (change)="setImage($event)" >
           </div>
           <div class="d-flex align-items-center" style="margin-top: 14px;">
             {{"Activate" | translate}} &nbsp;<mat-slide-toggle color="primary" class="mr-2" formControlName="activate" [(ngModel)]="user.activate"></mat-slide-toggle>

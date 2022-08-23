@@ -244,7 +244,7 @@ export class PaymentComponent implements OnInit {
 
     let elts = [];
     this.db_employee.loadEmployees().subscribe((data) => {
-      let elts = data?.results;
+      let elts = data['results'];
       // console.log('voici les datas', elts);
 
       for (let dat of this.posts) {
@@ -298,7 +298,7 @@ export class PaymentComponent implements OnInit {
       let da = this.dataSource;
       this.dataSource1 = new MatTableDataSource<EmployeeData>(da);
       this.dataSource1.paginator = this.paginator;
-        this.dataSource1.sort = this.sort;
+      this.dataSource1.sort = this.sort;
       setTimeout(() => {
         this.dataSource1.paginator = this.paginator;
         this.dataSource1.sort = this.sort;

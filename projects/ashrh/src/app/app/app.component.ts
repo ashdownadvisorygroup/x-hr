@@ -5,8 +5,6 @@ import { Observable } from 'rxjs';
 
 import { environment as env } from '../../environments/environment';
 
-
-
 import {
   authLogin,
   authLogout,
@@ -15,8 +13,7 @@ import {
   selectIsAuthenticated,
   selectSettingsStickyHeader,
   selectSettingsLanguage,
-  selectEffectiveTheme,
-
+  selectEffectiveTheme
 } from '../core/core.module';
 import {
   actionSettingsChangeAnimationsPageDisabled,

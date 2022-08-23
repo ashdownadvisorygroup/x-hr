@@ -21,8 +21,9 @@ import { DbUtilityService } from '../../core/services/db-utility.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog/dialog.component';
 
-import { NotificationService } from '../../core/core.module'
+import { NotificationService } from '../../core/core.module';
 import { TranslateService } from '@ngx-translate/core';
+import { take } from 'rxjs/operators';
 
 export interface SafewareData {
   id?: number;
@@ -210,10 +211,10 @@ export class SettingsEmployComponent implements OnInit {
         key: 'start_time',
         setValue: (event, element) => {
           element.start_time = event;
-          console.log('modification of start_time',element);
+          console.log('modification of start_time', element);
           this.db_utily.updateWorkingPeriod(element).subscribe(() => {
             this.db_utily.getPostGroupsPeriod().subscribe((data) => {
-              console.log('execution du getPostGroupsPeriod',data);
+              console.log('execution du getPostGroupsPeriod', data);
               this.working_period = data.working_period;
               this.cd.detectChanges();
             });
@@ -338,6 +339,7 @@ export class SettingsEmployComponent implements OnInit {
           console.log('this is data after deleting element');
           console.log(datapost);
           this.working_post = datapost;
+          this.notiservice.success('Updated succefully');
           this.cd.detectChanges();
         });
       });
@@ -345,18 +347,20 @@ export class SettingsEmployComponent implements OnInit {
   }
 
   //CRUD for Periods
-  updatePeriod(): void {
+  AddPeriod(): void {
     this.addElementPeriod({
       name: 'Enter name',
       start_time: '00:00:00',
       end_time: '00:00:00'
-    }).subscribe(() => {
-      console.log('done');
-      this.db_utily.getWorkingPeriod().subscribe((data) => {
-        this.working_period = data;
-        this.cd.detectChanges();
+    })
+      .pipe(take(1))
+      .subscribe(() => {
+        console.log('done');
+        this.db_utily.getWorkingPeriod().subscribe((data) => {
+          this.working_period = data;
+          this.cd.detectChanges();
+        });
       });
-    });
   }
   addElementPeriod(element: PeriodData): Observable<any> {
     return this.db_utily.addWorkingPeriod(element);
@@ -368,6 +372,8 @@ export class SettingsEmployComponent implements OnInit {
           console.log('this is data after deleting element');
           console.log(dataperiod);
           this.working_period = dataperiod;
+
+          this.notiservice.success('Updated succefully');
           this.cd.detectChanges();
         });
       });
@@ -397,6 +403,8 @@ export class SettingsEmployComponent implements OnInit {
           console.log('this is data after deleting element');
           console.log(datagroup);
           this.working_group = datagroup;
+
+          this.notiservice.success('Updated succefully');
           this.cd.detectChanges();
         });
       });

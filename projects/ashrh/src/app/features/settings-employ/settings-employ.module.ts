@@ -12,6 +12,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
 @NgModule({
   declarations: [SettingsEmployComponent],
   imports: [
@@ -23,7 +25,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
-    MatExpansionModule
+    MatExpansionModule,
+    BsDatepickerModule.forRoot()
   ]
 })
 export class SettingsEmployModule {}

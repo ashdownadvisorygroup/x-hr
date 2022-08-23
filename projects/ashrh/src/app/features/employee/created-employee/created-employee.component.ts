@@ -78,14 +78,19 @@ export class CreatedEmployeeComponent implements OnInit {
       type: 'tel',
       default: ''
     },
-    { key: 'start_date', validators: [], type: 'date', default: Date.now() }
+    {
+      key: 'start_date',
+      validators: [Validators.required],
+      type: 'date',
+      default: Date.now()
+    }
   ];
 
   poste = [
     // {key: 'departement', validators: [], options: []},
     { key: 'post', validators: [Validators.required], options: [] },
     { key: 'working_group', validators: [], options: [] },
-    { key: 'working_period', validators: [], options: [] }
+    { key: 'working_period', validators: [Validators.required], options: [] }
   ];
   urgent_phone = [
     { key: 'emergency_first_name', validators: [], type: 'text' },
@@ -94,9 +99,13 @@ export class CreatedEmployeeComponent implements OnInit {
     { key: 'emergency_phone', validators: [], type: 'tel' }
   ];
   compte = [
-    { key: 'username', validators: [], type: 'text' },
-    { key: 'password', validators: [], type: 'password' },
-    { key: 'confirm_password', validators: [], type: 'password' }
+    { key: 'username', validators: [Validators.required], type: 'text' },
+    { key: 'password', validators: [Validators.required], type: 'password' },
+    {
+      key: 'confirm_password',
+      validators: [Validators.required],
+      type: 'password'
+    }
   ];
   addressForm = new FormGroup({});
 
@@ -258,6 +267,12 @@ export class CreatedEmployeeComponent implements OnInit {
     //     console.log(pair[0]+ ' - ' + pair[1]);
     // }
     console.log('that is data ++++++++', data);
+    var object = {};
+    formdata.forEach(function (value, key) {
+      object[key] = value;
+    });
+    var json = JSON.stringify(object);
+
     this.employeeDbService
       .createEmployee(data)
       .pipe(take(1))

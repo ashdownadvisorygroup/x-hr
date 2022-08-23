@@ -25,6 +25,7 @@
             "tsConfig": "projects/ashrh/tsconfig.app.json",
             "aot": true,
             "assets": [
+              "node_modules/angular2-calendar/dist/css/angular2-calendar.css",
               "projects/ashrh/src/favicon.ico",
               "projects/ashrh/src/assets"
             ],
@@ -133,9 +134,7 @@
               "projects/ashrh/tsconfig.spec.json",
               "projects/ashrh/e2e/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {

@@ -29,10 +29,9 @@ export class SimpleInputComponent implements OnInit {
   ngOnInit(): void {
     this.formControl.setValue(this.value);
     this.formControl.valueChanges
-      .pipe(debounceTime(2500), distinctUntilChanged())
+      .pipe(debounceTime(1500), distinctUntilChanged())
       .subscribe((val) => {
         this.valueChange.emit(val);
       });
-
   }
 }

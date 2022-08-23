@@ -78,9 +78,9 @@ export class EmployeProfilComponent implements OnInit {
           this.user = user;
           this.picture = user.picture;
           this.cd.detectChanges();
-          console.log(this.picture);
-          console.log(this.user.picture);
-          console.log(user);
+          // console.log(this.picture);
+          // console.log(this.user.picture);
+          // console.log(user);
           // console.log('this is the emergency contact:');
           // console.log(user.emergency_contact);
         });

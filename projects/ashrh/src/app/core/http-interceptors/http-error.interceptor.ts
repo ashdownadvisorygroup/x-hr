@@ -51,40 +51,52 @@ import { Token } from '@angular/compiler';
 const TOKEN_HEADER_KEY = 'Authorization';
 const TOKEN_HEADER_KEY1 = 'x-access-token';
 
-let httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    'Authorization': `Bearer ${JSON.parse(localStorage.getItem('ASHRH-TOKEN'))}`,
-    //'x-access-token': JSON.parse(localStorage.getItem('ASHRH-TOKEN')),
-    //"Access-Control-Allow-Origin": "*",
-    //"Access-Control-Allow-Credentials": "true",
-    //"Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
-    //"Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers",
+// let httpOptions = {
+//   headers: new HttpHeaders({
+//     'Content-Type': 'application/json',
+//  //  'Content-Type':'multipart/form-data; application/json',
+//    'Accept': 'application/json',
+//     //'Authorization': `Bearer ${JSON.parse(localStorage.getItem('ASHRH-TOKEN'))}`,
+//    // 'Authorization': `Token ${JSON.parse(localStorage.getItem('ASHRH-TOKEN'))}`,
+//    'Authorization': `Token ${localStorage.getItem('ASHRH-TOKEN')}`,
+//     //'x-access-token': JSON.parse(localStorage.getItem('ASHRH-TOKEN')),
+//     //"Access-Control-Allow-Origin": "*",
+//     //"Access-Control-Allow-Credentials": "true",
+//     //"Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
+//     //"Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers",
 
-    //'Authorization': 'JWT ' + JSON.parse(localStorage.getItem('ASHRH-TOKEN'))
-  })
-};
+//     //'Authorization': 'JWT ' + JSON.parse(localStorage.getItem('ASHRH-TOKEN'))
+//   })
+// };
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
-  constructor(private token: LocalStorageService) {}
+  constructor(private localStorage: LocalStorageService) {}
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     let authReq = req;
-    const token = this.token.getItem('TOKEN');
-    console.log('that is token !!!!!!!!!!!!', token);
+    const token = this.localStorage.getItem('TOKEN');
+    //  console.log('that is token !!!!!!!!!!!!', token);
     if (token != null) {
-       // authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
-       authReq = req.clone(httpOptions);
-       console.log('that is headers',authReq);
+      // authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
+      authReq = req.clone({
+        setHeaders: {
+          'Content-Type': 'application/json',
+          //  'Accept': '*/*',
+          //  'Accept-Encoding':'gzip, deflate, br',
+          Authorization: `Token ${JSON.parse(
+            localStorage.getItem('ASHRH-TOKEN')
+          )}`
+        }
+      });
+      //  console.log('that is headers :)', `${JSON.parse(localStorage.getItem('ASHRH-TOKEN'))}`);
       //  authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, token) });
-     // authReq = req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
-     // authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY1, token) });
+      // authReq = req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
+      // authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY1, token) });
       //authReq = req.clone({  setHeaders: {Access-Control-Allow-Origin: "*"} });
-/*
+      /*
       const headers = new HttpHeaders();
       headers.set(TOKEN_HEADER_KEY1,token);
       headers.set('Content-Type', 'application/json; charset=utf-8');

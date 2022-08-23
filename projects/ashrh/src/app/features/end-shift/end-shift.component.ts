@@ -62,7 +62,8 @@ export class EndShiftComponent implements OnInit {
   colDistribution = [
     {
       header: 'Employee',
-      distrib: (el) => el.employee.first_name + ' ' + el.employee.last_name.toUpperCase()
+      distrib: (el) =>
+        el.employee.first_name + ' ' + el.employee.last_name.toUpperCase()
     },
     {
       header: 'Number of masks',
@@ -84,8 +85,7 @@ export class EndShiftComponent implements OnInit {
         setValue: (event, element) => {
           element.good_delivers = event;
           element.bad_delivers =
-            element.number_delivers -
-            element.good_delivers;
+            element.number_delivers - element.good_delivers;
         }
       }
     },
@@ -98,8 +98,7 @@ export class EndShiftComponent implements OnInit {
         setValue: (event, element) => {
           element.bad_delivers = event;
           element.good_delivers =
-            element.number_delivers -
-            element.bad_delivers;
+            element.number_delivers - element.bad_delivers;
         }
       }
     }
@@ -130,7 +129,6 @@ export class EndShiftComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     this.query();
     this.endShiftService.getDailyOutputSpecific(1);
 
@@ -138,13 +136,12 @@ export class EndShiftComponent implements OnInit {
       .getWorkingGroups()
       .pipe(take(1))
       .subscribe((group: any[]) => {
-
         this.ateliers = group;
-       // console.log(group);
+        // console.log(group);
         this.cd.detectChanges();
       });
     //  this.getEmployees(this!.ateliers);
-   // console.log('that is resultat!!!!!!!!!!!!!!!!!!!!!!!!!!!.................',this.dataSource);
+    // console.log('that is resultat!!!!!!!!!!!!!!!!!!!!!!!!!!!.................',this.dataSource);
   }
   //used to sort employee by working group
   public getEmployees(atelier: string) {
@@ -152,14 +149,13 @@ export class EndShiftComponent implements OnInit {
       .getEndShift()
       .pipe(take(1))
       .subscribe((res: any) => {
-        console.log('that is resultat1',res);
+        console.log('that is resultat1', res);
         this.dataSource = res.results.filter(
           (employee) => employee.working_group?.name == atelier
         );
         this.lengh = this.dataSource.length;
         this.cd.detectChanges();
       });
-
   }
 
   public setPage($event: PageEvent) {
@@ -176,13 +172,12 @@ export class EndShiftComponent implements OnInit {
       .subscribe(
         (res: any) => {
           //console.log('tried to get a value');
-         // console.log('tried to get a value',res);
-         console.log('that is resultat2',res);
+          // console.log('tried to get a value',res);
+          console.log('that is resultat2', res);
           this.dataSource = res;
           this.lengh = res.total;
           this.cd.detectChanges();
-        console.log('that is resultat3',this.dataSource);
-
+          console.log('that is resultat3', this.dataSource);
         },
         (err) => {
           console.warn(err);

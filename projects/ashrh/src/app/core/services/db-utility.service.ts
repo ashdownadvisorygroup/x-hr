@@ -37,7 +37,7 @@ export class DbUtilityService {
     console.log('updating name --->', element);
     //  console.log(element);
     return this.httpclient
-      .put<any[]>(
+      .patch<any[]>(
         environment.server + this.periods_url + element.id + '/',
         element
       )

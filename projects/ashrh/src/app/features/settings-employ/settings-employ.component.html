@@ -98,12 +98,12 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <ash-table-editable #tb2 [dataSource]="working_period" [colDistribution]="colDistribution_period"
-        [filter]="false">
+        [filter]="true">
       </ash-table-editable>
       <!-- <mat-list *ngFor= "let period of working_period">
         <mat-list-item >{{period.name}}</mat-list-item>
       </mat-list> -->
-      <button (click)="updatePeriod()" mat-raised-button color="primary"
+      <button (click)="AddPeriod()" mat-raised-button color="primary"
         style="margin: auto; display: flex; margin-top: 3px; color:white;">
         New Period
       </button>

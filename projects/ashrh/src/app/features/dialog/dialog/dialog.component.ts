@@ -28,7 +28,6 @@ import { share } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationService } from '../../../core/core.module';
 
-
 //../core/services/db-list.service
 @Component({
   selector: 'ash-dialog',
@@ -63,7 +62,6 @@ export class DialogComponent implements OnInit {
     private httpClient: HttpClient,
     private notiservice: NotificationService,
     private trans: TranslateService
-    
   ) {}
 
   ngOnInit(): void {
@@ -79,6 +77,10 @@ export class DialogComponent implements OnInit {
         this.responsibles = resp;
         // console.log('donnees des groups deja existants', this.groupsName);
       });
+  }
+
+  addLeaves(): void {
+    console.log('add leaves');
   }
 
   addGroup(): void {

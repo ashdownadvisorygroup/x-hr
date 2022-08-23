@@ -5,7 +5,7 @@ import { share } from 'rxjs/operators';
 let httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${JSON.parse(localStorage.getItem('ASHRH-TOKEN'))}`
+    Authorization: `Bearer ${JSON.parse(localStorage.getItem('ASHRH-TOKEN'))}`
     //'Authorization': 'JWT ' + JSON.parse(localStorage.getItem('ASHRH-TOKEN'))
   })
 };
@@ -49,7 +49,16 @@ export class EmployeeDbService {
       .pipe(share());
   }
   updateEmployee(id: string, params: any) {
-   // console.log(`modification of employee ${id}`,params);
+    // console.log(`modification of employee ${id}`,params);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      //'Content-Type': 'multipart/form-data',
+      Accept: 'application/json',
+      Authorization: `Token ${JSON.parse(localStorage.getItem('ASHRH-TOKEN'))}`
+    });
+
+    const requestOptions = { headers: headers };
+
     return this.httpClient
       .patch(environment.server + `/api/grh/employee/update/${id}/`, params)
       .pipe(share());

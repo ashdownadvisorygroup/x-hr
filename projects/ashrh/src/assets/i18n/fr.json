@@ -83,7 +83,7 @@
   "Personal Information": "Information Personnelle",
   "Post": "Poste",
   "Emergency Contact": "Contact d'urgence",
-  "Activate": "Activater",
+  "Activate": "Activer",
   "Create Account": "Créer compte",
   "Submit": "Soumettre",
   "post": "Fonction",
@@ -121,6 +121,6 @@
   "name is required": "un nom est requis",
   "Form to Add a Group": "Ajout d'un groupe",
   "Various Departments": "Divers Departements",
-  "Delete post(s)": "Supprimer"
-
+  "Delete post(s)": "Supprimer",
+  "Disable": "desactiver"
 }
