@@ -1,6 +1,7 @@
 @import 'styles-variables';
 @import '~@ng-select/ng-select/themes/default.theme.css';
 
+@import '../../../node_modules/angular-calendar/css/angular-calendar.css';
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
 @import 'styles-reset';

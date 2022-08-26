@@ -25,11 +25,11 @@
             "tsConfig": "projects/ashrh/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "node_modules/angular2-calendar/dist/css/angular2-calendar.css",
               "projects/ashrh/src/favicon.ico",
               "projects/ashrh/src/assets"
             ],
             "styles": [
+              "node_modules/flatpickr/dist/flatpickr.css",
               "projects/ashrh/src/styles-app-loading.scss",
               "projects/ashrh/src/styles.scss"
             ],

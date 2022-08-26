@@ -9,7 +9,7 @@
   </ng-template>
 
   <div *ngIf="events$ | async; else loading; let events">
-    <span>bonjour !!!!!!!</span>
+  
     <div [ngSwitch]="view">
       <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [activeDayIsOpen]="activeDayIsOpen"
         (dayClicked)="dayClicked($event.day)" (eventClicked)="eventClicked($event.event)" weekendDays=[6]>

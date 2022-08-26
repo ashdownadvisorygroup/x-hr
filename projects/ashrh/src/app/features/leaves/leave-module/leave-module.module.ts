@@ -31,6 +31,9 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { FlatpickrModule } from 'angularx-flatpickr';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   declarations: [
     AskLeaveComponent,
@@ -38,6 +41,7 @@ import { BrowserModule } from '@angular/platform-browser';
     DashCalendarComponent
   ],
   imports: [
+    NgbModalModule,
     CommonModule,
     LeaveRoutingModule,
     FeaturesSharedModule,

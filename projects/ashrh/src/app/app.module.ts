@@ -57,8 +57,12 @@ import {
 })
 */
 
+import { FlatpickrModule } from 'angularx-flatpickr';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   imports: [
+    NgbModalModule,
     // angular
     BrowserAnimationsModule,
     BrowserModule,
