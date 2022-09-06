@@ -80,7 +80,7 @@ export class DialogLeaveInfoComponent implements OnInit {
           this.Groupform.patchValue({
             start_date: resp['start_date'],
             end_date: resp['end_date'],
-            type: resp['leaveType.name'],
+            type: resp['leaveType']['name'],
             reason: resp['reason']
           });
         },

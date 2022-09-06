@@ -130,7 +130,7 @@ export class EndShiftComponent implements OnInit {
 
   ngOnInit(): void {
     this.query();
-    this.endShiftService.getDailyOutputSpecific(1);
+    // this.endShiftService.getDailyOutputSpecific('KLm50ojO3fVo185VS1HQ7grbncyTJ28o');
 
     this.dbListService
       .getWorkingGroups()

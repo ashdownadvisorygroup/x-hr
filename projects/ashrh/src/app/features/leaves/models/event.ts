@@ -5,6 +5,7 @@ export class Event {
   leaveType: any[];
   start_date: Date;
   end_date: Date;
+  employee: any;
 
   constructor(id) {
     this.id = id;
