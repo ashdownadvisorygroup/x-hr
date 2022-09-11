@@ -64,7 +64,8 @@ export class AllmodulesComponent implements OnInit {
       image: '',
       route: AppRoutes.leaves_dashboard,
       textBgColor: '#0F254B',
-      description: 'Module permettant aux employes de faire des demandes'
+      description:
+        'Module permettant au rh de visualiser les demandes faites par les differents employes'
     }
   ];
   constructor() {}

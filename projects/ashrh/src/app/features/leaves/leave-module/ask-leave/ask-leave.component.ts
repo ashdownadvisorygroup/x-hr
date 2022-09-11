@@ -262,7 +262,7 @@ export class AskLeaveComponent implements OnInit, OnDestroy {
     if (name === 'add') {
       const dialogRef = this.dialog.open(DialogAddLeavesComponent, {
         width: '50%',
-        height: '65%'
+        height: '75%'
       });
 
       dialogRef.afterClosed().subscribe((result) => {
@@ -274,7 +274,7 @@ export class AskLeaveComponent implements OnInit, OnDestroy {
       // console.log('entrer !!!!!!!!!!!', name);
       const dialogRef = this.dialog.open(DialogLeaveInfoComponent, {
         width: '50%',
-        height: '65%',
+        height: '60%',
         data: {
           id: name
         }

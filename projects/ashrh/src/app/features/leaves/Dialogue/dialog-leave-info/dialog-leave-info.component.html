@@ -4,6 +4,7 @@
 
   <button mat-button class='close-icon' [mat-dialog-close]="true">
     <mat-icon>close</mat-icon>
+    <!-- <fa-icon icon="key"></fa-icon> -->
   </button>
   <h4 class="mb-3 form-title"> Information For Leave </h4>
 
@@ -19,7 +20,7 @@
   <div class="form-group row">
     <label class="col-sm-3 col-form-label">Leave Reason&nbsp;</label>
     <div class="col-sm-9">
-      <textarea disabled rows="5" cols="60" name="reason" formControlName="reason">
+      <textarea disabled class="form-control" name="reason" formControlName="reason">
 
      </textarea>
       <!-- <input disabled="true" type="text" id="leaveReason"  class="form-control" placeholder="Leave Reason"
