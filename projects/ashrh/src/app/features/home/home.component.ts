@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     { link: '/home', label: 'All Modules' },
     { link: AppRoutes.employees, label: 'Employees' },
     { link: AppRoutes.check_presence, label: 'Presence' },
-    { link: AppRoutes.end_shift, label: 'End shift' },
+    // { link: AppRoutes.end_shift, label: 'End shift' },
     { link: AppRoutes.settings_employ, label: 'Settings' },
     { link: AppRoutes.payment, label: 'Payments' },
     { link: AppRoutes.leaves, label: 'leaves' },

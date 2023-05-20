@@ -5,8 +5,8 @@
       <img [src]="picture" alt="" (error)="picture = defaultImage" />
     </div>
     <div>
-      <p><span class="text-uppercase">{{user.first_name}}</span> {{user.last_name}}<br>{{user.post?.name}}</p>
-      <p>Tel: {{user.phone}}</p>
+      <p><span class="text-uppercase">{{user.person.first_name}}</span> {{user.person.last_name}}<br>{{user.post?.name}}</p>
+      <p>Tel: {{user.person.phone}}</p>
     </div>
   </div>
 </div>
@@ -30,16 +30,16 @@
       <h3 style="font-size: 1.4em;">{{about[0].title}}</h3>
       <div class="child-content">
         <ng-container *ngFor="let item of about[0].keys">
-          <span>{{item.key}}:</span> <span>{{user[item.key]}}</span>
+          <span>{{item.key}}:</span> <span>{{user.person[item.key]}}</span>
         </ng-container>
-        <span>{{'Start date'}}:</span> <span>{{user['created_at']|date}}</span>
+        <span>{{'Start date'}}:</span> <span>{{user.person['created_at']|date}}</span>
       </div>
     </div>
     <div class="child">
       <h3 style="font-size: 1.4em;">{{about[1].title}}</h3>
       <div class="child-content">
         <ng-container *ngFor="let item of about[1].keys">
-          <span>{{item.key}}:</span> <span>{{user[item.key]?.name || '--'}}</span>
+          <span>{{item.key}}:</span> <span>{{user.post[item.key] || '--'}}</span>
         </ng-container>
       </div>
     </div>
@@ -48,7 +48,16 @@
       <div class="child-content">
         <!-- *ngIf="user.emergency_contact" -->
         <ng-container *ngFor="let item of about[2].keys">
-          <span>{{item.key.substring(10)}}:</span> <span>{{user[item.key]? user[item.key] : '--'}}</span>
+          <span>{{item.key}}:</span> <span>{{user.emergency_person[item.key] || '--'}}</span>
+        </ng-container>
+      </div>
+    </div>
+    <div class="child" *ngIf="user.emergency_person_2">
+      <h3 style="font-size: 1.4em;">{{about[3].title}}</h3>
+      <div class="child-content">
+        <!-- *ngIf="user.emergency_contact" -->
+        <ng-container *ngFor="let item of about[3].keys">
+          <span>{{item.key}}:</span> <span>{{user.emergency_person_2[item.key] || '--'}}</span>
         </ng-container>
       </div>
     </div>

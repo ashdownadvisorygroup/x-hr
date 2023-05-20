@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>{{"Form to Add a Department" |translate}}</h2>
+<hr>
+<form [formGroup]="departementForm" (ngSubmit)="addDepartment()">
+  <div mat-dialog-content class="mat-typography">
+
+    <ng-container *ngFor="let item of departement">
+        <mat-form-field class="full-width" appearance="outline">
+          <input matInput [placeholder]="(item.key | translate)" [formControlName]="item.key" [type]="item.type" [(ngModel)]="item.default">
+          <mat-error *ngIf="departementForm.controls[item.key].hasError('required')">
+            {{item.key | translate}} is <strong>required</strong>
+          </mat-error>
+        </mat-form-field> 
+        <br>
+      </ng-container>
+  </div>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" type="submit" [disabled]="!departementForm.valid"
+      cdkFocusInitial>Add</button>
+  </mat-dialog-actions>
+
+</form>

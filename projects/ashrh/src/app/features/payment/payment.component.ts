@@ -30,6 +30,8 @@ import { AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { DbListService } from '../../core/services/db-list.service';
+import { DbUtilityService } from '../../core/services/db-utility.service';
 
 export interface EmployeeData {
   id: number;
@@ -207,9 +209,11 @@ export class PaymentComponent implements OnInit {
     private db_department: DbDepartmentsService,
     private db_employee: EmployeeDbService,
     private cd: ChangeDetectorRef,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private db_list: DbListService,
+    private db_utily: DbUtilityService
   ) {
-    this.postsObservable = this.db_department.getAllDepart();
+    this.postsObservable = this.db_utily.getPosts();
     //const display = Array.from({length: 100}, (_, k) => createNewUser(k+1));
 
     // Assign the data to the data source for the table to render
@@ -235,7 +239,7 @@ export class PaymentComponent implements OnInit {
     // this.dataSource1.sort = this.sort;
     // this.dataSource1.paginator = this.paginator;
 
-    this.db_department.getAllDepart().subscribe((dataposts) => {
+    this.db_utily.getPosts().subscribe((dataposts) => {
       this.posts = dataposts;
 
       this.check = true;
@@ -309,7 +313,7 @@ export class PaymentComponent implements OnInit {
 
     //console.log('voici les postes', this.posts);
     // console.log('voici les coldistributions', this.colDistribute);
-    this.postsObservable = this.db_department.getAllDepart();
+    this.postsObservable = this.db_utily.getPosts();
     //console.log('voici les postes',this.postsObservable);
 
     //    this.dataSource1.sort = this.sort;

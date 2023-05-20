@@ -44,14 +44,14 @@ export class AllmodulesComponent implements OnInit {
       textBgColor: '#0F254B',
       description: "Marquer la presence d'un employé"
     },
-    {
-      name: 'Fin de periode',
-      image: '/assets/modules/end_off_period.png',
-      route: AppRoutes.end_shift,
-      textBgColor: '#E14E4F',
-      description:
-        "Module permettant de faire des comptes a la fin d'une periode de travail"
-    },
+    // {
+    //   name: 'Fin de periode',
+    //   image: '/assets/modules/end_off_period.png',
+    //   route: AppRoutes.end_shift,
+    //   textBgColor: '#E14E4F',
+    //   description:
+    //     "Module permettant de faire des comptes a la fin d'une periode de travail"
+    // },
     {
       name: 'Permission',
       image: '',

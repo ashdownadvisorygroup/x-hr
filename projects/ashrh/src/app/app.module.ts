@@ -59,6 +59,9 @@ import {
 
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { PostDialogComponent } from './features/dialog/post-dialog/post-dialog.component';
+import { DepartDialogComponent } from './features/dialog/depart-dialog/depart-dialog.component';
+import { ContractDialogComponent } from './features/dialog/contract-dialog/contract-dialog.component';
 
 @NgModule({
   imports: [
@@ -97,7 +100,10 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     HomeBackgroundComponent,
     DialogComponent,
     DialogAddLeavesComponent,
-    DialogLeaveInfoComponent
+    DialogLeaveInfoComponent,
+    PostDialogComponent,
+    DepartDialogComponent,
+    ContractDialogComponent
   ],
   bootstrap: [AppComponent]
 })

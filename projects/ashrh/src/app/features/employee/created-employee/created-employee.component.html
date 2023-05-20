@@ -101,14 +101,37 @@
 
     <mat-card class="p-0 mt-3">
       <mat-card-header class="bg-p-o-50 rounded-top">
-        <mat-card-title style="padding: 5px; margin: auto 0">{{'Emergency Contact' | translate}}</mat-card-title>
+        <div style="display: flex; justify-content: space-between;" class="full-width">
+          <mat-card-title style="padding: 5px; margin: auto 0">{{'Emergency Contact' | translate}}</mat-card-title>
+          <button (click)="addEmergencyContactTwo()" *ngIf="add_emergency_contact_two == false" mat-raised-button  color="primary" type="button" class="text-white ml-2"><fa-icon icon="plus"></fa-icon></button>
+        </div>
       </mat-card-header>
       <mat-card-content>
         <div class="block-grip">
-          <ng-container *ngFor="let item of urgent_phone">
+          <ng-container *ngFor="let item of emergency">
             <mat-form-field class="full-width">
-              <input matInput [placeholder]="(item.key | translate)" [formControlName]="item.key">
-              <mat-error *ngIf="addressForm.controls[item.key].hasError('required')">
+              <input matInput [placeholder]="(item.key | translate)" [formControlName]="'emergency_'+item.key">
+              <mat-error *ngIf="addressForm.controls['emergency_'+item.key].hasError('required')">
+                {{ item.key | translate }} is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </ng-container>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="p-0 mt-3" *ngIf="add_emergency_contact_two">
+      <mat-card-header class="bg-p-o-50 rounded-top">
+        <div style="display: flex; justify-content: space-between;" class="full-width">
+          <mat-card-title style="padding: 5px; margin: auto 0">{{'Emergency Contact 2' | translate}}</mat-card-title>
+          <button (click)="removeEmergencyContactTwo()" mat-raised-button  color="primary" type="button" class="text-white ml-2"><fa-icon icon="times"></fa-icon></button>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="block-grip">
+          <ng-container *ngFor="let item of emergency_2">
+            <mat-form-field class="full-width">
+              <input matInput [placeholder]="(item.key | translate)" [formControlName]="'emergency_2_'+item.key">
+              <mat-error *ngIf="addressForm.controls['emergency_2_'+item.key].hasError('required')">
                 {{ item.key | translate }} is <strong>required</strong>
               </mat-error>
             </mat-form-field>
@@ -119,6 +142,6 @@
   </div>
 
   <div class="mt-2 text-right">
-    <button mat-raised-button [disabled]="!addressForm.valid" color="primary" type="submit" class="text-white ml-2">{{ "Submit" | translate}}</button>
+    <button mat-raised-button [disabled]="!addressForm.valid"  color="primary" type="submit" class="text-white ml-2">{{ "Submit" | translate}}</button>
   </div>
 </form>

@@ -76,11 +76,11 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe(
         (res: any) => {
           // console.log('donnees recu du serveur lors du login user :::))))', res);
-          this.store.dispatch(authLogin({ user: res.user }));
-          this.userInfo = res.user;
+          this.store.dispatch(authLogin({ user: res.data }));
+          this.userInfo = res.data;
 
           //console.log('donnees recu du serveur lors du login user :::))))', this.userInfo);
-          this.localser.setItem('TOKEN', res.token);
+          this.localser.setItem('TOKEN', res.token.access);
           // this.localser.setItem('employee/Rh', res.user);
 
           this.routes.goHome();
@@ -121,12 +121,9 @@ export class LoginComponent implements OnInit, OnDestroy {
           // console.log(`donnees recu du serveur lors du login :) `,res.results[1].user.id);
           // console.log('this.userInfo?.id', this.userInfo?.id);
           var val = res.results.filter(
-            (elt) => elt.user.id === this.userInfo.id
+            (elt) => elt.person.id === this.userInfo.id
           );
-          console.log(
-            'that is value which i charge in login component',
-            val[0].id
-          );
+
           this.localser.setItem('employee/Rh_id', val[0].id);
           // this.localser.setItem('employee/Rh', res.user);
 

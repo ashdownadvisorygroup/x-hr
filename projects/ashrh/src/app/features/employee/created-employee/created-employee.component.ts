@@ -50,6 +50,7 @@ export class CreatedEmployeeComponent implements OnInit {
   userimage = null;
   url_user_image: any = '/assets/man-avatar.jpg';
   create_account = false;
+  add_emergency_contact_two = false;
   informationPerso = [
     {
       key: 'first_name',
@@ -87,16 +88,64 @@ export class CreatedEmployeeComponent implements OnInit {
   ];
 
   poste = [
-    // {key: 'departement', validators: [], options: []},
-    { key: 'post', validators: [Validators.required], options: [] },
-    { key: 'working_group', validators: [], options: [] },
-    { key: 'working_period', validators: [Validators.required], options: [] }
+    { key: 'department', validators: [], options: [] },
+    { key: 'post', validators: [Validators.required], options: [] }
   ];
-  urgent_phone = [
-    { key: 'emergency_first_name', validators: [], type: 'text' },
-    { key: 'emergency_last_name', validators: [], type: 'text' },
-    { key: 'emergency_address', validators: [], type: 'text' },
-    { key: 'emergency_phone', validators: [], type: 'tel' }
+  emergency = [
+    {
+      key: 'first_name',
+      validators: [Validators.required],
+      type: 'text',
+      default: ''
+    },
+    { key: 'last_name', validators: [], type: 'text', default: '' },
+    {
+      key: 'email',
+      validators: [Validators.required],
+      type: 'email',
+      default: ''
+    },
+    {
+      key: 'cni',
+      validators: [Validators.required],
+      type: 'text',
+      default: ''
+    },
+    { key: 'address', validators: [], type: 'text', default: '' },
+    {
+      key: 'phone',
+      validators: [Validators.required],
+      type: 'tel',
+      default: ''
+    }
+  ];
+  emergency_2 = [
+    {
+      key: 'first_name',
+      validators: [],
+      type: 'text',
+      default: ''
+    },
+    { key: 'last_name', validators: [], type: 'text', default: '' },
+    {
+      key: 'email',
+      validators: [],
+      type: 'email',
+      default: ''
+    },
+    {
+      key: 'cni',
+      validators: [],
+      type: 'text',
+      default: ''
+    },
+    { key: 'address', validators: [], type: 'text', default: '' },
+    {
+      key: 'phone',
+      validators: [],
+      type: 'tel',
+      default: ''
+    }
   ];
   compte = [
     { key: 'username', validators: [Validators.required], type: 'text' },
@@ -151,12 +200,18 @@ export class CreatedEmployeeComponent implements OnInit {
 
   ngOnInit(): void {
     this.dbUtilityService
-      .getPostGroupsPeriod()
+      .getDepartment()
       .pipe(take(1))
       .subscribe((data) => {
-        for (const post of this.poste) {
-          post.options = [...data[post.key], null];
-        }
+        this.poste[0]['options'] = data;
+        this.cd.detectChanges();
+      });
+
+    this.dbUtilityService
+      .getPosts()
+      .pipe(take(1))
+      .subscribe((data) => {
+        this.poste[1]['options'] = data;
         this.cd.detectChanges();
       });
 
@@ -176,9 +231,15 @@ export class CreatedEmployeeComponent implements OnInit {
       );
     }
 
-    for (const urgent of this.urgent_phone) {
+    for (const urgent of this.emergency) {
       this.addressForm.addControl(
-        urgent.key,
+        'emergency_' + urgent.key,
+        new FormControl('', urgent.validators)
+      );
+    }
+    for (const urgent of this.emergency_2) {
+      this.addressForm.addControl(
+        'emergency_2_' + urgent.key,
         new FormControl('', urgent.validators)
       );
     }
@@ -190,22 +251,27 @@ export class CreatedEmployeeComponent implements OnInit {
     const formdata = new FormData();
     let data = {};
     for (const info of this.informationPerso) {
-      console.log(`${info.key}`, this.addressForm.controls[info.key].value);
       if (
         info.key !== 'birthday' &&
         this.addressForm.controls[info.key].value !== ''
       ) {
-        formdata.append(info.key, this.addressForm.controls[info.key].value);
-        data[`${info.key}`] = this.addressForm.controls[info.key].value;
+        formdata.append(
+          'person_' + info.key,
+          this.addressForm.controls[info.key].value
+        );
+        data[`person_${info.key}`] = this.addressForm.controls[info.key].value;
       }
     }
-    formdata.append('activate', this.addressForm.controls['activate'].value);
-    formdata.append('genre', this.addressForm.controls['genre'].value);
+    formdata.append(
+      'person_activate',
+      this.addressForm.controls['activate'].value
+    );
+    formdata.append('person_genre', this.addressForm.controls['genre'].value);
 
-    data['activate'] = this.addressForm.controls['activate'].value;
-    data['genre'] = this.addressForm.controls['genre'].value;
+    data['person_activate'] = this.addressForm.controls['activate'].value;
+    data['person_genre'] = this.addressForm.controls['genre'].value;
     if (this.userimage) {
-      formdata.append('picture', this.userimage);
+      formdata.append('person_picture', this.userimage);
     }
     // else{
     //   formdata.append('picture', this.url_user_image)
@@ -239,34 +305,35 @@ export class CreatedEmployeeComponent implements OnInit {
       }
     }
     //
-    for (const item of this.urgent_phone) {
+    for (const item of this.emergency) {
       //   console.log(`${item.key} 1`,this.addressForm.controls[item.key].value);
       // if (this.addressForm.controls[item.key].value) {
-      formdata.append(item.key, this.addressForm.controls[item.key].value);
-      data[`${item.key}`] = this.addressForm.controls[item.key].value;
+      formdata.append(
+        'emergency_' + item.key,
+        this.addressForm.controls['emergency_' + item.key].value
+      );
+      data[`emergency_${item.key}`] = this.addressForm.controls[
+        'emergency_' + item.key
+      ].value;
       //   console.log(`${item.key} 2`, data[`${item.key}`]);
       // }
     }
-    /*
-    console.log('that is the formdata !!!!!!!!!!!!', formdata.get('post')); //formdata.get('user__username'));
-    console.log(
-      'that is the formdata !!!!!!!!!!!!',
-      formdata.get('working_group')
-    );
-    console.log(
-      'that is the formdata !!!!!!!!!!!!',
-      formdata.get('working_period')
-    );
-    console.log(
-      'that is the formdata !!!!!!!!!!!!',
-      formdata.get('user__username')
-    );
-    */
+    for (const item of this.emergency_2) {
+      if (
+        this.addressForm.controls['emergency_2_' + item.key].value == '' ||
+        this.addressForm.controls['emergency_2_' + item.key].value == null
+      ) {
+        break;
+      }
+      formdata.append(
+        'emergency_2_' + item.key,
+        this.addressForm.controls['emergency_2_' + item.key].value
+      );
+      data[`emergency_2_${item.key}`] = this.addressForm.controls[
+        'emergency_2_' + item.key
+      ].value;
+    }
 
-    //   for (var pair of formdata) {
-    //     console.log(pair[0]+ ' - ' + pair[1]);
-    // }
-    console.log('that is data ++++++++', data);
     var object = {};
     formdata.forEach(function (value, key) {
       object[key] = value;
@@ -283,9 +350,6 @@ export class CreatedEmployeeComponent implements OnInit {
         },
         (err) => {
           console.warn(err);
-          // console.log('that is error1', err.response);
-          // console.log('that is error1', err.response.status);
-          // console.log('that is error1', err.response.data);
           if (err.error.non_field_errors) {
             this.notiservice.error(
               this.trans.instant(err.error.non_field_errors[0])
@@ -320,4 +384,24 @@ export class CreatedEmployeeComponent implements OnInit {
   }
 
   setWorkingGroups() {}
+
+  addEmergencyContactTwo() {
+    let is_valid = true;
+    for (const contact of this.emergency) {
+      if (this.addressForm.controls['emergency_' + contact.key].invalid) {
+        is_valid = false;
+        this.notiservice.error(
+          'please fill all emergency one information to continue'
+        );
+        break;
+      }
+    }
+    this.add_emergency_contact_two = is_valid;
+  }
+  removeEmergencyContactTwo() {
+    for (const contact of this.emergency_2) {
+      this.addressForm.controls['emergency_2_' + contact.key].reset();
+    }
+    this.add_emergency_contact_two = false;
+  }
 }

@@ -12,7 +12,7 @@ export const environment = {
   test: false,
   i18nPrefix: '',
   //server: 'https://api-demo.ashscan.org',
-  server: 'http://192.168.33.10:8000',
+  server: 'http://192.168.56.11:8000',
   // server: 'http://127.0.0.1:8000',
   versions: {
     app: packageJson.version,
