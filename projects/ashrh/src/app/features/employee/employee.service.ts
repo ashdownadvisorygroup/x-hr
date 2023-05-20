@@ -7,7 +7,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class EmployeeService {
-  private employeesUrl = 'api/employees';
+  private employeesUrl = 'api/grh/employer/'; //'api/employees';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -45,9 +45,9 @@ export class EmployeeService {
     );
   }
 
-  /** PUT: update the hero on the server */
+  /** PATCH: update the hero on the server */
   updateEmployee(hero: any): Observable<any> {
-    return this.http.put(this.employeesUrl, hero, this.httpOptions).pipe(
+    return this.http.patch(this.employeesUrl, hero, this.httpOptions).pipe(
       tap((_) => console.log(`updated hero id=${hero.id}`)),
       catchError(this.handleError<any>('updateHero'))
     );

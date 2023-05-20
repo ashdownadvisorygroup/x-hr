@@ -43,19 +43,31 @@ export class EmployeProfilComponent implements OnInit {
     {
       title: 'Poste',
       keys: [
-        { key: 'post' },
-        { key: 'working_group' },
-        { key: 'working_period' },
-        { key: 'supervisor' }
+        { key: 'name' },
+        { key: 'daily_salary' },
+        { key: 'monthly_salary' },
+        { key: 'number_work_days' },
+        { key: 'description' }
       ]
     },
     {
       title: "Contact d'urgence",
       keys: [
-        { key: 'emergency_first_name' },
-        { key: 'emergency_last_name' },
-        { key: 'emergency_address' },
-        { key: 'emergency_phone' }
+        { key: 'cni' },
+        { key: 'first_name' },
+        { key: 'last_name' },
+        { key: 'address' },
+        { key: 'phone' }
+      ]
+    },
+    {
+      title: "Contact d'urgence 2",
+      keys: [
+        { key: 'cni' },
+        { key: 'first_name' },
+        { key: 'last_name' },
+        { key: 'address' },
+        { key: 'phone' }
       ]
     }
   ];
@@ -75,12 +87,12 @@ export class EmployeProfilComponent implements OnInit {
         .getEmployee(employee_id)
         .pipe(take(1))
         .subscribe((user: any) => {
-          this.user = user;
-          this.picture = user.picture;
+          this.user = user.data;
+          this.picture = user.data.person.picture;
           this.cd.detectChanges();
-          console.log(this.picture);
-          console.log(this.user.picture);
-          console.log(user);
+          // console.log(this.picture);
+          // console.log(this.user.picture);
+          // console.log(user);
           // console.log('this is the emergency contact:');
           // console.log(user.emergency_contact);
         });

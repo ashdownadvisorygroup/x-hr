@@ -83,7 +83,7 @@
   "Personal Information": "Personal Information",
   "Post": "Post",
   "Emergency Contact": "Emergency Contact",
-  "Activate": "Activate",
+  "Activate": "Activer",
   "Create Account": "Create Account",
   "Submit": "Submit",
   "post": "Function",
@@ -114,5 +114,13 @@
   "Controle de presence": "Presence Control",
   "Fin de periode": "End of shift",
   "Score": "Score",
-  "Save": "Save"
+  "Save": "Save",
+  "Select responsible": "Sélectionnez le responsable",
+  "enter name of Group": "entrer un nom",
+  "responsible  is required": "un responsable est nécessaire",
+  "name is required": "un nom est requis",
+  "Form to Add a Group": "Ajout d'un groupe",
+  "Various Departments": "Divers Departements",
+  "Delete post(s)": "Supprimer",
+  "Disable": "desactiver"
 }

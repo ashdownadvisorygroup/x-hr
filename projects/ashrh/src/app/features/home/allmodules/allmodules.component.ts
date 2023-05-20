@@ -8,9 +8,6 @@ import { AppRoutes } from '../../../modeles/app-routes';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AllmodulesComponent implements OnInit {
-
-
-
   modules = [
     {
       name: 'Employées',
@@ -45,19 +42,33 @@ export class AllmodulesComponent implements OnInit {
       image: '/assets/modules/check_presence.png',
       route: AppRoutes.check_presence,
       textBgColor: '#0F254B',
-      description: 'Marquer la presence d\'un employé'
+      description: "Marquer la presence d'un employé"
+    },
+    // {
+    //   name: 'Fin de periode',
+    //   image: '/assets/modules/end_off_period.png',
+    //   route: AppRoutes.end_shift,
+    //   textBgColor: '#E14E4F',
+    //   description:
+    //     "Module permettant de faire des comptes a la fin d'une periode de travail"
+    // },
+    {
+      name: 'Permission',
+      image: '',
+      route: AppRoutes.leaves,
+      textBgColor: '#0F254B',
+      description: 'Module permettant aux employes de faire des demandes'
     },
     {
-      name: 'Fin de periode',
-      image: '/assets/modules/end_off_period.png',
-      route: AppRoutes.end_shift,
-      textBgColor: '#E14E4F',
-      description: 'Module permettant de faire des comptes a la fin d\'une periode de travail'
-    },
-  ]
-  constructor() { }
+      name: 'TOUTE Permission',
+      image: '',
+      route: AppRoutes.leaves_dashboard,
+      textBgColor: '#0F254B',
+      description:
+        'Module permettant au rh de visualiser les demandes faites par les differents employes'
+    }
+  ];
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

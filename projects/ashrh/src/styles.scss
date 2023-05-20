@@ -1,4 +1,9 @@
 @import 'styles-variables';
+@import '~@ng-select/ng-select/themes/default.theme.css';
+
+@import '../../../node_modules/angular-calendar/css/angular-calendar.css';
+@import '../../../node_modules/bootstrap-icons/font/bootstrap-icons';
+@import '~bootstrap-icons/font/bootstrap-icons.css';
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';

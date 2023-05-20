@@ -1,0 +1,37 @@
+<h2 mat-dialog-title>{{"Form to Add a Group" |translate}}</h2>
+<hr>
+<form [formGroup]="Groupform" (ngSubmit)="addLeaves()">
+  <div mat-dialog-content class="mat-typography">
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{"Name" | translate}}</mat-label>
+      <input matInput placeholder="enter name of Group" formControlName="name">
+      <mat-icon matSuffix>group</mat-icon>
+      <!--  <mat-hint>Hint</mat-hint> -->
+      <mat-error *ngIf="Groupform.controls['name'].hasError('required')" [ngClass]="'error'">
+        <strong>{{"name is required" | translate}}</strong>
+      </mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="fill">
+      <mat-label style="color: #42a5f5;">{{"Select responsible" |translate}}</mat-label>
+      <mat-select formControlName="responsible">
+        <mat-option *ngFor="let respo of responsibles" [value]="respo.id">{{respo.first_name +" "+respo.last_name}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="Groupform.controls['responsible'].hasError('required')" [ngClass]="'error'">
+        <strong>{{"responsible is required" | translate}}</strong>
+      </mat-error>
+    </mat-form-field>
+
+
+
+  </div>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" type="submit" [disabled]="!Groupform.valid"
+      cdkFocusInitial>Add</button>
+  </mat-dialog-actions>
+
+</form>

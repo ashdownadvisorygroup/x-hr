@@ -5,3 +5,16 @@
   background: transparent linear-gradient(120deg, #4e86bd 0%, #3faba5 100%) 0%
     0% no-repeat padding-box;
 }
+::ng-deep .mat-expansion-panel-body {
+  flex: 1;
+  overflow-y: auto;
+  height: 300vh;
+}
+
+.scroller {
+  height: 82%;
+  overflow: overlay;
+  margin-top: 21px;
+  visibility: transparent;
+  scrollbar-width: initial;
+}

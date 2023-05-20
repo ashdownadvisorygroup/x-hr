@@ -9,13 +9,30 @@
     <mat-datepicker #picker></mat-datepicker>
   </ng-container>
   <ng-container *ngSwitchCase="'action'" class="index-delete-form">
-    <input name="delete" type="text" class="inputField" placeholder="&#xf002; Enter 1 to delete" >
-    <button mat-icon-button class="btn-30" color="warn" type="submit"><fa-icon icon="trash"></fa-icon></button>
+    <input name="delete" type="text" class="inputField" placeholder="&#xf002; Enter 1 to delete">
+    <button mat-icon-button class="btn-30" color="warn" type="submit">
+      <fa-icon icon="trash"></fa-icon>
+    </button>
   </ng-container>
+<!--
+  <ng-container *ngSwitchCase="'select'">
+    <mat-form-field appearance="fill">
+      <mat-label style="color: #42a5f5;">"Select Group"</mat-label>
+      <mat-select [(ngModel)]="selectedPosts" multiple>
+        <mat-option *ngFor="let post of working_post" [value]="post">{{post.name}}</mat-option>
+      </mat-select>
+
+    </mat-form-field>
+  </ng-container>
+-->
+
   <ng-container *ngSwitchDefault>
     <input (keyup.enter)="enterPress.emit(formControl.value)" [type]="type" class="form-control filter-input"
       [placeholder]="placeholder" [formControl]="formControl">
   </ng-container>
+
+
+
 </ng-container>
 
 <!-- <mat-select >

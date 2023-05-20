@@ -2,16 +2,16 @@
   <div class="card c-p bg-a radius">
     <canvas class="header-bg" width="250" height="70" id="header-blur"></canvas>
     <div class="avatar">
-      <img [src]="picture" alt="" (error)="picture = defaultImage"/>
+      <img [src]="picture" alt="" (error)="picture = defaultImage" />
     </div>
     <div>
-      <p><span class="text-uppercase">{{user.first_name}}</span> {{user.last_name}}<br>{{user.post?.name}}</p>
-      <p>Tel: {{user.phone}}</p>
+      <p><span class="text-uppercase">{{user.person.first_name}}</span> {{user.person.last_name}}<br>{{user.post?.name}}</p>
+      <p>Tel: {{user.person.phone}}</p>
     </div>
   </div>
 </div>
 <!--profile detaillé-->
-<div class="mat-elevation-z2 flex-grow-1 radius overflow-hidden">
+<div class="mat-elevation-z2 flex-grow-1 radius flex-fill overflow-auto p-2">
   <div class="d-flex justify-content-between p-2 bg-p-o-50">
     <span class="text-large">About</span>
     <div>
@@ -26,29 +26,38 @@
     </div>
   </div>
   <div class="p-2 parent justify-content-between">
-      <div class="child">
-        <h3 style="font-size: 1.4em;">{{about[0].title}}</h3>
-        <div class="child-content">
-          <ng-container *ngFor="let item of about[0].keys">
-            <span>{{item.key}}:</span>  <span>{{user[item.key]}}</span>
-          </ng-container>
-          <span>{{'Start date'}}:</span>  <span>{{user['created_at']|date}}</span>
-        </div>
+    <div class="child">
+      <h3 style="font-size: 1.4em;">{{about[0].title}}</h3>
+      <div class="child-content">
+        <ng-container *ngFor="let item of about[0].keys">
+          <span>{{item.key}}:</span> <span>{{user.person[item.key]}}</span>
+        </ng-container>
+        <span>{{'Start date'}}:</span> <span>{{user.person['created_at']|date}}</span>
       </div>
+    </div>
     <div class="child">
       <h3 style="font-size: 1.4em;">{{about[1].title}}</h3>
       <div class="child-content">
         <ng-container *ngFor="let item of about[1].keys">
-          <span>{{item.key}}:</span>  <span>{{user[item.key]?.name || '--'}}</span>
+          <span>{{item.key}}:</span> <span>{{user.post[item.key] || '--'}}</span>
         </ng-container>
       </div>
     </div>
     <div class="child">
       <h3 style="font-size: 1.4em;">{{about[2].title}}</h3>
-      <div class="child-content" >
+      <div class="child-content">
         <!-- *ngIf="user.emergency_contact" -->
         <ng-container *ngFor="let item of about[2].keys">
-          <span>{{item.key.substring(10)}}:</span>  <span>{{user[item.key]? user[item.key] : '--'}}</span>
+          <span>{{item.key}}:</span> <span>{{user.emergency_person[item.key] || '--'}}</span>
+        </ng-container>
+      </div>
+    </div>
+    <div class="child" *ngIf="user.emergency_person_2">
+      <h3 style="font-size: 1.4em;">{{about[3].title}}</h3>
+      <div class="child-content">
+        <!-- *ngIf="user.emergency_contact" -->
+        <ng-container *ngFor="let item of about[3].keys">
+          <span>{{item.key}}:</span> <span>{{user.emergency_person_2[item.key] || '--'}}</span>
         </ng-container>
       </div>
     </div>

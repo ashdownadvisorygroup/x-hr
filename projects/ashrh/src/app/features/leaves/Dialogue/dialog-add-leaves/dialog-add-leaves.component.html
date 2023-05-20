@@ -1,0 +1,122 @@
+<!-- <h2 mat-dialog-title>{{"Form to Add a Group" |translate}}</h2>
+<hr>
+<form [formGroup] = "Groupform" (ngSubmit)="addGroup()">
+<div mat-dialog-content class="mat-typography">
+
+  <mat-form-field appearance="outline">
+    <mat-label>{{"Name" | translate}}</mat-label>
+    <input matInput placeholder="enter name of Group" formControlName="name">
+   <mat-icon matSuffix>group</mat-icon>
+    <mat-error *ngIf="Groupform.controls['name'].hasError('required')" [ngClass]="'error'">
+      <strong>{{"name is required" | translate}}</strong>
+    </mat-error>
+  </mat-form-field>
+
+
+  <mat-form-field appearance="fill">
+    <mat-label style="color: #42a5f5;">{{"Select responsible" |translate}}</mat-label>
+    <mat-select formControlName="responsible" >
+      <mat-option *ngFor="let respo of responsibles" [value]="respo.id">{{respo.first_name +" "+respo.last_name}}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="Groupform.controls['responsible'].hasError('required')" [ngClass]="'error'">
+      <strong>{{"responsible  is required" | translate}}</strong>
+    </mat-error>
+  </mat-form-field>
+
+
+
+</div>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" type="submit" [disabled]="!Groupform.valid" cdkFocusInitial>Add</button>
+</mat-dialog-actions>
+
+</form> -->
+
+
+<form [formGroup]="leaveForm" (ngSubmit)="onSubmit()" >
+
+  <div *ngIf="!!create_leave_req_msg" [ngClass]="has_error ? 'alert alert-danger': 'alert alert-info'">
+    {{create_leave_req_msg}}</div>
+
+  <h4 class="mb-3 form-title"> Request For Leave </h4>
+<br/>
+<br/>
+<!-- <br/>
+<br/> -->
+  <div class="form-group row">
+    <label for="leaveType" class="col-sm-3 col-form-label">Leave Type&nbsp;<span class="text-danger">* </span></label>
+    <div class="col-sm-9">
+      <ng-select [items]="leaveTypes" formControlName="leaveType" bindLabel="name" bindValue="id"
+        placeholder="Select Leave Type" class="custom-ngSelect"
+        [ngClass]="{ 'is-invalid': submitted && f.leaveType.errors }">
+      </ng-select>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-sm-3 col-form-label">Leave Reason&nbsp;<span class="text-danger">*</span></label>
+    <div class="col-sm-9">
+
+      <!-- <input multiple type="text" id="leaveReason" formControlName="leaveReason" class="form-control" placeholder="Leave Reason"
+        [ngClass]="{ 'is-invalid': submitted && f.leaveReason.errors }" /> -->
+<textarea id="leaveReason" formControlName="leaveReason" class="form-control" placeholder="Leave Reason"
+[ngClass]="{ 'is-invalid': submitted && f.leaveReason.errors }">
+
+</textarea>
+
+        <div *ngIf="submitted && f.leaveReason.errors" class="invalid-feedback">
+        <div *ngIf="f.leaveReason.errors.required">Leave Reason is required</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="leaveDateFrom" class="col-sm-3 col-form-label">Date From&nbsp;<span class="text-danger">*</span></label>
+    <div class="col-sm-9">
+      <input type="date" id="leaveDateFrom" formControlName="fromDate" class="form-control" bsDatepicker
+        [minDate]="minDate" [bsConfig]="{ containerClass: 'theme-dark-blue', dateInputFormat: 'YYYY-MM-DD' }"
+        placeholder="Date From" [ngClass]="{ 'is-invalid': submitted && f.fromDate.errors }" />
+      <div *ngIf="submitted && f.fromDate.errors" class="invalid-feedback">
+        <div *ngIf="f.fromDate.errors.required">Date From is required</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <ng-container >
+    <mat-form-field class="full-width">
+      <input matInput [placeholder]="(item.key | translate)" formControlName="fromDate" [type]="item.type" [(ngModel)]="item.default">
+      <mat-error *ngIf="addressForm.controls[item.key].hasError('required')">
+        {{item.key | translate}} is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </ng-container> -->
+
+  <!-- <ashrh-simple-date-picker type="search" placeholder="type start date" class="filter-input"
+  (valueChange)="queryFactory('created_at',serverFormatDatePipe.transform($event))"></ashrh-simple-date-picker> -->
+
+
+  <!-- <mat-form-field appearance="fill">
+    <mat-label>Date From&nbsp;</mat-label>
+    <input matInput [matDatepicker]="picker">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field> -->
+
+
+  <div class="form-group row">
+    <label for="leaveDateTo" class="col-sm-3 col-form-label">Date To&nbsp;<span class="text-danger">*</span></label>
+    <div class="col-sm-9">
+      <input type="date" id="leaveDateTo" formControlName="toDate" class="form-control" bsDatepicker [minDate]="minDate"
+        [bsConfig]="{ containerClass: 'theme-dark-blue', dateInputFormat: 'YYYY-MM-DD' }" placeholder="Date To"
+        [ngClass]="{ 'is-invalid': submitted && f.toDate.errors }" />
+      <div *ngIf="submitted && f.toDate.errors" class="invalid-feedback">
+        <div *ngIf="f.toDate.errors.required">Date To is required</div>
+      </div>
+    </div>
+  </div>
+
+  <button mat-raised-button color="primary" class="mt-3 btn-block" type="submit">Submit </button>
+
+</form>

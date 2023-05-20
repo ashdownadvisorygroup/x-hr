@@ -29,6 +29,7 @@
               "projects/ashrh/src/assets"
             ],
             "styles": [
+              "node_modules/flatpickr/dist/flatpickr.css",
               "projects/ashrh/src/styles-app-loading.scss",
               "projects/ashrh/src/styles.scss"
             ],
@@ -133,9 +134,7 @@
               "projects/ashrh/tsconfig.spec.json",
               "projects/ashrh/e2e/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {

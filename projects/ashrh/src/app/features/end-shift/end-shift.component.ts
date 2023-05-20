@@ -62,44 +62,43 @@ export class EndShiftComponent implements OnInit {
   colDistribution = [
     {
       header: 'Employee',
-      distrib: (el) => el.first_name + ' ' + el.last_name.toUpperCase()
+      distrib: (el) =>
+        el.employee.first_name + ' ' + el.employee.last_name.toUpperCase()
     },
     {
       header: 'Number of masks',
-      distrib: (el) => el.daily_outputs[0]?.number_delivers,
+      distrib: (el) => el.number_delivers,
       options: {
         key: 'number_delivers',
         type: 'number',
         setValue: (event, element) => {
-          element.daily_outputs[0].number_delivers = event;
+          element.number_delivers = event;
         }
       }
     },
     {
       header: 'Good masks',
-      distrib: (el) => el.daily_outputs[0]?.good_delivers,
+      distrib: (el) => el.good_delivers,
       options: {
         key: 'good_delivers',
         type: 'number',
         setValue: (event, element) => {
-          element.daily_outputs[0].good_delivers = event;
-          element.daily_outputs[0].bad_delivers =
-            element.daily_outputs[0].number_delivers -
-            element.daily_outputs[0].good_delivers;
+          element.good_delivers = event;
+          element.bad_delivers =
+            element.number_delivers - element.good_delivers;
         }
       }
     },
     {
       header: 'Bad masks',
-      distrib: (el) => el.daily_outputs[0]?.bad_delivers,
+      distrib: (el) => el.bad_delivers,
       options: {
         key: 'bad_delivers',
         type: 'number',
         setValue: (event, element) => {
-          element.daily_outputs[0].bad_delivers = event;
-          element.daily_outputs[0].good_delivers =
-            element.daily_outputs[0].number_delivers -
-            element.daily_outputs[0].bad_delivers;
+          element.bad_delivers = event;
+          element.good_delivers =
+            element.number_delivers - element.bad_delivers;
         }
       }
     }
@@ -131,21 +130,26 @@ export class EndShiftComponent implements OnInit {
 
   ngOnInit(): void {
     this.query();
+    // this.endShiftService.getDailyOutputSpecific('KLm50ojO3fVo185VS1HQ7grbncyTJ28o');
+
     this.dbListService
       .getWorkingGroups()
       .pipe(take(1))
       .subscribe((group: any[]) => {
         this.ateliers = group;
-        console.log(group);
+        // console.log(group);
         this.cd.detectChanges();
       });
+    //  this.getEmployees(this!.ateliers);
+    // console.log('that is resultat!!!!!!!!!!!!!!!!!!!!!!!!!!!.................',this.dataSource);
   }
   //used to sort employee by working group
   public getEmployees(atelier: string) {
     this.endShiftService
-      .getEndShift(this.paramSearch)
+      .getEndShift()
       .pipe(take(1))
       .subscribe((res: any) => {
+        console.log('that is resultat1', res);
         this.dataSource = res.results.filter(
           (employee) => employee.working_group?.name == atelier
         );
@@ -162,15 +166,18 @@ export class EndShiftComponent implements OnInit {
   searchChange(event: any): void {}
   private query() {
     this.endShiftService
-      .getEndShift(this.paramSearch)
+      //.getEndShift(this.paramSearch)
+      .getEndShift()
       .pipe(take(1))
       .subscribe(
         (res: any) => {
-          console.log('tried to get a value');
-          console.log(res);
-          this.dataSource = res.results;
+          //console.log('tried to get a value');
+          // console.log('tried to get a value',res);
+          console.log('that is resultat2', res);
+          this.dataSource = res;
           this.lengh = res.total;
           this.cd.detectChanges();
+          console.log('that is resultat3', this.dataSource);
         },
         (err) => {
           console.warn(err);

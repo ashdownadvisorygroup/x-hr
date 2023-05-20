@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { LocalStorageService } from '../../../core/local-storage/local-storage.service';
@@ -11,6 +17,7 @@ import { take } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { authLogin } from '../../../core/auth/auth.actions';
 import { RoutesService } from '../../../core/routes/routes.service';
+import { EmployeeDbService } from '../../../core/states/employees/employee-db.service';
 
 @Component({
   selector: 'ashrh-login',
@@ -20,22 +27,23 @@ import { RoutesService } from '../../../core/routes/routes.service';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
-  forgotpass = '/' + AppRoutes.forgotpasswod
+  forgotpass = '/' + AppRoutes.forgotpasswod;
   logo = '../assets/logo.png';
   fr = '../../assets/fr.png';
   en = '../../assets/en.png';
   langMap = {
     fr: 'Français',
-    en: 'English',
-  }
+    en: 'English'
+  };
   // registerRoute = '/' + AppRoutes.REGISTER;
   user_name = '';
   pass_word = '';
+  userInfo = null;
   error = false;
-  subsc = new Subscription
-  hidePass = true
+  subsc = new Subscription();
+  hidePass = true;
   languages = ['en', 'fr'];
-  language$: Observable<any>
+  language$: Observable<any>;
   constructor(
     // private authService: AuthService,
     private localser: LocalStorageService,
@@ -43,9 +51,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     private httpclient: HttpClient,
     // private permissionsService: NgxPermissionsService,
     // private ngxRolesService: NgxRolesService,
+
+    private employeeDbService: EmployeeDbService,
     private store: Store,
     private routes: RoutesService
-  ) { }
+  ) {}
 
   ngOnDestroy(): void {
     this.subsc.unsubscribe();
@@ -56,24 +66,33 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login() {
-    this.httpclient.post(environment.server + '/api/enterprise/login/',
-      {
-          username: this.user_name,
-           password: this.pass_word
-         }
-      ).pipe(take(1))
-      .subscribe((res: any) => {
-        this.store.dispatch(authLogin({user: res.user}));
-        this.localser.setItem('TOKEN', res.token);
-          this.routes.goHome()
+    // this.httpclient.post(environment.server + '/api/enterprise/login/',
+    this.httpclient
+      .post(environment.server + '/api/main/login/', {
+        username: this.user_name,
+        password: this.pass_word
+      })
+      .pipe(take(1))
+      .subscribe(
+        (res: any) => {
+          // console.log('donnees recu du serveur lors du login user :::))))', res);
+          this.store.dispatch(authLogin({ user: res.data }));
+          this.userInfo = res.data;
+
+          //console.log('donnees recu du serveur lors du login user :::))))', this.userInfo);
+          this.localser.setItem('TOKEN', res.token.access);
+          // this.localser.setItem('employee/Rh', res.user);
+
+          this.routes.goHome();
         },
-        error => {
-        if (error.status === 401){
-          this.error = true;
-          this.cd.detectChanges();
+        (error) => {
+          if (error.status === 401) {
+            this.error = true;
+            this.cd.detectChanges();
+          }
+          console.log('voici lerreur', error);
         }
-        }
-      )
+      );
     // this.subsc.add(
     //   this.authService.log({
     //     username: this.user_name,
@@ -94,6 +113,26 @@ export class LoginComponent implements OnInit, OnDestroy {
     //       }
     //     )
     // )
+    this.employeeDbService
+      .loadEmployees()
+      .pipe(take(1))
+      .subscribe(
+        (res: any) => {
+          // console.log(`donnees recu du serveur lors du login :) `,res.results[1].user.id);
+          // console.log('this.userInfo?.id', this.userInfo?.id);
+          var val = res.results.filter(
+            (elt) => elt.person.id === this.userInfo.id
+          );
+
+          this.localser.setItem('employee/Rh_id', val[0].id);
+          // this.localser.setItem('employee/Rh', res.user);
+
+          // this.routes.goHome();
+        },
+        (error) => {
+          console.log('voici lerreur', error);
+        }
+      );
   }
   onLanguageSelect({ value: language }) {
     this.store.dispatch(actionSettingsChangeLanguage({ language }));

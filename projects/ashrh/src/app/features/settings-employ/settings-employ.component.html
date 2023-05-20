@@ -8,78 +8,103 @@
 <mat-list *ngFor= "let group of working_group">
   <mat-list-item >{{group.name}}</mat-list-item>
 </mat-list> -->
+<h4 style="text-align: center; margin-top: 20px;">Basic Settings</h4>
+<hr>
+<div class="scroller">
+  <mat-accordion>
 
-<h4 style="text-align: center; margin-top: 20px;">Basic Settings</h4><hr>
 
-<mat-accordion>
+    <mat-expansion-panel>
 
-    <mat-expansion-panel >
-      <mat-form-field appearance="fill">
-      <mat-label style = "color: #42a5f5;" >Delete post(s)</mat-label>
-      <mat-select [(ngModel)] = "selectedPosts" multiple>
-        <mat-option *ngFor="let post of working_post" [value]="post">{{post.name}}</mat-option>
-      </mat-select>
-      </mat-form-field>
-      <button mat-icon-button (click)="deleteElementPost()" color="warn"><fa-icon icon="trash"></fa-icon></button>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <h5 style="text-align: center; margin-top: 20px;">Various Departments</h5>
+          <h5 style="text-align: center; margin-top: 20px;">{{"Posts" | translate}}</h5>
         </mat-panel-title>
 
       </mat-expansion-panel-header>
 
+      <mat-form-field appearance="fill">
+        <mat-label style="color: #42a5f5;">{{"Delete post(s)" |translate}}</mat-label>
+        <mat-select [(ngModel)]="selectedPosts" multiple>
+          <mat-option *ngFor="let post of working_post" [value]="post">{{post.name}}</mat-option>
+        </mat-select>
 
-      <ash-table-editable #tb [dataSource]="working_post" [colDistribution]="colDistribution_post" [filter]="false">
+      </mat-form-field>
+
+      <!--
+      <button mat-button color="primary" style="border: 1px solid; margin-left: 20px;" [ashTableFilterToogle]="tb">
+        <fa-icon icon="filter"></fa-icon>
+        Filter
+      </button>
+      -->
+
+      <button mat-icon-button (click)="deleteElementPost()" color="warn">
+        <fa-icon icon="trash"></fa-icon>
+      </button>
+
+
+      <ash-table-editable #tb [dataSource]="working_post" [colDistribution]="colDistribution_post" [filter]="true">
       </ash-table-editable>
-      <button (click)="updatePost()" mat-raised-button  color="primary" style="margin: auto; display: flex; margin-top: 3px; color:white;" >
+
+      <button (click)="addPost()" mat-raised-button color="primary"
+        style="margin: auto; display: flex; margin-top: 3px; color:white;">
         New Post
       </button>
+
     </mat-expansion-panel>
 
-    <mat-expansion-panel >
+
+    <mat-expansion-panel>
       <mat-form-field appearance="fill">
-        <mat-label style = "color: #42a5f5;" >Delete group(s)</mat-label>
-        <mat-select [(ngModel)] = "selectedGroups" multiple>
-          <mat-option *ngFor="let group of working_group" [value]="group">{{group.name}}</mat-option>
+        <mat-label style="color: #42a5f5;">Delete departmemnt(s)</mat-label>
+        <mat-select [(ngModel)]="selectedDepartment" multiple>
+          <mat-option *ngFor="let departement of departments" [value]="departement">{{departement.name}}</mat-option>
         </mat-select>
-        </mat-form-field>
-        <button mat-icon-button (click)="deleteElementGroup()" color="warn"><fa-icon icon="trash"></fa-icon></button>
+      </mat-form-field>
+      <button mat-icon-button (click)="deleteElementDepartment()" color="warn">
+        <fa-icon icon="trash"></fa-icon>
+      </button>
 
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <h5 style="text-align: center; margin-top: 20px;">Working Groups</h5>
+          <h5 style="text-align: center; margin-top: 20px;">Departement</h5>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <!-- <mat-list *ngFor= "let group of working_group">
-          <input matInput placeholder="Atelier" [(value)]="group.name">
-          <mat-list-item >{{group.name}}</mat-list-item>
-      </mat-list> -->
-      <ash-table-editable #tb1 [dataSource]="working_group" [colDistribution]="colDistribution_group" [filter]="false" [actionText] = "actionText">
+      
+      <ash-table-editable #tb1 [dataSource]="departments" [colDistribution]="colDistribution_group" [filter]="false"
+        [actionText]="actionText">
       </ash-table-editable>
-      <button (click)="updateGroup()" mat-raised-button  color="primary" style="margin: auto; display: flex; margin-top: 3px; color:white;" >
-        New Group
+      <button (click)="openDepartmentDialog()" mat-raised-button color="primary"
+        style="margin: auto; display: flex; margin-top: 3px; color:white;">
+        New Department
       </button>
     </mat-expansion-panel>
-    <mat-expansion-panel >
+    <mat-expansion-panel>
       <mat-form-field appearance="fill">
-        <mat-label style = "color: #42a5f5;" >Delete period(s)</mat-label>
-        <mat-select [(ngModel)] = "selectedPeriods" multiple>
-          <mat-option *ngFor="let period of working_period" [value]="period">{{period.name}}</mat-option>
+        <mat-label style="color: #42a5f5;">Delete contract(s)</mat-label>
+        <mat-select [(ngModel)]="selectedContracts" multiple>
+          <mat-option *ngFor="let contract of contracts" [value]="contract">{{contract.name}}</mat-option>
         </mat-select>
-        </mat-form-field>
-        <button mat-icon-button (click)="deleteElementPeriod()" color="warn"><fa-icon icon="trash"></fa-icon></button>
+      </mat-form-field>
+      <button mat-icon-button (click)="deleteElementContract()" color="warn">
+        <fa-icon icon="trash"></fa-icon>
+      </button>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <h5 style="text-align: center; margin-top: 20px;">Working Periods</h5>
+          <h5 style="text-align: center; margin-top: 20px;">Contract</h5>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <ash-table-editable #tb2 [dataSource]="working_period" [colDistribution]="colDistribution_period" [filter]="false">
+      <ash-table-editable #tb2 [dataSource]="contracts" [colDistribution]="colDistribution_period"
+        [filter]="true">
       </ash-table-editable>
       <!-- <mat-list *ngFor= "let period of working_period">
         <mat-list-item >{{period.name}}</mat-list-item>
       </mat-list> -->
-      <button (click)="updatePeriod()" mat-raised-button  color="primary" style="margin: auto; display: flex; margin-top: 3px; color:white;" >
-        New Period
+      <button (click)="addContract()" mat-raised-button color="primary"
+        style="margin: auto; display: flex; margin-top: 3px; color:white;">
+        New Contract
       </button>
     </mat-expansion-panel>
     <!-- <button mat-icon-button class="btn-30" color="warn"><fa-icon icon="trash"></fa-icon></button> -->
+  </mat-accordion>
+</div>

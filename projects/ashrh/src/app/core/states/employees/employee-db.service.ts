@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { share } from 'rxjs/operators';
+let httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${JSON.parse(localStorage.getItem('ASHRH-TOKEN'))}`
+    //'Authorization': 'JWT ' + JSON.parse(localStorage.getItem('ASHRH-TOKEN'))
+  })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -9,11 +16,19 @@ import { share } from 'rxjs/operators';
 export class EmployeeDbService {
   employee_url = '/api/grh/employee/';
 
+  requestOptions = {
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'Access-Control-Allow-Headers': 'Content-Type'
+    })
+  };
   constructor(private httpClient: HttpClient) {}
 
   public loadEmployees() {
+    //console.log('that is headers',headers);
     return this.httpClient
-      .get(environment.server + this.employee_url)
+      .get(environment.server + '/api/grh/employees_list/')
       .pipe(share());
   }
   public getEmployee(id: string) {
@@ -24,18 +39,28 @@ export class EmployeeDbService {
   //path needed to delete employee
   public deleteEmployee(id: string) {
     return this.httpClient
-      .delete(environment.server + this.employee_url + id + '/')
+      .delete(environment.server + this.employee_url + 'update/' + id + '/')
       .pipe(share());
   }
 
-  createEmployee(formdata: FormData) {
+  createEmployee(formdata: any) {
     return this.httpClient
       .post(environment.server + this.employee_url, formdata)
       .pipe(share());
   }
   updateEmployee(id: string, params: any) {
+    // console.log(`modification of employee ${id}`,params);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      //'Content-Type': 'multipart/form-data',
+      Accept: 'application/json',
+      Authorization: `Token ${JSON.parse(localStorage.getItem('ASHRH-TOKEN'))}`
+    });
+
+    const requestOptions = { headers: headers };
+
     return this.httpClient
-      .put(environment.server + `/api/grh/employee/${id}/`, params)
+      .patch(environment.server + `/api/grh/employee/update/${id}/`, params)
       .pipe(share());
   }
 

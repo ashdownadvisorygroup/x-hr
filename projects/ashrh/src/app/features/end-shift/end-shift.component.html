@@ -1,4 +1,4 @@
-<div class="h-100 d-flex flex-column">
+<div class="overflow-auto">
   <div class="d-flex justify-content-center">
     <ashrh-search (searchValueChange)="searchChange($event)"></ashrh-search>
   </div>
@@ -10,7 +10,7 @@
     style="display: inline-grid;grid-auto-flow: column;grid-gap: 0.5em;align-self: baseline;">
     <mat-form-field [floatLabel]="'never'">
       <mat-label> Choose Atelier</mat-label>
-      <mat-select (selectionChange)="getEmployees($event.value.name)" >
+      <mat-select (selectionChange)="getEmployees($event.value.name)">
         <mat-option *ngFor="let atelier of ateliers" [value]="atelier">
           {{atelier.name + ' by ' + atelier.responsible.first_name.toUpperCase()}}
         </mat-option>
@@ -20,13 +20,16 @@
       <fa-icon icon="filter"></fa-icon>
       Filter
     </button>
+    
+    <!-- 
     <button mat-raised-button color="primary" style="color: white;">
       <fa-icon icon="save" style="margin-right: 3px;"></fa-icon>
       Save
     </button>
+    -->
+
   </div>
-  <ash-table-editable class="flex-fill" #tb [dataSource]="dataSource" [colDistribution]="colDistribution"
-    [filter]="true">
+  <ash-table-editable #tb [dataSource]="dataSource" [colDistribution]="colDistribution" [filter]="true">
   </ash-table-editable>
   <div class="d-flex justify-content-end">
     <mat-paginator [pageSizeOptions]="pageSizeOption" [length]="lengh" [pageSize]="pageSize" (page)="setPage($event)"
@@ -38,10 +41,10 @@
       {{employee.firstname}}
     </div>
   </div> -->
-  <h4 >Group Output</h4>
-  <hr><ash-table class="flex-fill" #tb [dataSource]="dataSource2" [colDistribution]="colDistributionOutputs"
+  <h4>Group Output</h4>
+  <hr>
+  <ash-table class="flex-fill" #tb [dataSource]="dataSource2" [colDistribution]="colDistributionOutputs"
     [filter]="true">
-  </ash-table >
+  </ash-table>
 
 </div>
-

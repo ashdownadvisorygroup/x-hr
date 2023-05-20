@@ -12,8 +12,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
-import { ReactiveFormsModule } from '@angular/forms';
 import { FeaturesSharedModule } from '../features-shared/features-shared.module';
+import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,21 @@ import { FeaturesSharedModule } from '../features-shared/features-shared.module'
     UpdateComponent,
     CreatedEmployeeComponent
   ],
-  imports: [CommonModule, EmployeeRoutingModule, FeaturesSharedModule, SharedModule, MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule, MatCardModule, ReactiveFormsModule]
+  imports: [
+    CommonModule,
+    EmployeeRoutingModule,
+    FeaturesSharedModule,
+    SharedModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    MatTableModule,
+    MatSortModule,
+    ReactiveFormsModule,
+    MatTabsModule
+  ]
 })
 export class EmployeeModule {}

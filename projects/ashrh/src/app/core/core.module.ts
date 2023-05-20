@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import { NgModule, Optional, SkipSelf, ErrorHandler } from '@angular/core';
 import {
@@ -93,6 +92,13 @@ import { EmployeesEffects } from './states/employees/employees.effects';
 import { TokenInjectorService } from './services/token-injector.service';
 import { ServerFormatDatePipe } from './pipes/server-format-date.pipe';
 
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+
+// import { MatSortModule } from '@angular/material/sort';
+
+import { MatSortModule } from '@angular/material/sort';
+
 export {
   TitleService,
   selectAuth,
@@ -138,6 +144,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatTooltipModule,
     MatSnackBarModule,
     MatButtonModule,
+    MatDialogModule,
+    MatInputModule,
+    MatSortModule,
+    //  MatSortModule,
 
     // ngrx
     StoreModule.forRoot(reducers, { metaReducers }),
@@ -145,7 +155,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     EffectsModule.forRoot([
       AuthEffects,
       SettingsEffects,
-      EmployeesEffects,
+      EmployeesEffects
       // GoogleAnalyticsEffects
     ]),
     environment.production
@@ -162,12 +172,12 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    }),
+    })
   ],
   declarations: [ServerFormatDatePipe],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInjectorService, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInjectorService, multi: true },
     { provide: ErrorHandler, useClass: AppErrorHandler },
     { provide: RouterStateSerializer, useClass: CustomSerializer },
     ServerFormatDatePipe
@@ -186,6 +196,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatTooltipModule,
     MatSnackBarModule,
     MatButtonModule,
+
+    //    MatSortModule,
+
+    MatDialogModule,
+    MatInputModule,
 
     // 3rd party
     FontAwesomeModule,
