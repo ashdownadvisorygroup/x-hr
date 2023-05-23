@@ -6,7 +6,7 @@ export const environment = {
   production: true,
   test: false,
   i18nPrefix: '',
-  server: 'https://api-ashscan-demo.ashscan.org',
+  server: 'https://api-ashscan-demo.ashscan.org/api',
   versions: {
     app: packageJson.version,
     angular: packageJson.dependencies['@angular/core'],
