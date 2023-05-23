@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { share } from 'rxjs/operators';
 import {
   ContractData,
+  ContractEmployeeData,
   DepartmentData,
   PeriodData,
   PostData
@@ -16,6 +17,8 @@ import { Observable } from 'rxjs';
 export class DbUtilityService {
   periods_url = '/api/grh/working_period/';
   contract_url = '/api/grh/contract/';
+
+  contract_employee_url = '/api/grh/contract_employee/';
   post_groups_period_url = '/api/grh/post_groups_period/';
   post_url = '/api/grh/post/';
   department_url = '/api/main/departments/';
@@ -43,6 +46,19 @@ export class DbUtilityService {
   public getDepartment(): Observable<DepartmentData[]> {
     return this.httpclient
       .get<DepartmentData[]>(environment.server + this.department_url)
+      .pipe(share());
+  }
+
+  public getContract(): Observable<ContractData[]> {
+    return this.httpclient
+      .get<ContractData[]>(environment.server + this.contract_url)
+      .pipe(share());
+  }
+  public getContractEmployee(): Observable<ContractEmployeeData[]> {
+    return this.httpclient
+      .get<ContractEmployeeData[]>(
+        environment.server + this.contract_employee_url
+      )
       .pipe(share());
   }
 

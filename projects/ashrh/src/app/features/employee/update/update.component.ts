@@ -34,6 +34,7 @@ export class UpdateComponent implements OnInit {
   userimage = null;
   url_user_image: any = '/assets/man-avatar.jpg';
   create_account = false;
+  add_emergency_contact_two = false;
   informationPerso = [
     {
       key: 'first_name',
@@ -66,21 +67,103 @@ export class UpdateComponent implements OnInit {
   ];
 
   poste = [
-    // {key: 'departement', validators: [], options: []},
+    { key: 'department', validators: [], options: [], default: '' },
     {
       key: 'post',
       validators: [Validators.required],
       options: [],
+      type: 'select',
+      default: ''
+    }
+  ];
+
+  contractEmployee = [
+    { key: 'contract', validators: [], options: [], type: 'select' },
+    {
+      key: 'start_date',
+      validators: [Validators.required],
+      type: 'date',
+      default: Date.now()
+    },
+    {
+      key: 'end_date',
+      validators: [Validators.required],
+      type: 'date',
       default: ''
     },
-    { key: 'working_group', validators: [], options: [], default: '' },
-    { key: 'working_period', validators: [], options: [], default: '' }
+    {
+      key: 'type',
+      validators: [Validators.required],
+      type: 'select',
+      options: [
+        {
+          name: 'CDD',
+          code: 'cdd'
+        },
+        {
+          name: 'CDI',
+          code: 'cdi'
+        }
+      ],
+      default: ''
+    }
   ];
-  urgent_phone = [
-    { key: 'emergency_first_name', validators: [], type: 'text', default: '' },
-    { key: 'emergency_last_name', validators: [], type: 'text', default: '' },
-    { key: 'emergency_address', validators: [], type: 'text', default: '' },
-    { key: 'emergency_phone', validators: [], type: 'tel', default: '' }
+
+  emergency = [
+    {
+      key: 'first_name',
+      validators: [Validators.required],
+      type: 'text',
+      default: ''
+    },
+    { key: 'last_name', validators: [], type: 'text', default: '' },
+    {
+      key: 'email',
+      validators: [Validators.required],
+      type: 'email',
+      default: ''
+    },
+    {
+      key: 'cni',
+      validators: [Validators.required],
+      type: 'text',
+      default: ''
+    },
+    { key: 'address', validators: [], type: 'text', default: '' },
+    {
+      key: 'phone',
+      validators: [Validators.required],
+      type: 'tel',
+      default: ''
+    }
+  ];
+  emergency_2 = [
+    {
+      key: 'first_name',
+      validators: [],
+      type: 'text',
+      default: ''
+    },
+    { key: 'last_name', validators: [], type: 'text', default: '' },
+    {
+      key: 'email',
+      validators: [],
+      type: 'email',
+      default: ''
+    },
+    {
+      key: 'cni',
+      validators: [],
+      type: 'text',
+      default: ''
+    },
+    { key: 'address', validators: [], type: 'text', default: '' },
+    {
+      key: 'phone',
+      validators: [],
+      type: 'tel',
+      default: ''
+    }
   ];
   compte = [
     { key: 'username', validators: [], type: 'text', default: '' },
@@ -136,27 +219,37 @@ export class UpdateComponent implements OnInit {
       this.employeeDbService
         .getEmployee(employee_id)
         .pipe(take(1))
-        .subscribe((user: any) => {
+        .subscribe((employee: any) => {
           //  console.log('that is user loaded',user);
-          this.user = user;
-          // console.log(user);
+          this.user = employee;
+          console.log('***************USER***********************', employee);
           //this.url_user_image = user.picture;
           //this.create_account = user.create_account;
           for (const info of this.informationPerso) {
-            info.default = user[info.key] ? user[info.key] : 'none';
+            info.default = employee['data']['person'][info.key] || 'none';
           }
 
-          for (let info of this.urgent_phone) {
-            console.log(`urgent_phone element ${info.key}`, user[info.key]);
-            info.default = user[info.key] ? user[info.key] : 'none';
+          for (let info of this.emergency) {
+            console.log(`urgent_phone element ${info.key}`, employee[info.key]);
+            info.default =
+              employee['data']['emergency_person'][info.key] || 'none';
           }
+          // if (this.emergency_2 !== 'null') {
+
+          //   for (let info of this.emergency_2) {
+          //     console.log(`urgent_phone element ${info.key}`, employee[info.key]);
+          //     info.default =
+          //       employee['data']['emergency_person_2'][info.key] || 'none';
+          //   }
+
+          // }
 
           for (const info of this.poste) {
-            info.default = user[info.key]?.id ? user[info.key]?.id : 'none';
+            info.default = employee['data'][info.key]?.id || 'none';
           }
 
           for (const info of this.compte) {
-            info.default = user[info.key] ? user[info.key] : '';
+            info.default = employee[info.key] ? employee[info.key] : 'none';
           }
           //  console.log('these are the modifications');
           //  console.log(this.user);
@@ -165,13 +258,77 @@ export class UpdateComponent implements OnInit {
         });
     });
 
+    // this.activatedRoute.params
+    //   .pipe(take(1))
+    //   .subscribe(({ contract_employee_id }) => {
+    //     this.id = contract_employee_id;
+    //     this.employeeDbService
+    //       .getContractEmployee(contract_employee_id)
+    //       .pipe(take(1))
+    //       .subscribe((contract_employee: any) => {
+    //         //  console.log('that is user loaded',user);
+    //         this.user = contract_employee;
+    //         console.log(
+    //           '***************USER***********************',
+    //           contract_employee
+    //         );
+
+    //         for (const info of this.contractEmployee) {
+    //           info.default = contract_employee[info.key]?.id || 'none';
+    //         }
+
+    //         //  console.log('these are the modifications');
+    //         //  console.log(this.user);
+
+    //         this.cd.detectChanges();
+    //       });
+    //   });
+
+    // this.dbUtilityService
+    //   .getPostGroupsPeriod()
+    //   .pipe(take(1))
+    //   .subscribe((data) => {
+    //     for (const post of this.poste) {
+    //       post.options = [...data[post.key], null];
+    //     }
+
+    //     this.cd.detectChanges();
+    //   });
+
     this.dbUtilityService
-      .getPostGroupsPeriod()
+      .getContract()
       .pipe(take(1))
       .subscribe((data) => {
-        for (const post of this.poste) {
-          post.options = [...data[post.key], null];
-        }
+        this.contractEmployee[0]['options'] = data;
+        this.cd.detectChanges();
+      });
+
+    this.dbUtilityService
+      .getDepartment()
+      .pipe(take(1))
+      .subscribe((data) => {
+        this.poste[0]['options'] = data;
+        this.cd.detectChanges();
+      });
+
+    this.dbUtilityService
+      .getPosts()
+      .pipe(take(1))
+      .subscribe((data) => {
+        this.poste[1]['options'] = data;
+        this.cd.detectChanges();
+      });
+
+    this.dbUtilityService
+
+      .getContractEmployee()
+      .pipe(take(1))
+      .subscribe((data) => {
+        this.contractEmployee[0]['options'] = data;
+        this.contractEmployee[3]['options'] = data;
+        this.cd.detectChanges();
+
+        console.log('*****************DATA****************************', data);
 
         this.cd.detectChanges();
       });
@@ -182,6 +339,17 @@ export class UpdateComponent implements OnInit {
         new FormControl(info.default, info.validators)
       );
     }
+
+    for (const contractEmployee of this.contractEmployee) {
+      this.addressForm.addControl(
+        contractEmployee.key,
+        new FormControl(contractEmployee.default, contractEmployee.validators)
+      );
+      this.addressForm
+        .get(contractEmployee.key)
+        .setValue(contractEmployee.default);
+    }
+
     this.addressForm.addControl(
       'activate',
       new FormControl(this.user.activate)
@@ -197,11 +365,16 @@ export class UpdateComponent implements OnInit {
       this.addressForm.get(post.key).setValue(post.default);
     }
 
-    for (const urgent of this.urgent_phone) {
-      // console.log('voici un urgent charge dams post',urgent);
+    for (const urgent of this.emergency) {
       this.addressForm.addControl(
-        urgent.key,
-        new FormControl(urgent.default, urgent.validators)
+        'emergency_' + urgent.key,
+        new FormControl('', urgent.validators)
+      );
+    }
+    for (const urgent of this.emergency_2) {
+      this.addressForm.addControl(
+        'emergency_2_' + urgent.key,
+        new FormControl('', urgent.validators)
       );
     }
 
@@ -291,7 +464,14 @@ export class UpdateComponent implements OnInit {
       }
     }
     //
-    for (const item of this.urgent_phone) {
+    for (const item of this.emergency) {
+      if (this.addressForm.controls[item.key].value) {
+        //  console.log(`ligne 263`);
+        //  formdata.append(`${item.key}`, this.addressForm.controls[item.key].value);
+        data[`${item.key}`] = this.addressForm.controls[item.key].value;
+      }
+    }
+    for (const item of this.emergency_2) {
       if (this.addressForm.controls[item.key].value) {
         //  console.log(`ligne 263`);
         //  formdata.append(`${item.key}`, this.addressForm.controls[item.key].value);
@@ -344,4 +524,24 @@ export class UpdateComponent implements OnInit {
   }
 
   setWorkingGroups() {}
+
+  addEmergencyContactTwo() {
+    let is_valid = true;
+    for (const contact of this.emergency) {
+      if (this.addressForm.controls['emergency_' + contact.key].invalid) {
+        is_valid = false;
+        this.notiservice.error(
+          'please fill all emergency one information to continue'
+        );
+        break;
+      }
+    }
+    this.add_emergency_contact_two = is_valid;
+  }
+  removeEmergencyContactTwo() {
+    for (const contact of this.emergency_2) {
+      this.addressForm.controls['emergency_2_' + contact.key].reset();
+    }
+    this.add_emergency_contact_two = false;
+  }
 }

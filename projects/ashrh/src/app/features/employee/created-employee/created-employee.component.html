@@ -101,6 +101,44 @@
 
     <mat-card class="p-0 mt-3">
       <mat-card-header class="bg-p-o-50 rounded-top">
+        <mat-card-title style="padding: 5px; margin: auto 0">{{'ContractEmployee' | translate}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="block-grip">
+          <ng-container *ngFor="let item of contractEmployee">
+
+            <mat-form-field class="full-width"  *ngIf="item.type != 'select'" >
+              <input matInput [placeholder]="(item.key | translate)" [formControlName]="item.key" [type]="item.type" [(ngModel)]="item.default">
+              <mat-error *ngIf="addressForm.controls[item.key].hasError('required')">
+                {{item.key | translate}} is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width"  *ngIf="item.type == 'select'" >
+                <mat-select [placeholder]="(item.key | translate)" [formControlName]="item.key">
+                  <mat-option *ngFor="let state of item.options" [value]="state.id">
+                    {{ state?.name || '----!----' }}
+                  </mat-option>
+                  <mat-option *ngFor="let option of item.default" [value]="option.code">
+                    {{ option.name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="addressForm.controls[item.key].hasError('required')">
+                  {{ item.key | translate }} is <strong>required</strong>
+                </mat-error>
+            </mat-form-field> 
+
+            
+            
+
+           
+          </ng-container>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="p-0 mt-3">
+      <mat-card-header class="bg-p-o-50 rounded-top">
         <div style="display: flex; justify-content: space-between;" class="full-width">
           <mat-card-title style="padding: 5px; margin: auto 0">{{'Emergency Contact' | translate}}</mat-card-title>
           <button (click)="addEmergencyContactTwo()" *ngIf="add_emergency_contact_two == false" mat-raised-button  color="primary" type="button" class="text-white ml-2"><fa-icon icon="plus"></fa-icon></button>

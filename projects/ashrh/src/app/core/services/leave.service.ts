@@ -42,6 +42,13 @@ export class LeaveService {
       .pipe(share());
   }
 
+  public loadEmployees() {
+    //console.log('that is headers',headers);
+    return this.httpClient
+      .get(environment.server + '/api/grh/employees_list/')
+      .pipe(share());
+  }
+
   public loadLeaves() {
     //console.log('that is headers',headers);
     return this.httpClient

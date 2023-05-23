@@ -13,9 +13,8 @@ let httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class EmployeeDbService {
-  employee_url = '/api/grh/employee/';
-  contract_employee_url = '/api/grh/contract_employee/';
+export class ContractEmployeeDbService {
+  contract_url = '/api/grh/contract_employee/';
 
   requestOptions = {
     headers: new Headers({
@@ -26,35 +25,30 @@ export class EmployeeDbService {
   };
   constructor(private httpClient: HttpClient) {}
 
-  public loadEmployees() {
+  public loadContractsEmployee() {
     //console.log('that is headers',headers);
     return this.httpClient
-      .get(environment.server + '/api/grh/employees_list/')
-      .pipe(share());
-  }
-  public getEmployee(id: string) {
-    return this.httpClient
-      .get(environment.server + this.employee_url + id + '/')
+      .get(environment.server + '/api/grh/contract_employee/')
       .pipe(share());
   }
   public getContractEmployee(id: string) {
     return this.httpClient
-      .get(environment.server + this.contract_employee_url + id + '/')
+      .get(environment.server + this.contract_url + id + '/')
       .pipe(share());
   }
   //path needed to delete employee
-  public deleteEmployee(id: string) {
+  public deleteContractEmployee(id: string) {
     return this.httpClient
-      .delete(environment.server + this.employee_url + 'update/' + id + '/')
+      .delete(environment.server + this.contract_url + 'update/' + id + '/')
       .pipe(share());
   }
 
-  createEmployee(formdata: any) {
+  createContractEmployee(data: any) {
     return this.httpClient
-      .post(environment.server + this.employee_url, formdata)
+      .post(environment.server + this.contract_url, data)
       .pipe(share());
   }
-  updateEmployee(id: string, params: any) {
+  updateContractEmployee(id: string, params: any) {
     // console.log(`modification of employee ${id}`,params);
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -66,20 +60,20 @@ export class EmployeeDbService {
     const requestOptions = { headers: headers };
 
     return this.httpClient
-      .patch(environment.server + `/api/grh/employee/update/${id}/`, params)
+      .patch(environment.server + `/api/grh/contract_employee/${id}/`, params)
       .pipe(share());
   }
 
-  queryEmployees(params: any) {
+  queryContractsEmployee(params: any) {
     // return this.httpClient.get(environment.server + employee_url, { params }).pipe(share())
     return this.httpClient
-      .get(environment.server + '/api/grh/employees_list/', { params })
+      .get(environment.server + '/api/grh/contract_employee/', { params })
       .pipe(share());
   }
 
-  updateStateEmployees(ids: string[], state: boolean) {
+  updateStateContractsEmployee(ids: string[], state: boolean) {
     return this.httpClient
-      .put(environment.server + `/api/grh/update_state_employees/`, {
+      .put(environment.server + `/api/grh/update_state_contracts_employees/`, {
         ids,
         state
       })

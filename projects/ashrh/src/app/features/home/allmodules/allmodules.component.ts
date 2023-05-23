@@ -54,19 +54,19 @@ export class AllmodulesComponent implements OnInit {
     // },
     {
       name: 'Permission',
-      image: '',
+      image: '/assets/modules/permissions.png',
       route: AppRoutes.leaves,
       textBgColor: '#0F254B',
       description: 'Module permettant aux employes de faire des demandes'
-    },
-    {
-      name: 'TOUTE Permission',
-      image: '',
-      route: AppRoutes.leaves_dashboard,
-      textBgColor: '#0F254B',
-      description:
-        'Module permettant au rh de visualiser les demandes faites par les differents employes'
     }
+    // {
+    //   name: 'TOUTE Permission',
+    //   image: '',
+    //   route: AppRoutes.leaves_dashboard,
+    //   textBgColor: '#0F254B',
+    //   description:
+    //     'Module permettant au rh de visualiser les demandes faites par les differents employes'
+    // }
   ];
   constructor() {}
 

@@ -137,6 +137,7 @@ export class PaymentComponent implements OnInit {
       distrib: (el) => el.employeePost,
       options: { key: 'Employees', type: 'string' }
     },
+
     {
       header: 'Number of days',
       distrib: (el) => el.number_work_days,
@@ -167,6 +168,7 @@ export class PaymentComponent implements OnInit {
       options: { key: 'salary', type: 'number' }
     }
   ];
+
   displayedColumns: string[] = [
     'id',
     'employeePost1',
@@ -272,15 +274,17 @@ export class PaymentComponent implements OnInit {
           // console.log('that is obj .....',obj2);
           if (obj2.name === `${obj.post.name}`) {
             // console.log('number',i);
-            obj2.employeePost.push(`${obj.first_name} ${obj.last_name}`);
+            obj2.employeePost.push(
+              `${obj.person.first_name.toUpperCase()} ${obj.person.last_name.toUpperCase()}`
+            );
           }
-          //  this.colDistribute[i].employeePost.push(obj);
+          // this.colDistribute[i].employeePost.push(obj);
 
-          //  console.log('number',i);
+          console.log('number', obj);
         }
       }
 
-      // console.log('voici les coldistributions', this.colDistribute);
+      console.log('voici les coldistributions', this.colDistribute);
       var i = 0;
       for (let l of this.colDistribute) {
         for (let el of l.employeePost) {
@@ -289,14 +293,20 @@ export class PaymentComponent implements OnInit {
             this.dataSource.push({
               id: i,
               employeePost1: el.toLowerCase(),
+
               daily_salary: l.daily_salary,
               monthly_salary: l.monthly_salary,
               post: l.name,
               number_work_days: l.number_work_days
             });
+            console.log(
+              '********************EMPLOYEE********************',
+              l.employeePost
+            );
           }
         }
       }
+
       // this.dataSource1 = new MatTableDataSource(this.dataSource);
 
       let da = this.dataSource;
