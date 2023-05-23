@@ -307,12 +307,12 @@ export class SettingsEmployComponent implements OnInit {
           });
         }
       }
-    },
-    {
-      header: 'Post',
-      distrib: (el) => el.post.name,
-      options: {}
     }
+    // {
+    //   header: 'Post',
+    //   distrib: (el) => el.post?.name,
+    //   options: {}
+    // }
   ];
   colDistribution_group = [
     {
