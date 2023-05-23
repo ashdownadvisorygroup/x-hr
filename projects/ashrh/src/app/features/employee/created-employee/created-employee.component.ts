@@ -14,6 +14,7 @@ import { AppRoutes } from '../../../modeles/app-routes';
 import { NotificationService } from '../../../core/core.module';
 import { TranslateService } from '@ngx-translate/core';
 import { DbDepartmentsService } from '../../../core/services/db-departments.service';
+import { ContractEmployeeDbService } from '../../../core/states/contracts/contract-db.service';
 
 @Component({
   selector: 'ashrh-created-employee',
@@ -89,8 +90,45 @@ export class CreatedEmployeeComponent implements OnInit {
 
   poste = [
     { key: 'department', validators: [], options: [] },
-    { key: 'post', validators: [Validators.required], options: [] }
+    {
+      key: 'post',
+      validators: [Validators.required],
+      options: [],
+      type: 'select'
+    }
   ];
+
+  contractEmployee = [
+    { key: 'contract', validators: [], options: [], type: 'select' },
+    {
+      key: 'start_date',
+      validators: [Validators.required],
+      type: 'date',
+      default: Date.now()
+    },
+    {
+      key: 'end_date',
+      validators: [Validators.required],
+      type: 'date',
+      default: ''
+    },
+    {
+      key: 'type',
+      validators: [Validators.required],
+      type: 'select',
+      default: [
+        {
+          name: 'CDD',
+          code: 'cdd'
+        },
+        {
+          name: 'CDI',
+          code: 'cdi'
+        }
+      ]
+    }
+  ];
+
   emergency = [
     {
       key: 'first_name',
@@ -192,6 +230,7 @@ export class CreatedEmployeeComponent implements OnInit {
     private fb: FormBuilder,
     private dbUtilityService: DbUtilityService,
     private employeeDbService: EmployeeDbService,
+    private contractEmployeeDbService: ContractEmployeeDbService,
     private router: Router,
     private notiservice: NotificationService,
     private trans: TranslateService,
@@ -215,6 +254,14 @@ export class CreatedEmployeeComponent implements OnInit {
         this.cd.detectChanges();
       });
 
+    this.dbUtilityService
+      .getContract()
+      .pipe(take(1))
+      .subscribe((data) => {
+        this.contractEmployee[0]['options'] = data;
+        this.cd.detectChanges();
+      });
+
     for (const info of this.informationPerso) {
       this.addressForm.addControl(
         info.key,
@@ -228,6 +275,13 @@ export class CreatedEmployeeComponent implements OnInit {
       this.addressForm.addControl(
         post.key,
         new FormControl(null, post.validators)
+      );
+    }
+
+    for (const contractEmployee of this.contractEmployee) {
+      this.addressForm.addControl(
+        contractEmployee.key,
+        new FormControl(contractEmployee.default, contractEmployee.validators)
       );
     }
 
@@ -250,6 +304,7 @@ export class CreatedEmployeeComponent implements OnInit {
   onSubmit() {
     const formdata = new FormData();
     let data = {};
+    let dataContrat = {};
     for (const info of this.informationPerso) {
       if (
         info.key !== 'birthday' &&
@@ -262,6 +317,14 @@ export class CreatedEmployeeComponent implements OnInit {
         data[`person_${info.key}`] = this.addressForm.controls[info.key].value;
       }
     }
+    for (const contract of this.contractEmployee) {
+      if (this.addressForm.controls[contract.key].value !== '') {
+        dataContrat[`${contract.key}`] = this.addressForm.controls[
+          contract.key
+        ].value;
+      }
+    }
+
     formdata.append(
       'person_activate',
       this.addressForm.controls['activate'].value
@@ -270,9 +333,15 @@ export class CreatedEmployeeComponent implements OnInit {
 
     data['person_activate'] = this.addressForm.controls['activate'].value;
     data['person_genre'] = this.addressForm.controls['genre'].value;
+
     if (this.userimage) {
       formdata.append('person_picture', this.userimage);
+      console.log(
+        '*********************IMAGE****************************',
+        this.userimage
+      );
     }
+
     // else{
     //   formdata.append('picture', this.url_user_image)
     // }
@@ -295,6 +364,12 @@ export class CreatedEmployeeComponent implements OnInit {
         this.compteForm.controls['password'].value
       );
       data['user__password'] = this.compteForm.controls['password'].value;
+
+      // formdata.append(
+      //   'user__password',
+      //   this.compteForm.controls['password'].value
+      // );
+      // data['user__password'] = this.compteForm.controls['password'].value;
     }
     //
     for (const item of this.poste) {
@@ -340,31 +415,69 @@ export class CreatedEmployeeComponent implements OnInit {
     });
     var json = JSON.stringify(object);
 
-    this.employeeDbService
-      .createEmployee(data)
-      .pipe(take(1))
-      .subscribe(
-        (resp) => {
-          this.notiservice.success(this.trans.instant('created succefully'));
-          this.router.navigate(['/' + AppRoutes.home + '/employees']);
-        },
-        (err) => {
-          console.warn(err);
-          if (err.error.non_field_errors) {
-            this.notiservice.error(
-              this.trans.instant(err.error.non_field_errors[0])
-            );
-          } else if (err.error.username) {
-            this.notiservice.error(this.trans.instant(err.error.username[0]));
+    if (this.userimage) {
+      this.employeeDbService
+        .createEmployee(formdata)
+        .pipe(take(1))
+        .subscribe(
+          (resp) => {
+            this.contractEmployeeDbService
+              .createContractEmployee({ ...dataContrat, employee: resp['id'] })
+              .pipe(take(1))
+              .subscribe((response) => {
+                this.notiservice.success(
+                  this.trans.instant('created succefully')
+                );
+                this.router.navigate(['/' + AppRoutes.home + '/employees']);
+              });
+          },
+          (err) => {
+            console.warn(err);
+            if (err.error.non_field_errors) {
+              this.notiservice.error(
+                this.trans.instant(err.error.non_field_errors[0])
+              );
+            } else if (err.error.username) {
+              this.notiservice.error(this.trans.instant(err.error.username[0]));
+            }
           }
-        }
-      );
+        );
+    } else {
+      this.employeeDbService
+        .createEmployee(data)
+        .pipe(take(1))
+        .subscribe(
+          (resp) => {
+            this.contractEmployeeDbService
+              .createContractEmployee({ ...dataContrat, employee: resp['id'] })
+              .pipe(take(1))
+              .subscribe((response) => {
+                this.notiservice.success(
+                  this.trans.instant('created succefully')
+                );
+                this.router.navigate(['/' + AppRoutes.home + '/employees']);
+              });
+          },
+          (err) => {
+            console.warn(err);
+            if (err.error.non_field_errors) {
+              this.notiservice.error(
+                this.trans.instant(err.error.non_field_errors[0])
+              );
+            } else if (err.error.username) {
+              this.notiservice.error(this.trans.instant(err.error.username[0]));
+            }
+          }
+        );
+    }
   }
 
   setImage(event) {
     if (event.target.files && event.target.files.length > 0) {
       this.userimage = event.target.files[0];
       const reader = new FileReader();
+
+      // console.log('*********IMAGES*************', this.userimage);
 
       reader.onload = (e) => {
         this.url_user_image = e.target.result;

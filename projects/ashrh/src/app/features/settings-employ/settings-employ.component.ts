@@ -70,6 +70,16 @@ export interface ContractData {
   number_deliverables: number;
 }
 
+export interface ContractEmployeeData {
+  id?: number;
+  contract?: any;
+  employee?: any;
+  start_date: any;
+  end_date: any;
+  pdf: string;
+  type: string[];
+}
+
 export interface DepartmentData {
   id?: number;
   name: string;

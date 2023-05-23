@@ -42,6 +42,7 @@ import {
   format,
   getDay
 } from 'date-fns';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ash-ask-leave',
@@ -102,7 +103,8 @@ export class AskLeaveComponent implements OnInit, OnDestroy {
     private LeaveServiceDB: LeaveService,
     private modalService: NgbModal,
     private notiSelect: NotificationService,
-    public serverFormatDatePipe: ServerFormatDatePipe
+    public serverFormatDatePipe: ServerFormatDatePipe,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -160,6 +162,7 @@ export class AskLeaveComponent implements OnInit, OnDestroy {
     filterChoose = filterChoose.filter((elt) => elt.field !== '');
 
     console.log('filterChoose -------------', filterChoose);
+    console.log('TAB -------------', tab);
 
     // tab = tab.filter(function (elt) {
     //   for (let obj of filterChoose) {
@@ -179,9 +182,14 @@ export class AskLeaveComponent implements OnInit, OnDestroy {
           .toLowerCase()
           .includes(`${obj.element}`.trim().toLowerCase())
       );
+      console.log(
+        '*************************DATASOURCE***********************',
+        tab
+      );
     }
 
     this.dataSource = tab;
+
     // console.log('this.paramSearch[param] = val;', this.paramSearch);
     // this.query(this.paramSearch);
     // console.log('execution du filtre');
@@ -214,11 +222,15 @@ export class AskLeaveComponent implements OnInit, OnDestroy {
         console.log('emp ---------------', emp);
 
         tabul = emp.filter((elt) =>
-          `${elt.employee.id}`.includes(
-            `${JSON.parse(localStorage.getItem('ASHRH-employee/Rh_id'))}`
-          )
+          this.LeaveServiceDB.loadLeaves()
+            .pipe(take(1))
+            .subscribe((res) => {
+              console.log('**************************************RES', res);
+
+              this.dataSource = res as any[];
+            })
         );
-        //  console.log('emp +++++++++++++', tabul);
+        console.log('emp +++++++++++++', tabul);
         this.dataSource = tabul.map((elt) => ({
           id: elt.id,
           name: elt.leaveType.name,
@@ -226,6 +238,7 @@ export class AskLeaveComponent implements OnInit, OnDestroy {
           end_date: elt.end_date,
           date_soumission: elt.created_at,
           state: elt.state,
+          employee: elt.employee,
           select: false
         }));
         /*
@@ -252,7 +265,10 @@ export class AskLeaveComponent implements OnInit, OnDestroy {
       select: event.checked
     }));
 
-    console.log('elements which is cehcked', this.dataSource);
+    console.log(
+      '*****************************elements which is cehcked',
+      this.dataSource
+    );
     this.cd.detectChanges();
   }
 
@@ -269,6 +285,11 @@ export class AskLeaveComponent implements OnInit, OnDestroy {
         console.log(`Dialog after closing of dialog result: ${result}`);
         this.notiSelect.success('successful addition ');
         this.query(this.paramSearch);
+        this.LeaveServiceDB.loadLeaves()
+          .pipe(take(1))
+          .subscribe((res) => {
+            this.dataSource = res as any[];
+          });
       });
     } else {
       // console.log('entrer !!!!!!!!!!!', name);

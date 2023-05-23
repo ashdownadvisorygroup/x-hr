@@ -10,6 +10,7 @@ import { take } from 'rxjs/operators';
 import { NotificationService } from '../../../core/core.module';
 import { EmployeeDbService } from '../../../core/states/employees/employee-db.service';
 import { AppRoutes } from '../../../modeles/app-routes';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'ashrh-employe-profil',
@@ -26,6 +27,7 @@ export class EmployeProfilComponent implements OnInit {
   // employees: any[] = [
   //   {}
   // ];
+  _: any;
   about = [
     {
       title: 'Information personelle',
@@ -78,7 +80,9 @@ export class EmployeProfilComponent implements OnInit {
     private router: Router,
     private notiservice: NotificationService,
     private trans: TranslateService
-  ) {}
+  ) {
+    this._ = _;
+  }
 
   ngOnInit(): void {
     this.activatedRoute.params.pipe(take(1)).subscribe(({ employee_id }) => {

@@ -55,6 +55,16 @@
   </div>
 
   <div class="form-group row">
+    <label for="employee" class="col-sm-3 col-form-label">Employee&nbsp;<span class="text-danger">* </span></label>
+    <div class="col-sm-9">
+      <ng-select [items]="employees" formControlName="employee" bindLabel="person.first_name" bindValue="id"
+        placeholder="Select Employee" class="custom-ngSelect"
+        [ngClass]="{ 'is-invalid': submitted && f.employee.errors }">
+      </ng-select>
+    </div>
+  </div>
+
+  <div class="form-group row">
     <label class="col-sm-3 col-form-label">Leave Reason&nbsp;<span class="text-danger">*</span></label>
     <div class="col-sm-9">
 

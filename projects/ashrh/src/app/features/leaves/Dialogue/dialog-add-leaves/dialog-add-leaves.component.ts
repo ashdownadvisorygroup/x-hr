@@ -44,15 +44,25 @@ export class DialogAddLeavesComponent implements OnInit {
   submitted = false;
   public has_error = false;
   leaveTypes: Observable<any>;
+  employees: Observable<any>;
   leaveForm: FormGroup;
   Groupform = new FormGroup({
     type: new FormControl('', Validators.required),
     start_date: new FormControl('', Validators.required),
     end_date: new FormControl('', Validators.required),
-    reason: new FormControl('', Validators.required)
+    reason: new FormControl('', Validators.required),
+    employee: new FormControl('', Validators.required)
   });
   responsibles: any[] = [];
   //url: string = 'http://192.168.33.10:8000/api/grh/responsible/';
+  employee = [
+    {
+      key: 'employee',
+      validators: [Validators.required],
+      options: [],
+      type: 'select'
+    }
+  ];
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -81,8 +91,24 @@ export class DialogAddLeavesComponent implements OnInit {
         (err) => {}
       ); //_leaveTypeService.getAllLeaveTypes();
 
+    this.LeaveServiceDB.loadEmployees()
+      .pipe(take(1))
+      .subscribe(
+        (resp) => {
+          // this.notiSelect.success('Suppression succefully');
+          // this.query(this.paramSearch);
+          console.log(
+            '****************EMPLOYEEEEEEEEEEEEEEEEEEEEE*********************',
+            resp
+          );
+          this.employees = resp['results'];
+        },
+        (err) => {}
+      ); //_leaveTypeService.getAllLeaveTypes();
+
     this.leaveForm = this.formBuilder.group({
       leaveType: ['', Validators.required],
+      employee: ['', Validators.required],
       leaveReason: ['', [Validators.required, Validators.minLength(3)]],
       fromDate: ['', Validators.required],
       toDate: ['', Validators.required]
@@ -120,7 +146,8 @@ export class DialogAddLeavesComponent implements OnInit {
     // const submissionData = { ...this.leaveForm.value, 'leaveTypeDTO': { 'leaveTypeId': this.leaveForm.value.leaveType } };
     const submissionData = {
       leaveType: this.leaveForm.value.leaveType,
-      employee: `${JSON.parse(localStorage.getItem('ASHRH-employee/Rh_id'))}`,
+      employee: this.leaveForm.value.employee,
+      // employee: `${JSON.parse(localStorage.getItem('ASHRH-employee/Rh_id'))}`,
       start_date: this.convertDate(this.leaveForm.value.fromDate),
       end_date: this.convertDate(this.leaveForm.value.toDate),
       reason: this.leaveForm.value.leaveReason,

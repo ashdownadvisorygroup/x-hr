@@ -16,10 +16,12 @@ import { settingsReducer } from './settings/settings.reducer';
 import { SettingsState } from './settings/settings.model';
 import * as fromEmployees from './states/employees/employees.reducer';
 import { employeesReducer } from './states/employees/employees.reducer';
+import { contractsEmployeesReducer } from './states/contracts/contracts.reducer';
 
 export const reducers: ActionReducerMap<AppState> = {
   user: authReducer,
   employees: employeesReducer,
+  contractsEmployees: contractsEmployeesReducer,
   settings: settingsReducer,
   router: routerReducer
 };
@@ -51,9 +53,15 @@ export const selectRouterState = createFeatureSelector<
 export const selectEmployeesState = createFeatureSelector<AppState, any>(
   'employees'
 );
+
+export const selectContractsEmployeesState = createFeatureSelector<
+  AppState,
+  any
+>('contractsEmployees');
 export interface AppState {
   user: AuthState;
-  employees: any
+  employees: any;
+  contractsEmployees: any;
   settings: SettingsState;
   router: RouterReducerState<RouterStateUrl>;
 }

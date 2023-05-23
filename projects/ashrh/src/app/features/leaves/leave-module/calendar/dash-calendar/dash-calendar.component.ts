@@ -113,6 +113,7 @@ export class DashCalendarComponent implements OnInit {
         this.activeDayIsOpen = true;
       }
     }
+    console.log('*************dayClicked*************', this.dayClicked);
   }
 
   openDialog(id) {
@@ -136,6 +137,7 @@ export class DashCalendarComponent implements OnInit {
     const clickedEvent = currEvent.meta.event;
 
     this.openDialog(clickedEvent.id);
+    console.log('*******************EVENT****************');
 
     // if (clickedEvent.eventType === 'leave') {
     //   console.log('This is leave event', clickedEvent.eventId);
@@ -175,7 +177,7 @@ export class DashCalendarComponent implements OnInit {
           return {
             title:
               event.leaveType['name'] +
-              ` by ${event.employee.first_name.toUpperCase()} ${event.employee.last_name.toUpperCase()}`,
+              ` by ${event.employee.person.first_name?.toUpperCase()} ${event.employee.person.last_name?.toUpperCase()}`,
             start: startOfDay(new Date(event.start_date)),
             end: endOfDay(new Date(event.end_date)),
             allDay: true,
