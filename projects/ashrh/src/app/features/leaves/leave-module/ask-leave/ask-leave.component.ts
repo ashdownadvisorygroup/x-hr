@@ -215,10 +215,10 @@ export class AskLeaveComponent implements OnInit, OnDestroy {
       .subscribe((emp: any) => {
         console.log('these are the leaves: :( ):', emp);
         // console.log(emp);localStorage.getItem('ASHRH-TOKEN')
-        console.log(
-          'voici les demandes faites par lemploye',
-          JSON.parse(localStorage.getItem('ASHRH-employee/Rh_id'))
-        );
+        // console.log(
+        //   'voici les demandes faites par lemploye',
+        //   JSON.parse(localStorage.getItem('ASHRH-employee/Rh_id'))
+        // );
         console.log('emp ---------------', emp);
 
         tabul = emp.filter((elt) =>
@@ -233,7 +233,7 @@ export class AskLeaveComponent implements OnInit, OnDestroy {
         console.log('emp +++++++++++++', tabul);
         this.dataSource = tabul.map((elt) => ({
           id: elt.id,
-          name: elt.leaveType.name,
+          name: elt.leaveType?.name,
           start_date: elt.start_date,
           end_date: elt.end_date,
           date_soumission: elt.created_at,

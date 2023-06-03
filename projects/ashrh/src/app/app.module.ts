@@ -62,6 +62,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { PostDialogComponent } from './features/dialog/post-dialog/post-dialog.component';
 import { DepartDialogComponent } from './features/dialog/depart-dialog/depart-dialog.component';
 import { ContractDialogComponent } from './features/dialog/contract-dialog/contract-dialog.component';
+import { LeavesTypesDialogComponent } from './features/dialog/leaves-types-dialog/leaves-types-dialog.component';
 
 @NgModule({
   imports: [
@@ -103,7 +104,8 @@ import { ContractDialogComponent } from './features/dialog/contract-dialog/contr
     DialogLeaveInfoComponent,
     PostDialogComponent,
     DepartDialogComponent,
-    ContractDialogComponent
+    ContractDialogComponent,
+    LeavesTypesDialogComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -79,11 +79,6 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.store.dispatch(authLogin({ user: res.data }));
           this.userInfo = res.data;
 
-          console.log(
-            '**********************************************************************',
-            this.userInfo
-          );
-
           //console.log('donnees recu du serveur lors du login user :::))))', this.userInfo);
           this.localser.setItem('TOKEN', res.token.access);
           // this.localser.setItem('employee/Rh', res.user);
@@ -126,19 +121,11 @@ export class LoginComponent implements OnInit, OnDestroy {
           // console.log(`donnees recu du serveur lors du login :) `,res.results[1].user.id);
           // console.log('this.userInfo?.id', this.userInfo?.id);
           var val = res.results.filter(
-            (elt) => elt.person.id === this.userInfo.id
-          );
-          console.log(
-            '**************************USERRRRR*****************************',
-            res.results
-          );
-          console.log(
-            '**************************USERRRRR*****************************',
-            this.userInfo.id
+            (elt) => elt.person.id === this.userInfo?.id
           );
           // this.localser.setItem('employee/Rh', res.user);
 
-          this.localser.setItem('employee/Rh_id', val[0].id);
+          this.localser.setItem('employee/Rh_id', val[0]?.id);
 
           // this.routes.goHome();
         },

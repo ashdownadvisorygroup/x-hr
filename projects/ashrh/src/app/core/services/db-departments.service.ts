@@ -4,6 +4,7 @@ import { share } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import {
   DepartmentData,
+  LeaveTypesData,
   SafewareData
 } from '../../features/settings-employ/settings-employ.component';
 import { Observable } from 'rxjs';
@@ -13,6 +14,7 @@ import { Observable } from 'rxjs';
 })
 export class DbDepartmentsService {
   department_url: string = '/api/main/departments/';
+  leave_types_url: string = '/api/grh/leaveTypes_list/';
   constructor(private httpclient: HttpClient) {}
   // do not forget to put correct url
   public getDepart(element: SafewareData) {
@@ -43,6 +45,12 @@ export class DbDepartmentsService {
   public getAllDepart(): Observable<DepartmentData[]> {
     return this.httpclient
       .get<DepartmentData[]>(environment.server + this.department_url)
+      .pipe(share());
+  }
+
+  public getAllLeaveType(): Observable<LeaveTypesData[]> {
+    return this.httpclient
+      .get<LeaveTypesData[]>(environment.server + this.leave_types_url)
       .pipe(share());
   }
 }

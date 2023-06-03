@@ -17,13 +17,15 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSortModule } from '@angular/material/sort';
+import { FormEmployeeComponent } from './form-employee/form-employee.component';
 
 @NgModule({
   declarations: [
     EmployeeComponent,
     EmployeProfilComponent,
     UpdateComponent,
-    CreatedEmployeeComponent
+    CreatedEmployeeComponent,
+    FormEmployeeComponent
   ],
   imports: [
     CommonModule,

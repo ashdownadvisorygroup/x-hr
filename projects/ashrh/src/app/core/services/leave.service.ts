@@ -12,6 +12,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { share } from 'rxjs/operators';
+import { LeaveTypesData } from '../../features/settings-employ/settings-employ.component';
 // let httpOptions = {
 //   headers: new HttpHeaders({
 //     'Content-Type': 'application/json',
@@ -25,6 +26,7 @@ import { share } from 'rxjs/operators';
 })
 export class LeaveService {
   leaves_url = '/api/grh/leave/';
+  leaves_type_url = '/api/grh/leave_types/';
 
   requestOptions = {
     headers: new Headers({
@@ -34,6 +36,12 @@ export class LeaveService {
     })
   };
   constructor(private httpClient: HttpClient) {}
+
+  public addLeaveTypes(formdata: any) {
+    return this.httpClient
+      .post(environment.server + this.leaves_type_url, formdata)
+      .pipe(share());
+  }
 
   public loadLeavesTypes() {
     //console.log('that is headers',headers);

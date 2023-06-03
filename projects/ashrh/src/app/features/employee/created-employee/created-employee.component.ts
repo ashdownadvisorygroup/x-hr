@@ -48,6 +48,8 @@ export class CreatedEmployeeComponent implements OnInit {
   //   {name: 'Night'},
   // ]
 
+  employee: any = {};
+  isUpdate: boolean = false;
   userimage = null;
   url_user_image: any = '/assets/man-avatar.jpg';
   create_account = false;
@@ -306,10 +308,7 @@ export class CreatedEmployeeComponent implements OnInit {
     let data = {};
     let dataContrat = {};
     for (const info of this.informationPerso) {
-      if (
-        info.key !== 'birthday' &&
-        this.addressForm.controls[info.key].value !== ''
-      ) {
+      if (this.addressForm.controls[info.key].value !== '') {
         formdata.append(
           'person_' + info.key,
           this.addressForm.controls[info.key].value

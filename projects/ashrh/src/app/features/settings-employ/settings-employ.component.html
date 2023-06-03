@@ -8,7 +8,7 @@
 <mat-list *ngFor= "let group of working_group">
   <mat-list-item >{{group.name}}</mat-list-item>
 </mat-list> -->
-<h4 style="text-align: center; margin-top: 20px;">Basic Settings</h4>
+<h4 style="text-align: center; margin-top: 20px;">{{"Basic Settings" | translate}}</h4>
 <hr>
 <div class="scroller">
   <mat-accordion>
@@ -18,7 +18,7 @@
 
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <h5 style="text-align: center; margin-top: 20px;">{{"Posts" | translate}}</h5>
+          <h5 style="text-align: center; margin-top: 20px;">{{"Post" | translate}}</h5>
         </mat-panel-title>
 
       </mat-expansion-panel-header>
@@ -56,7 +56,7 @@
 
     <mat-expansion-panel>
       <mat-form-field appearance="fill">
-        <mat-label style="color: #42a5f5;">Delete departmemnt(s)</mat-label>
+        <mat-label style="color: #42a5f5;">{{"Delete departmemnt(s)" | translate}}</mat-label>
         <mat-select [(ngModel)]="selectedDepartment" multiple>
           <mat-option *ngFor="let departement of departments" [value]="departement">{{departement.name}}</mat-option>
         </mat-select>
@@ -67,7 +67,7 @@
 
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <h5 style="text-align: center; margin-top: 20px;">Departement</h5>
+          <h5 style="text-align: center; margin-top: 20px;">{{"Department" | translate}}</h5>
         </mat-panel-title>
       </mat-expansion-panel-header>
       
@@ -81,7 +81,7 @@
     </mat-expansion-panel>
     <mat-expansion-panel>
       <mat-form-field appearance="fill">
-        <mat-label style="color: #42a5f5;">Delete contract(s)</mat-label>
+        <mat-label style="color: #42a5f5;">{{"Delete contract(s)" | translate}}</mat-label>
         <mat-select [(ngModel)]="selectedContracts" multiple>
           <mat-option *ngFor="let contract of contracts" [value]="contract">{{contract.name}}</mat-option>
         </mat-select>
@@ -91,7 +91,7 @@
       </button>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <h5 style="text-align: center; margin-top: 20px;">Contract</h5>
+          <h5 style="text-align: center; margin-top: 20px;">{{"Contract" | translate}}</h5>
         </mat-panel-title>
       </mat-expansion-panel-header>
       <ash-table-editable #tb2 [dataSource]="contracts" [colDistribution]="colDistribution_period"
@@ -103,6 +103,30 @@
       <button (click)="addContract()" mat-raised-button color="primary"
         style="margin: auto; display: flex; margin-top: 3px; color:white;">
         New Contract
+      </button>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-form-field appearance="fill">
+        <mat-label style="color: #42a5f5;">{{"Delete leaveType(s)" | translate}}</mat-label>
+        <mat-select [(ngModel)]="selectedLeaveTypes" multiple>
+          <mat-option *ngFor="let leavetype of leavetypes" [value]="leavetype">{{leavetype.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-icon-button (click)="deleteElementLeaveType()" color="warn">
+        <fa-icon icon="trash"></fa-icon>
+      </button>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h5 style="text-align: center; margin-top: 20px;">{{"LeaveType" | translate}}</h5>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <ash-table-editable #tb3 [dataSource]="leavetypes" [colDistribution]="colDistribution_leaveTypes"
+        [filter]="true">
+      </ash-table-editable>
+      <button (click)="addLeaveTpe()" mat-raised-button color="primary"
+        style="margin: auto; display: flex; margin-top: 3px; color:white;">
+        New LeaveType
       </button>
     </mat-expansion-panel>
     <!-- <button mat-icon-button class="btn-30" color="warn"><fa-icon icon="trash"></fa-icon></button> -->

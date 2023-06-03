@@ -14,7 +14,7 @@ let httpOptions = {
   providedIn: 'root'
 })
 export class ContractEmployeeDbService {
-  contract_url = '/api/grh/contract_employee/';
+  contract_url = '/api/grh/contract_employees/';
 
   requestOptions = {
     headers: new Headers({
@@ -28,7 +28,7 @@ export class ContractEmployeeDbService {
   public loadContractsEmployee() {
     //console.log('that is headers',headers);
     return this.httpClient
-      .get(environment.server + '/api/grh/contract_employee/')
+      .get(environment.server + '/api/grh/contract_employees/')
       .pipe(share());
   }
   public getContractEmployee(id: string) {
@@ -60,14 +60,14 @@ export class ContractEmployeeDbService {
     const requestOptions = { headers: headers };
 
     return this.httpClient
-      .patch(environment.server + `/api/grh/contract_employee/${id}/`, params)
+      .patch(environment.server + `/api/grh/contract_employees/${id}/`, params)
       .pipe(share());
   }
 
   queryContractsEmployee(params: any) {
     // return this.httpClient.get(environment.server + employee_url, { params }).pipe(share())
     return this.httpClient
-      .get(environment.server + '/api/grh/contract_employee/', { params })
+      .get(environment.server + '/api/grh/contract_employees/', { params })
       .pipe(share());
   }
 

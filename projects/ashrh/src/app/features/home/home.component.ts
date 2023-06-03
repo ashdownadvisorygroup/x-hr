@@ -1,12 +1,16 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   OnInit
 } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { environment as env } from '../../../environments/environment';
+import {
+  environment as env,
+  environment
+} from '../../../environments/environment';
 import { routeAnimations } from '../../core/animations/route.animations';
 import { authLogout } from '../../core/auth/auth.actions';
 import { selectIsAuthenticated } from '../../core/auth/auth.selectors';
@@ -17,6 +21,8 @@ import {
   selectSettingsStickyHeader
 } from '../../core/settings/settings.selectors';
 import { AppRoutes } from '../../modeles/app-routes';
+import { AuthService } from '../../core/auth/auth.service';
+import { filter, take } from 'rxjs/operators';
 
 @Component({
   selector: 'anms-home',
@@ -31,6 +37,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   year = new Date().getFullYear();
   logo = require('../../../assets/logo.png').default;
   languages = ['en', 'fr'];
+  user: any = { picture: '', username: '' };
+  server = environment.server;
+  loadUserSuccess = true;
   navigation = [
     { link: '/home', label: 'All Modules' },
     { link: AppRoutes.employees, label: 'Employees' },
@@ -47,7 +56,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
   language$: Observable<string>;
   theme$: Observable<string>;
 
-  constructor(private store: Store) {}
+  constructor(
+    private store: Store,
+    private authser: AuthService,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngAfterViewInit() {}
 
@@ -56,6 +69,19 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.stickyHeader$ = this.store.pipe(select(selectSettingsStickyHeader));
     this.language$ = this.store.pipe(select(selectSettingsLanguage));
     this.theme$ = this.store.pipe(select(selectEffectiveTheme));
+
+    this.authser.user$
+      .pipe(
+        filter((elt) => !!elt),
+        take(1)
+      )
+      .subscribe((user) => {
+        this.user = user;
+        this.cd.detectChanges();
+      });
+    // this.store.pipe(select(selectIsAuthenticated)).subscribe(user => {
+    //   this.user = user ? user.username : null;
+    // });
   }
 
   onLogoutClick() {

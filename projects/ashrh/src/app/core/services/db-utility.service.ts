@@ -6,6 +6,7 @@ import {
   ContractData,
   ContractEmployeeData,
   DepartmentData,
+  LeaveTypesData,
   PeriodData,
   PostData
 } from '../../features/settings-employ/settings-employ.component';
@@ -16,12 +17,14 @@ import { Observable } from 'rxjs';
 })
 export class DbUtilityService {
   periods_url = '/api/grh/working_period/';
-  contract_url = '/api/grh/contract/';
+  contract_url = '/api/grh/contracts/';
 
-  contract_employee_url = '/api/grh/contract_employee/';
+  contract_employee_url = '/api/grh/contract_employees/';
   post_groups_period_url = '/api/grh/post_groups_period/';
-  post_url = '/api/grh/post/';
+  post_url = '/api/grh/posts/';
   department_url = '/api/main/departments/';
+  leaves_type_url = '/api/grh/leave_types/';
+  leaves_type_url2 = '/api/grh/leaveTypes_list/';
 
   constructor(private httpclient: HttpClient) {}
 
@@ -42,6 +45,13 @@ export class DbUtilityService {
       .get<PostData[]>(environment.server + this.post_url)
       .pipe(share());
   }
+  public getContractEmployees(): Observable<ContractEmployeeData[]> {
+    return this.httpclient
+      .get<ContractEmployeeData[]>(
+        environment.server + this.contract_employee_url
+      )
+      .pipe(share());
+  }
 
   public getDepartment(): Observable<DepartmentData[]> {
     return this.httpclient
@@ -54,7 +64,14 @@ export class DbUtilityService {
       .get<ContractData[]>(environment.server + this.contract_url)
       .pipe(share());
   }
-  public getContractEmployee(): Observable<ContractEmployeeData[]> {
+  public getContractEmployee(id?: string): Observable<ContractEmployeeData[]> {
+    if (id) {
+      return this.httpclient
+        .get<ContractEmployeeData[]>(
+          environment.server + this.contract_employee_url + '?employee_id=' + id
+        )
+        .pipe(share());
+    }
     return this.httpclient
       .get<ContractEmployeeData[]>(
         environment.server + this.contract_employee_url
@@ -104,6 +121,24 @@ export class DbUtilityService {
   public getContracts(): Observable<ContractData[]> {
     return this.httpclient
       .get<ContractData[]>(environment.server + this.contract_url)
+      .pipe(share());
+  }
+
+  public deleteLeaveTypes(element: LeaveTypesData) {
+    return this.httpclient
+      .delete(environment.server + this.leaves_type_url + element.id + '/')
+      .pipe(share());
+  }
+
+  public getLeaveTypes(): Observable<LeaveTypesData[]> {
+    return this.httpclient
+      .get<LeaveTypesData[]>(environment.server + this.leaves_type_url)
+      .pipe(share());
+  }
+
+  public getAllLeaveTypes(): Observable<LeaveTypesData[]> {
+    return this.httpclient
+      .get<LeaveTypesData[]>(environment.server + this.leaves_type_url2)
       .pipe(share());
   }
   public deletePost(element: PostData) {

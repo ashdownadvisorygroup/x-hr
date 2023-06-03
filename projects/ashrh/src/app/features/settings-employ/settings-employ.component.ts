@@ -28,6 +28,8 @@ import { PostDialogComponent } from '../dialog/post-dialog/post-dialog.component
 import * as _ from 'lodash';
 import { DepartDialogComponent } from '../dialog/depart-dialog/depart-dialog.component';
 import { ContractDialogComponent } from '../dialog/contract-dialog/contract-dialog.component';
+import { LeavesTypesDialogComponent } from '../dialog/leaves-types-dialog/leaves-types-dialog.component';
+import { LeaveService } from '../../core/services/leave.service';
 
 export interface SafewareData {
   id?: number;
@@ -40,6 +42,12 @@ export interface GroupData {
   id?: number;
   name: string;
   responsible?: any;
+}
+
+export interface LeaveTypesData {
+  id?: number;
+  state?: number;
+  name: string;
 }
 export interface PeriodData {
   id?: number;
@@ -125,7 +133,9 @@ export class SettingsEmployComponent implements OnInit {
   //   {name: 'A5'},
   // ]
   contracts: ContractData[];
+  leavetypes: LeaveTypesData[];
   selectedContracts = [];
+  selectedLeaveTypes = [];
   // working_period: any[] = [
   //   {name: 'Day'},
   //   {name: 'Night'},
@@ -350,6 +360,42 @@ export class SettingsEmployComponent implements OnInit {
       }
     }
   ];
+  colDistribution_leaveTypes = [
+    {
+      header: 'State',
+      distrib: (el) => el.state,
+      options: {
+        setValue: (event, element) => {
+          /*
+          element.name = event;
+          this.db_list.updateWorkingGroup(element).subscribe(() => {
+            this.db_list.getWorkingGroups().subscribe((data) => {
+              this.working_group = data;
+              this.cd.detectChanges();
+            });
+          });
+          */
+        }
+      }
+    },
+    {
+      header: 'Name',
+      distrib: (el) => el.name,
+      options: {
+        key: 'name',
+        type: 'option',
+        setValue: (event, element) => {
+          element.name = event;
+          // this.leave.updateLeaves(element).subscribe(() => {
+          //   this.db_department.getAllDepart().subscribe((data) => {
+          //     this.departments = data;
+          //     this.cd.detectChanges();
+          //   });
+          // });
+        }
+      }
+    }
+  ];
 
   constructor(
     private db_department: DbDepartmentsService,
@@ -358,7 +404,8 @@ export class SettingsEmployComponent implements OnInit {
     private cd: ChangeDetectorRef,
     public dialog: MatDialog,
     private notiservice: NotificationService,
-    private trans: TranslateService
+    private trans: TranslateService,
+    private leave: LeaveService
   ) {}
 
   ngOnInit(): void {
@@ -370,6 +417,14 @@ export class SettingsEmployComponent implements OnInit {
     });
     this.db_utily.getContracts().subscribe((dataperiod) => {
       this.contracts = dataperiod;
+    });
+    this.db_utily.getAllLeaveTypes().subscribe((datagroup) => {
+      if (
+        Array.isArray(datagroup['results']) &&
+        datagroup['results'].length > 0
+      ) {
+        this.leavetypes = datagroup['results'];
+      }
     });
   }
 
@@ -410,6 +465,26 @@ export class SettingsEmployComponent implements OnInit {
       });
     });
   }
+
+  addLeaveTpe(): void {
+    const dialogRef = this.dialog.open(LeavesTypesDialogComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.db_utily.getAllLeaveTypes().subscribe((datagroup) => {
+        console.log(
+          '-+++++++++++++++++++++++++++++++++++++++++++++++->',
+          datagroup
+        );
+        if (
+          Array.isArray(datagroup['results']) &&
+          datagroup['results'].length > 0
+        ) {
+          this.leavetypes = datagroup['results'];
+          this.cd.detectChanges();
+        }
+      });
+    });
+  }
   addElementPeriod(element: PeriodData): Observable<any> {
     return this.db_utily.addWorkingPeriod(element);
   }
@@ -418,7 +493,19 @@ export class SettingsEmployComponent implements OnInit {
       this.db_utily.deleteContract(element).subscribe(() => {
         this.db_utily.getContracts().subscribe((dataperiod) => {
           this.contracts = dataperiod;
-          this.notiservice.success('Updated succefully');
+          this.notiservice.success('Delete succefully');
+          this.cd.detectChanges();
+        });
+      });
+    }
+  }
+
+  deleteElementLeaveType() {
+    for (const element of this.selectedLeaveTypes) {
+      this.db_utily.deleteLeaveTypes(element).subscribe(() => {
+        this.db_utily.getLeaveTypes().subscribe((dataperiod) => {
+          this.leavetypes = dataperiod;
+          this.notiservice.success('Delete succefully');
           this.cd.detectChanges();
         });
       });
@@ -434,7 +521,7 @@ export class SettingsEmployComponent implements OnInit {
       this.db_department.deleteDepart(element).subscribe(() => {
         this.db_department.getAllDepart().subscribe((datapost) => {
           this.departments = datapost;
-          this.notiservice.success('Updated succefully');
+          this.notiservice.success('Delete succefully');
           this.cd.detectChanges();
         });
       });
@@ -465,4 +552,14 @@ export class SettingsEmployComponent implements OnInit {
       });
     });
   }
+  // openLeaveTypesDialog() {
+  //   const dialogRef = this.dialog.open(LeavesTypesDialogComponent);
+
+  //   dialogRef.afterClosed().subscribe((result) => {
+  //     this.db_department.getAllDepart().subscribe((datagroup) => {
+  //       this.departments = datagroup;
+  //       this.cd.detectChanges();
+  //     });
+  //   });
+  // }
 }

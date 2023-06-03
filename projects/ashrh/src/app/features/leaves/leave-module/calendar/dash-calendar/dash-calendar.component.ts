@@ -177,7 +177,7 @@ export class DashCalendarComponent implements OnInit {
           return {
             title:
               event.leaveType['name'] +
-              ` by ${event.employee.person.first_name?.toUpperCase()} ${event.employee.person.last_name?.toUpperCase()}`,
+              ` by ${event.employee?.person.first_name?.toUpperCase()} ${event.employee?.person.last_name?.toUpperCase()}`,
             start: startOfDay(new Date(event.start_date)),
             end: endOfDay(new Date(event.end_date)),
             allDay: true,

@@ -14,8 +14,8 @@ import { Observable } from 'rxjs';
 })
 export class DbListService {
   groups_url = '/api/grh/working_groups/';
-  post_url = '/api/grh/post/';
-  contract_url = '/api/grh/contract/';
+  post_url = '/api/grh/posts/';
+  contract_url = '/api/grh/contracts/';
 
   constructor(private httpclient: HttpClient) {}
 

@@ -22,6 +22,7 @@ import { EmployeeDbService } from '../../core/states/employees/employee-db.servi
 import { AppRoutes } from '../../modeles/app-routes';
 import { NotificationService } from '../../core/core.module';
 import { ServerFormatDatePipe } from '../../core/pipes/server-format-date.pipe';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'ashrh-employee',
@@ -48,7 +49,8 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     'start_date',
     'contact',
     'status',
-    'actions'
+    'actions',
+    'download'
   ];
   displayedColumnsFilter: string[] = [
     'selection_filter',
@@ -64,6 +66,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   // paginator
   pageSizeOption: number[] = [5, 10, 25, 50, 100];
   lengh = 0;
+  id;
   pageSize: number = this.pageSizeOption[2];
   private paramSearch: any = {
     page_size: this.pageSize,
@@ -259,6 +262,16 @@ export class EmployeeComponent implements OnInit, OnDestroy {
           );
       }
     });
+  }
+
+  download(element: any) {
+    this.employeeDbService
+      .downloadContractEmployee(element.id)
+      .subscribe((pdf) => {
+        const blob = new Blob([pdf], { type: 'application/pdf' });
+        const fileName = 'ContractEmployee.pdf';
+        saveAs(blob, fileName);
+      });
   }
 
   private notiSelectBeforeAction() {

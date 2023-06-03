@@ -31,9 +31,9 @@
       <div class="child-content">
         <ng-container *ngIf="user?.person">
           <ng-container *ngFor="let item of about[0].keys">
-            <span>{{ item.key }}:</span> <span>{{ user.person[item.key] }}</span>
+            <span>{{ item.key | translate}}:</span> <span>{{ user.person[item.key]}}</span>
           </ng-container>
-          <span>{{ 'Start date' }}:</span> <span>{{ _.get(user, 'person.created_at') | date }}</span>
+          <span>{{'start_date' | translate}}:</span> <span>{{ _.get(user, 'person.created_at') | date }}</span>
         </ng-container>
       </div>
     </div>
@@ -42,7 +42,7 @@
       <div class="child-content">
         <ng-container *ngIf="user?.post">
           <ng-container *ngFor="let item of about[1].keys">
-            <span>{{item.key}}:</span> <span>{{user?.post[item.key] || '--'}}</span>
+            <span>{{item.key | translate}}:</span> <span>{{user?.post[item.key] || '--'}}</span>
           </ng-container>
         </ng-container>
       </div>
@@ -53,7 +53,7 @@
         <ng-container *ngIf="user?.emergency_person">
           <!-- *ngIf="user.emergency_contact" -->
           <ng-container *ngFor="let item of about[2].keys">
-            <span>{{item.key}}:</span> <span>{{user.emergency_person[item.key] || '--'}}</span>
+            <span>{{item.key | translate}}:</span> <span>{{user.emergency_person[item.key] || '--'}}</span>
           </ng-container>
         </ng-container>
       </div>
@@ -63,7 +63,7 @@
       <div class="child-content">
         <!-- *ngIf="user.emergency_contact" -->
         <ng-container *ngFor="let item of about[3].keys">
-          <span>{{item.key}}:</span> <span>{{user.emergency_person_2[item.key] || '--'}}</span>
+          <span>{{item.key | translate}}:</span> <span>{{user.emergency_person_2[item.key] || '--'}}</span>
         </ng-container>
       </div>
     </div>

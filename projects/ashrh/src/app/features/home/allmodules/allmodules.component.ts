@@ -30,13 +30,13 @@ export class AllmodulesComponent implements OnInit {
       textBgColor: '#4E86BD',
       description: 'Toute les configuration'
     },
-    {
-      name: 'Evolution générale',
-      image: '/assets/modules/evolution.png',
-      route: '',
-      textBgColor: '#469A1F',
-      description: ''
-    },
+    // {
+    //   name: 'Evolution générale',
+    //   image: '/assets/modules/evolution.png',
+    //   route: '',
+    //   textBgColor: '#469A1F',
+    //   description: ''
+    // },
     {
       name: 'Controle de presence',
       image: '/assets/modules/check_presence.png',

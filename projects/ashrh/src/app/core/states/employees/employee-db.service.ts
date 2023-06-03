@@ -15,7 +15,8 @@ let httpOptions = {
 })
 export class EmployeeDbService {
   employee_url = '/api/grh/employee/';
-  contract_employee_url = '/api/grh/contract_employee/';
+  contract_employee_url = '/api/grh/contract_employees/';
+  download_contract_employee_url = '/api/grh/contract_pdf/';
 
   requestOptions = {
     headers: new Headers({
@@ -46,6 +47,31 @@ export class EmployeeDbService {
   public deleteEmployee(id: string) {
     return this.httpClient
       .delete(environment.server + this.employee_url + 'update/' + id + '/')
+      .pipe(share());
+  }
+
+  // public downloadContractEmployee() {
+  //   return this.httpClient
+  //     .get(environment.server + this.download_contract_employee_url + '/')
+  //     .pipe(share());
+  // }
+
+  public downloadContractEmployee(id: string) {
+    // console.log(`modification of employee ${id}`,params);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      //'Content-Type': 'multipart/form-data',
+      Accept: 'application/json',
+      Authorization: `Token ${JSON.parse(localStorage.getItem('ASHRH-TOKEN'))}`
+    });
+
+    const requestOptions = { headers: headers };
+    let params = { employee_id: id };
+
+    return this.httpClient
+      .post(environment.server + `/api/grh/contract_pdf/`, params, {
+        responseType: 'arraybuffer'
+      })
       .pipe(share());
   }
 
