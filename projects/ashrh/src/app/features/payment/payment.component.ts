@@ -163,7 +163,7 @@ export class PaymentComponent implements OnInit {
     },
     */
     {
-      header: 'Salary',
+      header: 'Monthly Salary',
       distrib: (el) => el.monthly_salary,
       options: { key: 'salary', type: 'number' }
     }

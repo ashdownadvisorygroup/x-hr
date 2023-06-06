@@ -6,19 +6,19 @@
     <mat-icon>close</mat-icon>
     <!-- <fa-icon icon="key"></fa-icon> -->
   </button>
-  <h4 class="mb-3 form-title"> Information For Leave </h4>
+  <h4 class="mb-3 form-title"> {{"Information For Leave" | translate}}</h4>
 
 
   <br />
   <div class="form-group row">
-    <label for="leaveType" class="col-sm-3 col-form-label">Leave Type&nbsp;<span class="text-danger"></span></label>
+    <label for="leaveType" class="col-sm-3 col-form-label">{{"Leave Type" | translate}}&nbsp;<span class="text-danger"></span></label>
     <div class="col-sm-9">
       <input disabled="true" type="text" id="leave Type" formControlName="type" class="form-control" />
     </div>
   </div>
 
   <div class="form-group row">
-    <label class="col-sm-3 col-form-label">Leave Reason&nbsp;</label>
+    <label class="col-sm-3 col-form-label">{{"Leave Reason" | translate}}&nbsp;</label>
     <div class="col-sm-9">
       <textarea disabled class="form-control" name="reason" formControlName="reason">
 
@@ -30,7 +30,7 @@
   </div>
 
   <div class="form-group row">
-    <label for="leaveDateFrom" class="col-sm-3 col-form-label">Date From&nbsp;</label>
+    <label for="leaveDateFrom" class="col-sm-3 col-form-label">{{"Date From" | translate}}&nbsp;</label>
     <div class="col-sm-9">
       <input disabled="true" type="date" id="leaveDateFrom" formControlName="start_date" class="form-control"
         bsDatepicker [minDate]="minDate"
@@ -40,7 +40,7 @@
   </div>
 
   <div class="form-group row">
-    <label for="leaveDateTo" class="col-sm-3 col-form-label">Date To&nbsp;</label>
+    <label for="leaveDateTo" class="col-sm-3 col-form-label">{{"Date To" | translate}}&nbsp;</label>
     <div class="col-sm-9">
       <input disabled="true" type="date" id="leaveDateTo" formControlName="end_date" class="form-control" bsDatepicker
         [bsConfig]="{ containerClass: 'theme-dark-blue', dateInputFormat: 'YYYY-MM-DD' }" placeholder="Date To" />

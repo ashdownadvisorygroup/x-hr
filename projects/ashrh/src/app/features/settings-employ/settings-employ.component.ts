@@ -186,7 +186,7 @@ export class SettingsEmployComponent implements OnInit {
       }
     },
     {
-      header: 'Number of days',
+      header: 'Number work days',
       distrib: (el) => el.number_work_days,
       options: {
         key: 'number_work_days',
@@ -259,7 +259,7 @@ export class SettingsEmployComponent implements OnInit {
       }
     },
     {
-      header: 'Salary',
+      header: 'Monthly Salary',
       distrib: (el) => el.salary,
       options: {
         setValue: (event, element) => {
@@ -274,7 +274,7 @@ export class SettingsEmployComponent implements OnInit {
       }
     },
     {
-      header: 'Number of work days',
+      header: 'Number work days',
       distrib: (el) => el.number_work_days,
       options: {
         setValue: (event, element) => {
@@ -288,21 +288,21 @@ export class SettingsEmployComponent implements OnInit {
         }
       }
     },
-    {
-      header: 'Number deliverables',
-      distrib: (el) => el.number_deliverables,
-      options: {
-        setValue: (event, element) => {
-          element.number_deliverables = event;
-          this.db_utily.updateContract(element).subscribe(() => {
-            this.db_utily.getContracts().subscribe((data) => {
-              this.contracts = data;
-              this.cd.detectChanges();
-            });
-          });
-        }
-      }
-    },
+    // {
+    //   header: 'Number deliverables',
+    //   distrib: (el) => el.number_deliverables,
+    //   options: {
+    //     setValue: (event, element) => {
+    //       element.number_deliverables = event;
+    //       this.db_utily.updateContract(element).subscribe(() => {
+    //         this.db_utily.getContracts().subscribe((data) => {
+    //           this.contracts = data;
+    //           this.cd.detectChanges();
+    //         });
+    //       });
+    //     }
+    //   }
+    // },
     {
       header: 'Bonus',
       distrib: (el) => el.bonus,
@@ -360,6 +360,7 @@ export class SettingsEmployComponent implements OnInit {
       }
     }
   ];
+
   colDistribution_leaveTypes = [
     {
       header: 'State',
@@ -379,7 +380,7 @@ export class SettingsEmployComponent implements OnInit {
       }
     },
     {
-      header: 'Name',
+      header: this.trans.instant('Name'),
       distrib: (el) => el.name,
       options: {
         key: 'name',
@@ -426,6 +427,17 @@ export class SettingsEmployComponent implements OnInit {
         this.leavetypes = datagroup['results'];
       }
     });
+  }
+
+  name: string = '';
+  getTranslateValue(key: string): string {
+    let value = '';
+    this.trans.stream(key).subscribe((data) => {
+      value = data;
+    });
+    console.log(value);
+
+    return value;
   }
 
   addPost(): void {

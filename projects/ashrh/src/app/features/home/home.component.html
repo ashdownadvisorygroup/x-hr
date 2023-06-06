@@ -6,7 +6,7 @@
     <mat-nav-list>
       <a style="font-weight: 500 !important;" mat-list-item *ngFor="let item of navigation" (click)="sidenav.close()" [routerLink]="[item.link]"
          routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" >
-        {{item.label | translate}}
+        {{ item.label | translate}}
       </a>
 
     </mat-nav-list>
@@ -29,7 +29,7 @@
         </span>
         <span class="d-none d-md-inline">
             <button mat-button class="nav-button " *ngFor="let item of navigation"  [routerLink]="[item.link]"  routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-             {{item.label}}
+             {{item.label | translate}}
             </button>
 
         </span>

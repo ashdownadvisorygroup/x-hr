@@ -241,6 +241,10 @@ export class AskLeaveComponent implements OnInit, OnDestroy {
           employee: elt.employee,
           select: false
         }));
+        console.log(
+          '**************************************>>>>>>>',
+          this.dataSource
+        );
         /*
          leaveType = models.ForeignKey(LeaveTypes, null=True, on_delete=models.CASCADE)
     employee = models.ForeignKey(Employer, null=True, on_delete=models.SET_NULL, related_name='employee')

@@ -60,7 +60,7 @@ export class ContractEmployeeDbService {
     const requestOptions = { headers: headers };
 
     return this.httpClient
-      .patch(environment.server + `/api/grh/contract_employees/${id}/`, params)
+      .patch(environment.server + this.contract_url + id + '/', params)
       .pipe(share());
   }
 

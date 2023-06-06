@@ -10,14 +10,14 @@ import { AppRoutes } from '../../../modeles/app-routes';
 export class AllmodulesComponent implements OnInit {
   modules = [
     {
-      name: 'Employées',
+      name: 'Employés',
       image: '/assets/modules/employee.png',
       route: AppRoutes.employees,
       textBgColor: '#7F6CA1',
       description: 'Module de gestion des employés'
     },
     {
-      name: 'Payement',
+      name: 'Paiement',
       image: '/assets/modules/payment.png',
       route: AppRoutes.payment,
       textBgColor: '#3FABA5',

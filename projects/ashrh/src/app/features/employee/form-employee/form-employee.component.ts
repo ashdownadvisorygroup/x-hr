@@ -55,6 +55,8 @@ export class FormEmployeeComponent implements OnInit {
   url_user_image: any = '/assets/man-avatar.jpg';
   create_account = false;
   add_emergency_contact_two = false;
+  contractId;
+  contract_employee;
   informationPerso = [
     {
       key: 'first_name',
@@ -244,6 +246,7 @@ export class FormEmployeeComponent implements OnInit {
 
   activate = false;
   genre = 'M';
+  contractEmployeeId;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -279,6 +282,11 @@ export class FormEmployeeComponent implements OnInit {
       .getContract()
       .pipe(take(1))
       .subscribe((data) => {
+        console.log(
+          '--------------------CONTRACTID--------------------->',
+          data
+        );
+        this.contractId = data[0]?.id;
         this.contractEmployee[0].options = data;
         this.cd.detectChanges();
       });
@@ -346,6 +354,8 @@ export class FormEmployeeComponent implements OnInit {
               .pipe(take(1))
               .subscribe((data) => {
                 console.log('----------DATA-------', data);
+                this.contract_employee = data;
+                this.contractEmployeeId = data[0]?.id;
                 for (const info of this.contractEmployee) {
                   info.default = data[0]?.[info.key] || 'none';
                   console.log(info.key + '----------CONTRACT-------' + info);
@@ -414,15 +424,6 @@ export class FormEmployeeComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(
-      '----------------------------------------------------******------------------------>',
-      this.emergencyForm
-    );
-    console.log(
-      '----------------------------------------------------******------------------------>',
-      this.emergency_2Form
-    );
-
     if (!this.employee) {
       console.log('CREATE');
 
@@ -450,6 +451,11 @@ export class FormEmployeeComponent implements OnInit {
         'person_activate',
         this.informationPersoForm.controls['activate'].value
       );
+      console.log(
+        '+++++++',
+        this.informationPersoForm.controls['activate'].value
+      );
+
       formdata.append(
         'person_genre',
         this.informationPersoForm.controls['genre'].value
@@ -540,6 +546,8 @@ export class FormEmployeeComponent implements OnInit {
       });
       var json = JSON.stringify(object);
 
+      console.log('{{{{{{{{{', data);
+
       if (this.userimage) {
         this.employeeDbService
           .createEmployee(formdata)
@@ -608,7 +616,9 @@ export class FormEmployeeComponent implements OnInit {
     } else {
       console.log('UPDATE');
       let data = {};
+      let jsonData = {};
       const formdata = new FormData();
+
       for (const info of this.informationPerso) {
         // console.log('info.key',info.key);
         console.log(`ligne 216`);
@@ -623,6 +633,17 @@ export class FormEmployeeComponent implements OnInit {
       data['person_activate'] = this.informationPersoForm.controls[
         'activate'
       ].value;
+
+      for (const contract of this.contractEmployee) {
+        console.log('++++++++++++++++++++CONTRACT+++++++++++++', contract);
+
+        if (this.contractEmployeeForm.controls[contract.key].value !== 'none') {
+          //  formdata.append(`${info.key}`, this.addressForm.controls[info.key].value);
+          jsonData[`${contract.key}`] = this.contractEmployeeForm.controls[
+            contract.key
+          ].value;
+        }
+      }
 
       // console.log('this.addressForm.controls[activate].value',this.addressForm.controls['activate'].value);
       // formdata.append('genre', this.addressForm.controls['genre'].value);
@@ -645,7 +666,10 @@ export class FormEmployeeComponent implements OnInit {
           'none'
         ) {
           //  console.log(`ligne 263`);
-          //  formdata.append(`${item.key}`, this.addressForm.controls[item.key].value);
+          formdata.append(
+            `${item.key}`,
+            this.emergency_2Form.controls[item.key]?.value
+          );
           data[`emergency_2_${item.key}`] = this.emergency_2Form.controls[
             'emergency_2_' + item.key
           ].value;
@@ -699,6 +723,32 @@ export class FormEmployeeComponent implements OnInit {
             }
           );
       }
+
+      this.contractEmployeeDbService
+        .updateContractEmployee(this.contractEmployeeId, jsonData)
+        .pipe(take(1))
+        .subscribe(
+          (resp) => {
+            console.log(
+              'responceCONTRACT ----------------------------------------------------------------------->',
+              resp
+            );
+            console.log(
+              'responceJSON ----------------------------------------------------------------------->',
+              jsonData
+            );
+          },
+          (err) => {
+            console.warn(err);
+            if (err.error.non_field_errors) {
+              this.notiservice.error(
+                this.trans.instant(err.error.non_field_errors[0])
+              );
+            } else if (err.error.username) {
+              this.notiservice.error(this.trans.instant(err.error.username[0]));
+            }
+          }
+        );
 
       for (const item of this.poste) {
         if (this.posteForm.controls[item.key].value) {

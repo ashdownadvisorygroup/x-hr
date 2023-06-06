@@ -5,7 +5,7 @@
 <!--  Liste des employés-->
 <!--</div>-->
 <div class="d-flex justify-content-center">
-  <ashrh-search [placeholder]="'first name, last name, email, phone'" (searchValueChange)="queryFactory(['search'],$event)"></ashrh-search>
+  <ashrh-search [placeholder]="'nom, prénom, email, téléphone'" (searchValueChange)="queryFactory(['search'],$event)"></ashrh-search>
 </div>
 <div class="action mb-2">
   <button mat-raised-button color="primary" class="text-white mr-2" [routerLink]="new_employee">

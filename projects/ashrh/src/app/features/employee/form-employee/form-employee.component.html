@@ -17,7 +17,7 @@
                 <input #inputFile type="file" class="d-none" accept="image/*" (change)="setImage($event)" >
                 </div>
                 <div class="d-flex align-items-center" style="margin-top: 14px;">
-                {{"Activate" | translate}} &nbsp;<mat-slide-toggle color="primary" class="mr-2" formControlName="activate"></mat-slide-toggle>
+                {{"Activate" | translate}} &nbsp;<mat-slide-toggle color="primary" class="mr-2" formControlName="activate" [(ngModel)]="activate"></mat-slide-toggle>
                 {{"Create Account" | translate}} &nbsp;<mat-checkbox color="primary" (change)="addCreateAccount($event.checked);create_account = $event.checked"></mat-checkbox>
                 </div>
             </div>
