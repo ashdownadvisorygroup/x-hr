@@ -245,14 +245,6 @@ export class AskLeaveComponent implements OnInit, OnDestroy {
           '**************************************>>>>>>>',
           this.dataSource
         );
-        /*
-         leaveType = models.ForeignKey(LeaveTypes, null=True, on_delete=models.CASCADE)
-    employee = models.ForeignKey(Employer, null=True, on_delete=models.SET_NULL, related_name='employee')
-    start_date = models.DateField()
-    end_date = models.DateField()
-    reason = models.TextField(blank=True, null=True)
-    state = models.CharField(max_length=25, choices=STATE)
-    */
 
         this.lengh = emp.total;
         console.log('that is total of data output !!!!!!!!!!!!!', emp?.results);
