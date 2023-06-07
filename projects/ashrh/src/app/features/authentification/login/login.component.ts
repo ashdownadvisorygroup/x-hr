@@ -81,7 +81,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
           //console.log('donnees recu du serveur lors du login user :::))))', this.userInfo);
           this.localser.setItem('TOKEN', res.token.access);
-          // this.localser.setItem('employee/Rh', res.user);
+          this.localser.setItem('user', res.data);
 
           this.routes.goHome();
         },

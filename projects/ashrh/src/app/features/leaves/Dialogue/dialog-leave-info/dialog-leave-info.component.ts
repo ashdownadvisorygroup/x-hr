@@ -32,6 +32,7 @@ import { NotificationService } from '../../../../core/core.module';
 import { LeaveService } from '../../../../core/services/leave.service';
 import { take } from 'rxjs/operators';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'ash-dialog-leave-info',
@@ -41,6 +42,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class DialogLeaveInfoComponent implements OnInit {
   minDate: Date;
+  id;
+  user: any = {};
   create_leave_req_msg: string;
   submitted = false;
   public has_error = false;
@@ -50,7 +53,8 @@ export class DialogLeaveInfoComponent implements OnInit {
     type: new FormControl('', Validators.required),
     start_date: new FormControl('', Validators.required),
     end_date: new FormControl('', Validators.required),
-    reason: new FormControl('', Validators.required)
+    reason: new FormControl('', Validators.required),
+    employee: new FormControl('', Validators.required)
   });
   // responsibles: any[] = [];
   //url: string = 'http://192.168.33.10:8000/api/grh/responsible/';
@@ -62,6 +66,7 @@ export class DialogLeaveInfoComponent implements OnInit {
     private LeaveServiceDB: LeaveService,
     private trans: TranslateService,
     private formBuilder: FormBuilder,
+    private activatedRoute: ActivatedRoute,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.minDate = new Date();
@@ -70,28 +75,47 @@ export class DialogLeaveInfoComponent implements OnInit {
   ngOnInit(): void {
     // console.log('bonjour snake eyes ',this.data);
     // console.log('datet time',this.convertDate('2022-08-10T10:18:45.709103Z'));
+    this.activatedRoute.params.pipe(take(1)).subscribe(({ employee_id }) => {
+      this.id = employee_id;
+      console.log('+++++++++++THISID', this.id);
 
-    this.LeaveServiceDB.getLeaves(this.data.id)
-      .pipe(take(1))
-      .subscribe(
-        (resp) => {
-          // this.notiSelect.success('Suppression succefully');
-          // this.query(this.paramSearch);
-          this.Groupform.patchValue({
-            start_date: resp['start_date'],
-            end_date: resp['end_date'],
-            type: resp['leaveType']['name'],
-            reason: resp['reason']
-          });
-        },
-        (err) => {}
-      );
+      this.LeaveServiceDB.getLeaves(this.data.id)
+        .pipe(take(1))
+        .subscribe(
+          (resp) => {
+            console.log('+++++++++++++++RESP++++++++++++++++', resp);
+            // this.notiSelect.success('Suppression succefully');
+            // this.query(this.paramSearch);
+            this.Groupform.patchValue({
+              start_date: resp['start_date'],
+              end_date: resp['end_date'],
+              type: resp['leaveType']['name'],
+              reason: resp['reason']
+              // employee: resp['employee']['person']
+            });
+          },
+          (err) => {}
+        );
+      this.LeaveServiceDB.getEmployee(employee_id)
+        .pipe(take(1))
+        .subscribe(
+          (employee: any) => {
+            this.user = employee;
+            console.log('+++++++++++++++RESPONSE++++++++++++++++', employee);
+            this.Groupform.patchValue({
+              employee: employee['employee']?.['data']['person']
+            });
+          },
+          (err) => {}
+        );
+    });
 
     this.leaveForm = this.formBuilder.group({
       leaveType: ['', Validators.required],
       leaveReason: ['', [Validators.required, Validators.minLength(3)]],
       fromDate: ['', Validators.required],
-      toDate: ['', Validators.required]
+      toDate: ['', Validators.required],
+      employee: ['', Validators.required]
     });
   }
 

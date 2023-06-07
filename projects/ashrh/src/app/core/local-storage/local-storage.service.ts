@@ -25,10 +25,16 @@ export class LocalStorageService {
               )
               .join('')
           );
+        console.log(stateKeys);
+
         let currentStateRef = state;
         stateKeys.forEach((key, index) => {
           if (index === stateKeys.length - 1) {
-            currentStateRef[key] = JSON.parse(localStorage.getItem(storageKey));
+            try {
+              currentStateRef[key] = JSON.parse(
+                localStorage.getItem(storageKey)
+              );
+            } catch (error) {}
             return;
           }
           currentStateRef[key] = currentStateRef[key] || {};

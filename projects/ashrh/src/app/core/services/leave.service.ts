@@ -27,6 +27,7 @@ import { LeaveTypesData } from '../../features/settings-employ/settings-employ.c
 export class LeaveService {
   leaves_url = '/api/grh/leave/';
   leaves_type_url = '/api/grh/leave_types/';
+  employee_url = '/api/grh/employee/';
 
   requestOptions = {
     headers: new Headers({
@@ -47,6 +48,12 @@ export class LeaveService {
     //console.log('that is headers',headers);
     return this.httpClient
       .get(environment.server + '/api/grh/leaveTypes_list/')
+      .pipe(share());
+  }
+
+  public getEmployee(id: string) {
+    return this.httpClient
+      .get(environment.server + this.employee_url + id + '/')
       .pipe(share());
   }
 

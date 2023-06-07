@@ -151,7 +151,7 @@ export class DialogAddLeavesComponent implements OnInit {
       start_date: this.convertDate(this.leaveForm.value.fromDate),
       end_date: this.convertDate(this.leaveForm.value.toDate),
       reason: this.leaveForm.value.leaveReason,
-      state: 'PENDING'
+      state: 'APPROVED'
     };
     console.log('element to submit', submissionData);
 
