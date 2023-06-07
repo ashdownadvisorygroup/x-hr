@@ -180,5 +180,12 @@
   "Form to Add a LeaveType": "Form to Add a LeaveType",
   "Form to Add a Department": "Form to Add a Department",
   "Form to Add a Contract": "Form to Add a Contract",
-  "monthly salary": "monthly salary"
+  "monthly salary": "monthly salary",
+  "Day": "Day",
+  "Week": "Week",
+  "Month": "Month",
+  "Next": "Next",
+  "Previous": "Previous",
+  "Today": "Today",
+  "state": "state"
 }

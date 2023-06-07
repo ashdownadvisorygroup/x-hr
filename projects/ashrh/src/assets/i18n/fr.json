@@ -179,5 +179,12 @@
   "Form to Add a LeaveType": "Formulaire d'ajout d'un type de permission",
   "Form to Add a Department": "Formulaire d'ajout d'un département",
   "Form to Add a Contract": "Formulaire d'ajout d'un contrat",
-  "monthly salary": "salaire mensuel"
+  "monthly salary": "salaire mensuel",
+  "Day": "Jour",
+  "Week": "Semaine",
+  "Month": "Mois",
+  "Next": "Suivant",
+  "Previous": "Précédent",
+  "Today": "Aujourd'hui",
+  "state": "statut"
 }
