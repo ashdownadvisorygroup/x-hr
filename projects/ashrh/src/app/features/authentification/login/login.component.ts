@@ -121,7 +121,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           // console.log(`donnees recu du serveur lors du login :) `,res.results[1].user.id);
           // console.log('this.userInfo?.id', this.userInfo?.id);
           var val = res.results.filter(
-            (elt) => elt.person.id === this.userInfo.id
+            (elt) => elt.person.id === this.userInfo?.id
           );
           // this.localser.setItem('employee/Rh', res.user);
 
