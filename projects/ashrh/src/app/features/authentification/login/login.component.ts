@@ -125,7 +125,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           );
           // this.localser.setItem('employee/Rh', res.user);
 
-          this.localser.setItem('employee/Rh_id', val[0].id);
+          this.localser.setItem('employee/Rh_id', val[0]?.id);
 
           // this.routes.goHome();
         },
