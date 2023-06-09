@@ -271,6 +271,8 @@ export class AskLeaveComponent implements OnInit, OnDestroy {
   open(name: string) {}
 
   openDialog(name) {
+    console.log('+++++++++++++++++++++++++++++++++++>>');
+
     if (name === 'add') {
       const dialogRef = this.dialog.open(DialogAddLeavesComponent, {
         width: '50%',

@@ -13,21 +13,21 @@
   <div class="form-group row">
     <label for="leaveType" class="col-sm-3 col-form-label">{{"Leave Type" | translate}}&nbsp;<span class="text-danger"></span></label>
     <div class="col-sm-9">
-      <input disabled="true" type="text" id="leave Type" formControlName="type" class="form-control" />
+      <input type="text" id="leave Type" formControlName="type" class="form-control" />
     </div>
   </div>
 
   <div class="form-group row">
     <label for="employee" class="col-sm-3 col-form-label">{{"Employee" | translate}}&nbsp;<span class="text-danger"></span></label>
     <div class="col-sm-9">
-      <input disabled="true" type="text" id="employee" formControlName="employee" class="form-control" />
+      <input type="text" id="employee" formControlName="employee" class="form-control" />
     </div>
   </div>
 
   <div class="form-group row">
     <label class="col-sm-3 col-form-label">{{"Leave Reason" | translate}}&nbsp;</label>
     <div class="col-sm-9">
-      <textarea disabled class="form-control" name="reason" formControlName="reason">
+      <textarea class="form-control" name="reason" formControlName="reason">
 
      </textarea>
       <!-- <input disabled="true" type="text" id="leaveReason"  class="form-control" placeholder="Leave Reason"
@@ -39,7 +39,7 @@
   <div class="form-group row">
     <label for="leaveDateFrom" class="col-sm-3 col-form-label">{{"Date From" | translate}}&nbsp;</label>
     <div class="col-sm-9">
-      <input disabled="true" type="date" id="leaveDateFrom" formControlName="start_date" class="form-control"
+      <input type="date" id="leaveDateFrom" formControlName="start_date" class="form-control"
         bsDatepicker [minDate]="minDate"
         [bsConfig]="{ containerClass: 'theme-dark-blue', dateInputFormat: 'YYYY-MM-DD' }" placeholder="Date From" />
 
@@ -49,7 +49,7 @@
   <div class="form-group row">
     <label for="leaveDateTo" class="col-sm-3 col-form-label">{{"Date To" | translate}}&nbsp;</label>
     <div class="col-sm-9">
-      <input disabled="true" type="date" id="leaveDateTo" formControlName="end_date" class="form-control" bsDatepicker
+      <input type="date" id="leaveDateTo" formControlName="end_date" class="form-control" bsDatepicker
         [bsConfig]="{ containerClass: 'theme-dark-blue', dateInputFormat: 'YYYY-MM-DD' }" placeholder="Date To" />
 
     </div>

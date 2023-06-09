@@ -254,7 +254,6 @@ export class PaymentComponent implements OnInit {
       // console.log('voici les datas', elts);
 
       for (let dat of this.posts) {
-        console.log('voici une data', dat);
         //this.employees?.push(dat.result);
         //console.log('that is post ..............', dat);
         this.colDistribute.push({
@@ -279,8 +278,6 @@ export class PaymentComponent implements OnInit {
             );
           }
           // this.colDistribute[i].employeePost.push(obj);
-
-          console.log('number', obj);
         }
       }
 
@@ -299,10 +296,6 @@ export class PaymentComponent implements OnInit {
               post: l.name,
               number_work_days: l.number_work_days
             });
-            console.log(
-              '********************EMPLOYEE********************',
-              l.employeePost
-            );
           }
         }
       }

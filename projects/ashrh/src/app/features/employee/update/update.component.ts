@@ -260,6 +260,7 @@ export class UpdateComponent implements OnInit {
 
     this.activatedRoute.params.pipe(take(1)).subscribe(({ employee_id }) => {
       this.id = employee_id;
+      console.log('+++++++++++THISID', this.id);
       this.employeeDbService
         .getEmployee(employee_id)
         .pipe(take(1))

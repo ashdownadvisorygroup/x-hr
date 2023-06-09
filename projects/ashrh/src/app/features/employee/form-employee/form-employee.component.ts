@@ -245,7 +245,7 @@ export class FormEmployeeComponent implements OnInit {
   confipasseye = true;
 
   activate = false;
-  genre = 'M';
+  genre = 'F';
   contractEmployeeId;
 
   constructor(
@@ -262,6 +262,7 @@ export class FormEmployeeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.informationPersoForm.addControl('genre', new FormControl('F'));
     this.dbUtilityService
       .getDepartment()
       .pipe(take(1))
@@ -298,7 +299,8 @@ export class FormEmployeeComponent implements OnInit {
       );
     }
     this.informationPersoForm.addControl('activate', new FormControl(true));
-    this.informationPersoForm.addControl('genre', new FormControl('M'));
+    // this.informationPersoForm.addControl('genre', new FormControl('F'));
+    this.informationPersoForm.addControl('genre', new FormControl());
 
     for (const post of this.poste) {
       // console.log('voici un post charge dams post',post);
@@ -347,7 +349,9 @@ export class FormEmployeeComponent implements OnInit {
             console.log('that is user loaded', employee);
             this.user = employee;
             this.activate = employee['data']['activate'];
-            this.genre = employee['data']['person']?.['genre'];
+            this.genre = employee['data']['person']['genre'];
+
+            // this.informationPersoForm.controls['genre'].value = employee['data']['person']['genre'];
 
             this.dbUtilityService
               .getContractEmployee(employee_id)
@@ -448,11 +452,7 @@ export class FormEmployeeComponent implements OnInit {
       }
 
       formdata.append(
-        'person_activate',
-        this.informationPersoForm.controls['activate'].value
-      );
-      console.log(
-        '+++++++',
+        'activate',
         this.informationPersoForm.controls['activate'].value
       );
 
@@ -461,9 +461,9 @@ export class FormEmployeeComponent implements OnInit {
         this.informationPersoForm.controls['genre'].value
       );
 
-      data['person_activate'] = this.informationPersoForm.controls[
-        'activate'
-      ].value;
+      console.log('+++++++', this.informationPersoForm.controls['genre'].value);
+
+      data['activate'] = this.informationPersoForm.controls['activate'].value;
       data['person_genre'] = this.informationPersoForm.controls['genre'].value;
 
       if (this.userimage) {
@@ -630,13 +630,9 @@ export class FormEmployeeComponent implements OnInit {
         }
       }
       // formdata.append('activate', this.addressForm.controls['activate'].value);
-      data['person_activate'] = this.informationPersoForm.controls[
-        'activate'
-      ].value;
+      data['activate'] = this.informationPersoForm.controls['activate'].value;
 
       for (const contract of this.contractEmployee) {
-        console.log('++++++++++++++++++++CONTRACT+++++++++++++', contract);
-
         if (this.contractEmployeeForm.controls[contract.key].value !== 'none') {
           //  formdata.append(`${info.key}`, this.addressForm.controls[info.key].value);
           jsonData[`${contract.key}`] = this.contractEmployeeForm.controls[
@@ -648,6 +644,8 @@ export class FormEmployeeComponent implements OnInit {
       // console.log('this.addressForm.controls[activate].value',this.addressForm.controls['activate'].value);
       // formdata.append('genre', this.addressForm.controls['genre'].value);
       data['person_genre'] = this.informationPersoForm.controls['genre'].value;
+
+      console.log('+++++++', this.informationPersoForm.controls['genre'].value);
 
       for (const item of this.emergency) {
         if (
@@ -774,7 +772,6 @@ export class FormEmployeeComponent implements OnInit {
             this.notiservice.success(
               this.trans.instant('Updated successfully')
             );
-            console.log('-------------DATASS-----------', data);
             this.router.navigate(['/' + AppRoutes.home + '/employees']);
           },
 

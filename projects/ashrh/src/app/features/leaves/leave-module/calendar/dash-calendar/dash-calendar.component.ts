@@ -173,7 +173,7 @@ export class DashCalendarComponent implements OnInit {
       map((results: any) => {
         console.log('results iss ', results);
         return results.map((event: Event) => {
-          // console.log('voici les donnees charges', event.leaveType['name']);
+          console.log('voici les donnees charges', event);
           return {
             title:
               event.leaveType['name'] +
