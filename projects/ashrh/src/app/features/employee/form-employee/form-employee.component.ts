@@ -351,7 +351,12 @@ export class FormEmployeeComponent implements OnInit {
             this.activate = employee['data']['activate'];
             this.genre = employee['data']['person']['genre'];
 
-            // this.informationPersoForm.controls['genre'].value = employee['data']['person']['genre'];
+            // this.informationPersoForm.controls['genre'].value =
+            //   employee['data']['person']['genre'];
+
+            this.informationPersoForm.controls['genre'].patchValue(
+              employee['data']['person']['genre']
+            );
 
             this.dbUtilityService
               .getContractEmployee(employee_id)
@@ -452,7 +457,7 @@ export class FormEmployeeComponent implements OnInit {
       }
 
       formdata.append(
-        'activate',
+        'person_activate',
         this.informationPersoForm.controls['activate'].value
       );
 
@@ -463,7 +468,9 @@ export class FormEmployeeComponent implements OnInit {
 
       console.log('+++++++', this.informationPersoForm.controls['genre'].value);
 
-      data['activate'] = this.informationPersoForm.controls['activate'].value;
+      data['person_activate'] = this.informationPersoForm.controls[
+        'activate'
+      ].value;
       data['person_genre'] = this.informationPersoForm.controls['genre'].value;
 
       if (this.userimage) {
@@ -630,7 +637,9 @@ export class FormEmployeeComponent implements OnInit {
         }
       }
       // formdata.append('activate', this.addressForm.controls['activate'].value);
-      data['activate'] = this.informationPersoForm.controls['activate'].value;
+      data['person_activate'] = this.informationPersoForm.controls[
+        'activate'
+      ].value;
 
       for (const contract of this.contractEmployee) {
         if (this.contractEmployeeForm.controls[contract.key].value !== 'none') {
