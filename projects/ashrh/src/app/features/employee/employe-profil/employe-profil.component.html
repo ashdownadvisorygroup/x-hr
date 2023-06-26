@@ -13,15 +13,15 @@
 <!--profile detaillé-->
 <div class="mat-elevation-z2 flex-grow-1 radius flex-fill overflow-auto p-2">
   <div class="d-flex justify-content-between p-2 bg-p-o-50">
-    <span class="text-large">About</span>
+    <span class="text-large">{{"About" | translate}}</span>
     <div>
       <button mat-button class="bg-a text-white mr-2" [routerLink]="[update_employee,id]">
         <fa-icon icon="pencil-alt"></fa-icon>
-        Edit
+        {{"Edit" | translate}}
       </button>
       <button (click)="deleteEmployee()" mat-button class="bg-w text-white">
         <fa-icon icon="trash"></fa-icon>
-        Delete
+        {{"Delete" | translate}}
       </button>
     </div>
   </div>

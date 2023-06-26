@@ -37,7 +37,7 @@ export class EmployeProfilComponent implements OnInit {
         { key: 'email' },
         { key: 'cni' },
         { key: 'address' },
-        { key: 'birthday' },
+        { key: 'birth_date' },
         { key: 'phone' }
         // {key: 'created_at'},
       ]

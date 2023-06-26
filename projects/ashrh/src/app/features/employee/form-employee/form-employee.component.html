@@ -23,12 +23,22 @@
             </div>
             <div class="block-grip flex-fill">
                 <ng-container *ngFor="let item of informationPerso">
-                <mat-form-field class="full-width">
+                <mat-form-field class="full-width" *ngIf="item.type != 'select'">
                     <input matInput [placeholder]="(item.key | translate)" [formControlName]="item.key" [type]="item.type" [(ngModel)]="item.default">
                     <mat-error *ngIf="informationPersoForm.controls[item.key].hasError('required')">
                     {{item.key | translate}} is <strong>required</strong>
                     </mat-error>
                 </mat-form-field>
+                <mat-form-field class="full-width"  *ngIf="item.type == 'select'" >
+                    <mat-select [placeholder]="(item.key | translate)" [formControlName]="item.key" [(ngModel)]="item.default" multiple>
+                        <mat-option *ngFor="let state of item.options" [value]="state[item.id || 'id']">
+                        {{ state?.name || '----!----' }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="informationPersoForm.controls[item.key].hasError('required')">
+                        {{ item.key | translate }} is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field> 
                 </ng-container>
                 <div class="row align-items-center">
                 <div class="col">

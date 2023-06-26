@@ -78,13 +78,61 @@ export class FormEmployeeComponent implements OnInit {
       default: ''
     },
     { key: 'address', validators: [], type: 'text', default: '' },
-    { key: 'birthday', validators: [], type: 'date', default: '' },
+    { key: 'birth_date', validators: [], type: 'date', default: '' },
     {
       key: 'phone',
       validators: [Validators.required],
       type: 'tel',
       default: ''
     }
+    // {
+    //   key: 'work_days',
+    //   validators: [Validators.required],
+    //   type: 'select',
+    //   options: [
+    //     {
+    //       name: 'MONDAY',
+    //       code: 'monday'
+    //     },
+    //     {
+    //       name: 'TUESDAY',
+    //       code: 'tuesday'
+    //     },
+    //     {
+    //       name: 'WEDNESDAY',
+    //       code: 'wednesday'
+    //     },
+    //     {
+    //       name: 'THURSDAY',
+    //       code: 'thursday'
+    //     },
+    //     {
+    //       name: 'FRIDAY',
+    //       code: 'friday'
+    //     },
+    //     {
+    //       name: 'SATURDAY',
+    //       code: 'saturday'
+    //     },
+    //     {
+    //       name: 'SUNDAY',
+    //       code: 'sunday'
+    //     }
+    //   ],
+    //   default: []
+    // },
+    // {
+    //   key: 'work_hours_start',
+    //   validators: [Validators.required],
+    //   type: 'time',
+    //   default: ''
+    // },
+    // {
+    //   key: 'work_hours_end',
+    //   validators: [Validators.required],
+    //   type: 'time',
+    //   default: ''
+    // }
   ];
 
   poste = [
