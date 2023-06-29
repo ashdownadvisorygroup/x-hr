@@ -78,7 +78,7 @@ export class FormEmployeeComponent implements OnInit {
       default: ''
     },
     { key: 'address', validators: [], type: 'text', default: '' },
-    { key: 'birth_date', validators: [], type: 'date', default: '' },
+    { key: 'birthday', validators: [], type: 'date', default: '' },
     {
       key: 'phone',
       validators: [Validators.required],

@@ -33,6 +33,7 @@
           <ng-container *ngFor="let item of about[0].keys">
             <span>{{ item.key | translate}}:</span> <span>{{ user.person[item.key]}}</span>
           </ng-container>
+          <span>Code:</span> <span>{{ user.code }}</span>
           <span>{{'start_date' | translate}}:</span> <span>{{ _.get(user, 'person.created_at') | date }}</span>
         </ng-container>
       </div>
