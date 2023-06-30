@@ -69,7 +69,8 @@ export class CheckArriveComponent implements OnInit {
           }
         );
     } else {
-      this.notiService.error('Value not known');
+      this.notiService.error('Invalid QR code value');
+      // this.notiService.error('Value not known');
     }
   }
 
