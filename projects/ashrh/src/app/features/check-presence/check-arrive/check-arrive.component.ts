@@ -48,7 +48,8 @@ export class CheckArriveComponent implements OnInit {
 
   onCodeResult(resultString: string) {
     let qrResultString = parseInt(resultString);
-    if (qrResultString) {
+    // if (qrResultString) {
+    if (!isNaN(qrResultString)) {
       qrResultString = this.decode(qrResultString);
       this.onResult = true;
       this.reset = true;

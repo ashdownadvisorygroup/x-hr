@@ -310,7 +310,7 @@ export class FormEmployeeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.informationPersoForm.addControl('genre', new FormControl('F'));
+    this.informationPersoForm.addControl('genre', new FormControl());
     this.dbUtilityService
       .getDepartment()
       .pipe(take(1))
@@ -346,7 +346,7 @@ export class FormEmployeeComponent implements OnInit {
         new FormControl(info.default, info.validators)
       );
     }
-    this.informationPersoForm.addControl('activate', new FormControl(true));
+    this.informationPersoForm.addControl('activate', new FormControl());
     // this.informationPersoForm.addControl('genre', new FormControl('F'));
     this.informationPersoForm.addControl('genre', new FormControl());
 
