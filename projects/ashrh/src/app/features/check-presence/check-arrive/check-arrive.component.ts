@@ -47,15 +47,14 @@ export class CheckArriveComponent implements OnInit {
   }
 
   onCodeResult(resultString: string) {
-    let qrResultString = parseInt(resultString);
-    // if (qrResultString) {
-    if (!isNaN(qrResultString)) {
-      qrResultString = this.decode(qrResultString);
+    let qrResultString = resultString;
+
+    if (qrResultString) {
       this.onResult = true;
       this.reset = true;
       this.cd.detectChanges();
       this.presenceDbService
-        .arrive(qrResultString + '', this.type)
+        .arrive(qrResultString, this.type)
         .pipe(take(1))
         .subscribe(
           (emp) => {
@@ -69,9 +68,9 @@ export class CheckArriveComponent implements OnInit {
           }
         );
     } else {
-      this.notiService.error('Invalid QR code value');
-      // this.notiService.error('Value not known');
+      this.notiService.error('Value not known');
     }
+    console.log('-------------------------------------->', qrResultString);
   }
 
   // onDeviceSelectChange(selected: string) {

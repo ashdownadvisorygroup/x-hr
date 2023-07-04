@@ -16,7 +16,7 @@ export class DepartDialogComponent implements OnInit {
   departement = [
     {
       key: 'code',
-      validators: [Validators.required],
+      validators: [],
       type: 'text',
       default: ''
     },

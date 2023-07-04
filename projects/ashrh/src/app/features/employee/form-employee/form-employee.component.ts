@@ -67,13 +67,13 @@ export class FormEmployeeComponent implements OnInit {
     { key: 'last_name', validators: [], type: 'text', default: '' },
     {
       key: 'email',
-      validators: [Validators.required],
+      validators: [],
       type: 'email',
       default: ''
     },
     {
       key: 'cni',
-      validators: [Validators.required],
+      validators: [],
       type: 'text',
       default: ''
     },
@@ -81,7 +81,7 @@ export class FormEmployeeComponent implements OnInit {
     { key: 'birthday', validators: [], type: 'date', default: '' },
     {
       key: 'phone',
-      validators: [Validators.required],
+      validators: [],
       type: 'tel',
       default: ''
     }
@@ -150,20 +150,20 @@ export class FormEmployeeComponent implements OnInit {
     { key: 'contract', validators: [], options: [], type: 'select' },
     {
       key: 'start_date',
-      validators: [Validators.required],
+      validators: [],
       type: 'date',
       default: Date.now()
     },
     {
       key: 'end_date',
-      validators: [Validators.required],
+      validators: [],
       type: 'date',
       default: ''
     },
     {
       key: 'type',
       id: 'code',
-      validators: [Validators.required],
+      validators: [],
       type: 'select',
       options: [
         {
@@ -182,27 +182,27 @@ export class FormEmployeeComponent implements OnInit {
   emergency = [
     {
       key: 'first_name',
-      validators: [Validators.required],
+      validators: [],
       type: 'text',
       default: ''
     },
     { key: 'last_name', validators: [], type: 'text', default: '' },
     {
       key: 'email',
-      validators: [Validators.required],
+      validators: [],
       type: 'email',
       default: ''
     },
     {
       key: 'cni',
-      validators: [Validators.required],
+      validators: [],
       type: 'text',
       default: ''
     },
     { key: 'address', validators: [], type: 'text', default: '' },
     {
       key: 'phone',
-      validators: [Validators.required],
+      validators: [],
       type: 'tel',
       default: ''
     }
@@ -609,18 +609,17 @@ export class FormEmployeeComponent implements OnInit {
           .pipe(take(1))
           .subscribe(
             (resp) => {
-              this.contractEmployeeDbService
-                .createContractEmployee({
-                  ...dataContrat,
-                  employee: resp['id']
-                })
-                .pipe(take(1))
-                .subscribe((response) => {
-                  this.notiservice.success(
-                    this.trans.instant('created succefully')
-                  );
-                  this.router.navigate(['/' + AppRoutes.home + '/employees']);
-                });
+              // this.contractEmployeeDbService
+              //   .createContractEmployee({
+              //     ...dataContrat,
+              //     employee: resp['id']
+              //   })
+              //   .pipe(take(1))
+
+              this.notiservice.success(
+                this.trans.instant('created succefully')
+              );
+              this.router.navigate(['/' + AppRoutes.home + '/employees']);
             },
             (err) => {
               console.warn(err);
@@ -641,18 +640,17 @@ export class FormEmployeeComponent implements OnInit {
           .pipe(take(1))
           .subscribe(
             (resp) => {
-              this.contractEmployeeDbService
-                .createContractEmployee({
-                  ...dataContrat,
-                  employee: resp['id']
-                })
-                .pipe(take(1))
-                .subscribe((response) => {
-                  this.notiservice.success(
-                    this.trans.instant('created succefully')
-                  );
-                  this.router.navigate(['/' + AppRoutes.home + '/employees']);
-                });
+              // this.contractEmployeeDbService
+              //   .createContractEmployee({
+              //     ...dataContrat,
+              //     employee: resp['id']
+              //   })
+              //   .pipe(take(1))
+
+              this.notiservice.success(
+                this.trans.instant('created succefully')
+              );
+              this.router.navigate(['/' + AppRoutes.home + '/employees']);
             },
             (err) => {
               console.warn(err);

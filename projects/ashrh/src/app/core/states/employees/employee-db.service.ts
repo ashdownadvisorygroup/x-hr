@@ -75,6 +75,45 @@ export class EmployeeDbService {
       .pipe(share());
   }
 
+  public downloadBadgeEmployee(id: string) {
+    // console.log(`modification of employee ${id}`,params);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      //'Content-Type': 'multipart/form-data',
+      Accept: 'application/json',
+      Authorization: `Token ${JSON.parse(localStorage.getItem('ASHRH-TOKEN'))}`
+    });
+
+    const requestOptions = { headers: headers };
+    let params = { employee_id: id };
+
+    return this.httpClient
+      .post(environment.server + `/api/grh/badge_pdf/`, params, {
+        responseType: 'arraybuffer'
+      })
+      .pipe(share());
+  }
+
+  regenerateQRCode(id: string) {
+    // console.log(`modification of employee ${id}`,params);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      //'Content-Type': 'multipart/form-data',
+      Accept: 'application/json',
+      Authorization: `Token ${JSON.parse(localStorage.getItem('ASHRH-TOKEN'))}`
+    });
+
+    const requestOptions = { headers: headers };
+    let params = { employee_id: id };
+
+    return this.httpClient
+      .put(
+        environment.server + `/api/grh/employee/regenerateQRCode/${id}/`,
+        params
+      )
+      .pipe(share());
+  }
+
   createEmployee(formdata: any) {
     return this.httpClient
       .post(environment.server + this.employee_url, formdata)

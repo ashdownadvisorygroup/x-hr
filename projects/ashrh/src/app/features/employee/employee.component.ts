@@ -23,6 +23,7 @@ import { AppRoutes } from '../../modeles/app-routes';
 import { NotificationService } from '../../core/core.module';
 import { ServerFormatDatePipe } from '../../core/pipes/server-format-date.pipe';
 import { saveAs } from 'file-saver';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'ashrh-employee',
@@ -50,7 +51,9 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     'contact',
     'status',
     'actions',
-    'download'
+    'download',
+    'downloadBadge',
+    'regenerateQRCode'
   ];
   displayedColumnsFilter: string[] = [
     'selection_filter',
@@ -78,7 +81,9 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     private employeeDbService: EmployeeDbService,
     private modalService: NgbModal,
     private notiSelect: NotificationService,
-    public serverFormatDatePipe: ServerFormatDatePipe
+    public serverFormatDatePipe: ServerFormatDatePipe,
+    private notiservice: NotificationService,
+    private trans: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -272,6 +277,32 @@ export class EmployeeComponent implements OnInit, OnDestroy {
         const fileName = 'ContractEmployee.pdf';
         saveAs(blob, fileName);
       });
+  }
+
+  downloadBadge(element: any) {
+    this.employeeDbService
+      .downloadBadgeEmployee(element.id)
+      .subscribe((pdf) => {
+        const blob = new Blob([pdf], { type: 'application/pdf' });
+        const fileName = 'BadgeEmployee.pdf';
+        saveAs(blob, fileName);
+      });
+  }
+
+  regenerateQRCode(element: any): void {
+    const params = {};
+
+    this.employeeDbService.regenerateQRCode(element.id).subscribe(
+      (response) => {
+        this.notiservice.success(
+          this.trans.instant('QR code regenerated successfully.')
+        );
+        console.log('QR code regenerated successfully.');
+      },
+      (error) => {
+        console.error('Failed to regenerate QR code:', error);
+      }
+    );
   }
 
   private notiSelectBeforeAction() {

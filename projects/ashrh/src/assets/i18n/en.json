@@ -191,5 +191,8 @@
   "Download": "Download",
   "About": "About",
   "Edit": "Edit",
-  "birth_date": "Birth Date"
+  "birth_date": "Birth Date",
+  "Download Badge": "Download Badge",
+  "RegenerateQRCode": "RegenerateQRCode",
+  "Regenerate": "Regenerate"
 }

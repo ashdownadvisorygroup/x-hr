@@ -135,6 +135,26 @@
         <!-- <button mat-icon-button class="btn-30" color="warn"><fa-icon icon="trash"></fa-icon>Delete</button> -->
       </td>
     </ng-container>
+
+    <ng-container matColumnDef="downloadBadge">
+      <th mat-header-cell *matHeaderCellDef class="min-cell c-a"> {{"Download Badge" | translate}} </th>
+      <td mat-cell *matCellDef="let element" class="min-cell">
+        <button mat-icon-button class="btn-30" color="primary" (click) = "downloadBadge(element)">
+          <fa-icon icon="save"></fa-icon> {{"Download" | translate}}
+        </button>
+        <!-- <button mat-icon-button class="btn-30" color="warn"><fa-icon icon="trash"></fa-icon>Delete</button> -->
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="regenerateQRCode">
+      <th mat-header-cell *matHeaderCellDef class="min-cell c-a"> {{"RegenerateQRCode" | translate}} </th>
+      <td mat-cell *matCellDef="let element" class="min-cell">
+        <button mat-icon-button class="btn-30" color="primary" (click) = "regenerateQRCode(element)">
+          <fa-icon icon="save"></fa-icon> {{"Regenerate" | translate}}
+        </button>
+        <!-- <button mat-icon-button class="btn-30" color="warn"><fa-icon icon="trash"></fa-icon>Delete</button> -->
+      </td>
+    </ng-container>
     <ng-container matColumnDef="actions_filter">
       <th mat-header-cell *matHeaderCellDef class="text-nowrap c-a">
       </th>
