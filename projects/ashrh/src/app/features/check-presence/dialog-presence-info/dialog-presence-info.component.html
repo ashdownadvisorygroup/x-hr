@@ -1,0 +1,36 @@
+<form [formGroup]="Groupform" class="diag">
+    <div *ngIf="!!create_presence_req_msg" [ngClass]="has_error ? 'alert alert-danger': 'alert alert-info'">
+      {{create_presence_req_msg}}</div>
+  
+    <button mat-button class='close-icon' [mat-dialog-close]="true">
+      <mat-icon>close</mat-icon>
+      <!-- <fa-icon icon="key"></fa-icon> -->
+    </button>
+    <h4 class="mb-3 form-title"> {{"Information For Presence" | translate}}</h4>
+  
+  
+    <br />
+    <div class="form-group row">
+      <label for="date" class="col-sm-3 col-form-label">{{"Presence Date" | translate}}&nbsp;<span class="text-danger"></span></label>
+      <div class="col-sm-9">
+        <input type="date" id="date" formControlName="presence_date" class="form-control" />
+      </div>
+    </div>
+  
+    <div class="form-group row">
+      <label for="employee" class="col-sm-3 col-form-label">{{"Employee" | translate}}&nbsp;<span class="text-danger"></span></label>
+      <div class="col-sm-9">
+        <input type="text" id="employee" formControlName="employee" class="form-control" />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="total_hours" class="col-sm-3 col-form-label">{{"Total Hours" | translate}}&nbsp;</label>
+      <div class="col-sm-9">
+        <input type="text" id="total_hours" formControlName="total_hours" class="form-control" placeholder="Number Hours" />
+  
+      </div>
+    </div>
+  
+  </form>
+  

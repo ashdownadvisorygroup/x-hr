@@ -3,20 +3,72 @@
 <button mat-raised-button style="border: 1px solid; border-color: #42a5f5; border-radius: 4px; margin: 8px 0px 8px 0; color:#42a5f5 " [routerLink]="['check-depart']">{{"Departure" | translate}}</button>
 </div> -->
 
-<div class="flex-fill d-flex justify-content-center align-items-center overflow-hidden p-2" style="height: 95%">
-  <div class="modules-container p-2">
-    <ng-container *ngFor="let module of sections" >
-      <div class="module-container mat-elevation-z4" matRipple matTooltipPosition="above" [matTooltip]="module.description" [routerLink]="[module.route]">
-        <div style="height: 80px;background-color: white;" class="rounded-top w-80 d-flex justify-content-center align-items-center">
-          <img [src]="module.image" >
-        </div>
-        <div class="p-2 rounded-bottom overflow-hidden text-white module-name text-uppercase d-flex justify-content-center align-items-center" [style.background]="module.textBgColor">
-          {{module.name | translate}}
+<div class="flex-fill d-flex">
+  <div class="overflow-hidden p-2">
+    <ul class="list-group">
+      <li class="list-group-item active" aria-current="true">List employee</li>
+      <div class="justify-content-start p-2">
+        <!-- Check presence search form -->
+        <ashrh-search
+          [placeholder]="'nom'"
+          (searchValueChange)="queryFactory(['search'], $event)"
+        ></ashrh-search>
+      </div>
+      <!-- Check presence employee menu -->
+      <div style="max-height: calc(100vh - 255px); overflow-y: scroll">
+        <li
+          class="list-group-item"
+          *ngFor="let employee of dataSource"
+          [class.active]="employee?.isActive"
+        >
+          <a href="#" (click)="selectEmployee($event, employee)">{{
+            employee.person.first_name + " " + employee.person.last_name
+          }}</a>
+        </li>
+      </div>
+    </ul>
+  </div>
+
+  <div class="w-100 p-2 d-flex flex-column">
+    <div class="d-flex justify-content-end">
+      <button
+        *ngFor="let module of sections"
+        mat-raised-button
+        color="primary"
+        class="text-white mr-3 h5 d-flex justify-content-center align-items-center"
+        [style.background]="module.textBgColor"
+        [routerLink]="[module.route]"
+      >
+        {{ module.name | translate }}
+      </button>
+    </div>
+    <div class="p-2">
+      <!-- Check presence calendar -->
+      <div class="dash-calendar" *ngIf="isEmployeeSelected">
+        <ash-list-presence [(view)]="view" [(viewDate)]="viewDate" (viewChange)="fetchEvents()">
+        </ash-list-presence>
+        <ng-template #loading>
+          <mat-spinner class="m-auto"></mat-spinner>
+          <br>
+          <h4 class="text-center">Loading events...</h4>
+        </ng-template>
+      
+        <div *ngIf="events$ | async; else loading; let events">
+      
+          <div [ngSwitch]="view">
+            <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [activeDayIsOpen]="activeDayIsOpen"
+            [refresh]="refresh"
+            (dayClicked)="dayClicked($event.day)" (eventClicked)="eventClicked($event.event)" weekendDays=[6]>
+            </mwl-calendar-month-view>
+            <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" (eventClicked)="eventClicked($event.event)">
+            </mwl-calendar-week-view>
+            <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" (eventClicked)="eventClicked($event.event)">
+            </mwl-calendar-day-view>
+          </div>
         </div>
       </div>
-    </ng-container>
+      
+      <div class=""></div>
+    </div>
   </div>
 </div>
-
-
-

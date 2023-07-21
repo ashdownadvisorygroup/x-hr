@@ -4,11 +4,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppRoutes } from '../../../modeles/app-routes';
 import { AskLeaveComponent } from './ask-leave/ask-leave.component';
 import { DashCalendarComponent } from './calendar/dash-calendar/dash-calendar.component';
+// import { CheckPresenceComponent } from '../../check-presence/check-presence.component';
 
 const routes: Routes = [
   // { path: '', component: EmployeeComponent },
   { path: '', component: AskLeaveComponent },
   { path: AppRoutes.leaves_dashboard, component: DashCalendarComponent }
+  // { path: AppRoutes.check_presence, component: CheckPresenceComponent }
 ];
 
 // const routes: Routes = [

@@ -194,5 +194,8 @@
   "birth_date": "Birth Date",
   "Download Badge": "Download Badge",
   "RegenerateQRCode": "RegenerateQRCode",
-  "Regenerate": "Regenerate"
+  "Regenerate": "Regenerate",
+  "Information For Presence": "Information For Presence",
+  "Presence Date": "Presence Date ",
+  "Total Hours": "Total Hours"
 }

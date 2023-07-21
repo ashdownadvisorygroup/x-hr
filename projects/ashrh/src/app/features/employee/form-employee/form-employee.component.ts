@@ -259,7 +259,7 @@ export class FormEmployeeComponent implements OnInit {
   // addressForm = new FormGroup({});
   informationPersoForm = new FormGroup({});
   posteForm = new FormGroup({});
-  contractEmployeeForm = new FormGroup({});
+  // contractEmployeeForm = new FormGroup({});
   emergencyForm = new FormGroup({});
   emergency_2Form = new FormGroup({});
 
@@ -359,12 +359,12 @@ export class FormEmployeeComponent implements OnInit {
       this.posteForm.get(post.key).setValue(post.default);
     }
 
-    for (const contractEmployee of this.contractEmployee) {
-      this.contractEmployeeForm.addControl(
-        contractEmployee.key,
-        new FormControl(contractEmployee.default, contractEmployee.validators)
-      );
-    }
+    // for (const contractEmployee of this.contractEmployee) {
+    //   this.contractEmployeeForm.addControl(
+    //     contractEmployee.key,
+    //     new FormControl(contractEmployee.default, contractEmployee.validators)
+    //   );
+    // }
 
     let defaultValues: { [key: string]: any } = {};
     for (const urgent of this.emergency) {
@@ -406,20 +406,20 @@ export class FormEmployeeComponent implements OnInit {
               employee['data']['person']['genre']
             );
 
-            this.dbUtilityService
-              .getContractEmployee(employee_id)
-              .pipe(take(1))
-              .subscribe((data) => {
-                console.log('----------DATA-------', data);
-                this.contract_employee = data;
-                this.contractEmployeeId = data[0]?.id;
-                for (const info of this.contractEmployee) {
-                  info.default = data[0]?.[info.key] || 'none';
-                  console.log(info.key + '----------CONTRACT-------' + info);
-                }
+            // this.dbUtilityService
+            //   .getContractEmployee(employee_id)
+            //   .pipe(take(1))
+            //   .subscribe((data) => {
+            //     console.log('----------DATA-------', data);
+            //     this.contract_employee = data;
+            //     this.contractEmployeeId = data[0]?.id;
+            //     for (const info of this.contractEmployee) {
+            //       info.default = data[0]?.[info.key] || 'none';
+            //       console.log(info.key + '----------CONTRACT-------' + info);
+            //     }
 
-                this.cd.detectChanges();
-              });
+            //     this.cd.detectChanges();
+            //   });
 
             for (const info of this.informationPerso) {
               if (
@@ -498,11 +498,11 @@ export class FormEmployeeComponent implements OnInit {
           ].value;
         }
       }
-      for (const contract of this.contractEmployee) {
-        dataContrat[`${contract.key}`] = this.contractEmployeeForm.controls[
-          contract.key
-        ].value;
-      }
+      // for (const contract of this.contractEmployee) {
+      //   dataContrat[`${contract.key}`] = this.contractEmployeeForm.controls[
+      //     contract.key
+      //   ].value;
+      // }
 
       formdata.append(
         'person_activate',
@@ -687,14 +687,14 @@ export class FormEmployeeComponent implements OnInit {
         'activate'
       ].value;
 
-      for (const contract of this.contractEmployee) {
-        if (this.contractEmployeeForm.controls[contract.key].value !== 'none') {
-          //  formdata.append(`${info.key}`, this.addressForm.controls[info.key].value);
-          jsonData[`${contract.key}`] = this.contractEmployeeForm.controls[
-            contract.key
-          ].value;
-        }
-      }
+      // for (const contract of this.contractEmployee) {
+      //   if (this.contractEmployeeForm.controls[contract.key].value !== 'none') {
+      //     //  formdata.append(`${info.key}`, this.addressForm.controls[info.key].value);
+      //     jsonData[`${contract.key}`] = this.contractEmployeeForm.controls[
+      //       contract.key
+      //     ].value;
+      //   }
+      // }
 
       // console.log('this.addressForm.controls[activate].value',this.addressForm.controls['activate'].value);
       // formdata.append('genre', this.addressForm.controls['genre'].value);
@@ -777,31 +777,31 @@ export class FormEmployeeComponent implements OnInit {
           );
       }
 
-      this.contractEmployeeDbService
-        .updateContractEmployee(this.contractEmployeeId, jsonData)
-        .pipe(take(1))
-        .subscribe(
-          (resp) => {
-            console.log(
-              'responceCONTRACT ----------------------------------------------------------------------->',
-              resp
-            );
-            console.log(
-              'responceJSON ----------------------------------------------------------------------->',
-              jsonData
-            );
-          },
-          (err) => {
-            console.warn(err);
-            if (err.error.non_field_errors) {
-              this.notiservice.error(
-                this.trans.instant(err.error.non_field_errors[0])
-              );
-            } else if (err.error.username) {
-              this.notiservice.error(this.trans.instant(err.error.username[0]));
-            }
-          }
-        );
+      // this.contractEmployeeDbService
+      //   .updateContractEmployee(this.contractEmployeeId, jsonData)
+      //   .pipe(take(1))
+      //   .subscribe(
+      //     (resp) => {
+      //       console.log(
+      //         'responceCONTRACT ----------------------------------------------------------------------->',
+      //         resp
+      //       );
+      //       console.log(
+      //         'responceJSON ----------------------------------------------------------------------->',
+      //         jsonData
+      //       );
+      //     },
+      //     (err) => {
+      //       console.warn(err);
+      //       if (err.error.non_field_errors) {
+      //         this.notiservice.error(
+      //           this.trans.instant(err.error.non_field_errors[0])
+      //         );
+      //       } else if (err.error.username) {
+      //         this.notiservice.error(this.trans.instant(err.error.username[0]));
+      //       }
+      //     }
+      //   );
 
       for (const item of this.poste) {
         if (this.posteForm.controls[item.key].value) {

@@ -193,5 +193,8 @@
   "birth_date": "Date de naissance",
   "Download Badge": "Télécharger le Badge",
   "RegenerateQRCode": "Regénérer le QR_Code",
-  "Regenerate": "Regénérer"
+  "Regenerate": "Regénérer",
+  "Information For Presence": "Information sur la presence",
+  "Presence Date": "Date de présence",
+  "Total Hours": "Nombre d'heure"
 }

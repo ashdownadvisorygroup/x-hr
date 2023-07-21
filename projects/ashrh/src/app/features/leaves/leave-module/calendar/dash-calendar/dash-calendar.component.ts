@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { Event } from '../../../models/event';
+import { Events } from '../../../models/event';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -67,7 +67,7 @@ export class DashCalendarComponent implements OnInit {
   activeDayIsOpen = false;
   refresh: Subject<any> = new Subject();
   excludeDays: number[] = [];
-  events$: Observable<Array<CalendarEvent<{ events: Event }>>>;
+  events$: Observable<Array<CalendarEvent<{ events: Events }>>>;
 
   actions: CalendarEventAction[] = [
     // {
@@ -132,7 +132,7 @@ export class DashCalendarComponent implements OnInit {
     });
   }
 
-  eventClicked(currEvent: CalendarEvent<{ event: Event }>): void {
+  eventClicked(currEvent: CalendarEvent<{ event: Events }>): void {
     console.log('Event clicked', currEvent.meta.event);
     const clickedEvent = currEvent.meta.event;
 
@@ -172,7 +172,8 @@ export class DashCalendarComponent implements OnInit {
     }).pipe(
       map((results: any) => {
         console.log('results iss ', results);
-        return results.map((event: Event) => {
+        console.log('Type of results:', typeof results);
+        return results.map((event: Events) => {
           console.log('voici les donnees charges', event);
           return {
             title:

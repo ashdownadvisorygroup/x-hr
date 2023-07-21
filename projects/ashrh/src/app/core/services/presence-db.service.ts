@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class PresenceDbService {
+  presences_url = '/api/grh/presences_details/';
   public static TYPE_ARRIVE = 'arrive';
   public static TYPE_LEAVE = 'leave';
   constructor(private httpClient: HttpClient) {}
@@ -22,6 +23,21 @@ export class PresenceDbService {
   public depart(id: string) {
     return this.httpClient
       .get(environment.server + `/api/grh/presence/${id}/`)
+      .pipe(share());
+  }
+
+  getPresenceListBetweenDate(params: any) {
+    // return this.httpClient.get(environment.server + leaves_url, { params }).pipe(share())
+    console.log('that is params ===========>>', params);
+    return this.httpClient
+      .get(environment.server + '/api/grh/presences_list/', params)
+      .pipe(share());
+  }
+
+  public getPresences(id: string, params: any) {
+    console.log('that is params ===========>> a', params);
+    return this.httpClient
+      .get(environment.server + `/api/grh/presences_details/${id}`, params)
       .pipe(share());
   }
 }

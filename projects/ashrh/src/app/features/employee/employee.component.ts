@@ -51,7 +51,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     'contact',
     'status',
     'actions',
-    'download',
+    // 'download',
     'downloadBadge',
     'regenerateQRCode'
   ];

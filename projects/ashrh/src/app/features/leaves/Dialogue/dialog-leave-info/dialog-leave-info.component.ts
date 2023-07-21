@@ -117,6 +117,11 @@ export class DialogLeaveInfoComponent implements OnInit {
       .pipe(
         take(1),
         switchMap(({ employee_id }) => {
+          console.log(
+            'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+            employee_id
+          );
+
           this.id = employee_id;
 
           const leaveDetails$ = this.LeaveServiceDB.getLeaves(this.data.id);
@@ -129,8 +134,8 @@ export class DialogLeaveInfoComponent implements OnInit {
       )
       .subscribe(
         ([leaveDetails, employeeDetails]) => {
-          // console.log('Leave details:', leaveDetails);
-          // console.log('Employee details:', employeeDetails);
+          console.log('Leave details:', leaveDetails);
+          console.log('Employee details:', employeeDetails);
 
           const employeeId = leaveDetails['employee']['person'];
           const employees = Array.isArray(employeeDetails)
