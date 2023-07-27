@@ -66,6 +66,12 @@
             </mwl-calendar-day-view>
           </div>
         </div>
+        <div *ngIf="totalWorkDays > 0" style="font-weight: bold">
+          Total Work Day: {{ totalWorkDays }}
+        </div>
+        <div *ngIf="totalWorkDays === 0" style="font-weight: bold">
+          Total Work Day: 0
+        </div>
       </div>
       
       <div class=""></div>

@@ -84,14 +84,16 @@ export class CheckPresenceComponent implements OnInit {
     }
   ];
   isEmployeeSelected = false;
+  totalWorkDays: number = 0;
 
   selectEmployee(event: Event, employee: any) {
     event.preventDefault(); // Empêcher la redirection du lien
-    console.log('------------------------', employee);
+    // console.log('------------------------', employee);
 
     this.selectedEmployee = employee; // Mettre à jour l'employé sélectionné
     this.activeEmployee = employee;
     this.isEmployeeSelected = true;
+    this.totalWorkDays = 0;
 
     const getStart: any = {
       month: startOfMonth,
@@ -120,6 +122,9 @@ export class CheckPresenceComponent implements OnInit {
           console.log('Type of results:', typeof results);
           return results.presences.map((event: any) => {
             console.log('voici les donnees charges', event);
+            this.totalWorkDays = results.work_days;
+            // console.log('TEST++++++++++', this.totalWorkDays);
+
             const formattedArrive = formatDate(
               event.arrive,
               'yyyy-MM-dd',
@@ -135,6 +140,7 @@ export class CheckPresenceComponent implements OnInit {
               // `${event.reason} by ${event.employee?.person.first_name?.toUpperCase()} ${event.employee?.person.last_name?.toUpperCase()}`,
               start: startOfDay(new Date(formattedArrive)),
               end: endOfDay(new Date(formattedDepart)),
+              totalWorkDays: this.totalWorkDays,
               allDay: true,
               resizable: {
                 beforeStart: true,
@@ -156,9 +162,9 @@ export class CheckPresenceComponent implements OnInit {
         })
       );
 
-    this.events$.subscribe((res) =>
-      console.log('pppppppppppppppppppppppppppppppppppp', res)
-    );
+    this.events$.subscribe((result: any) => {
+      // console.log('pppppppppppppppppppppppppppppppppppp', result);
+    });
   }
 
   sections: any[] = [
