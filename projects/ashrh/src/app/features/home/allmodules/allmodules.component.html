@@ -1,9 +1,21 @@
-<div class="text-white pl-3">
-  <button mat-icon-button style="font-size: 28px;">
-    <fa-icon icon="home"></fa-icon>
-  </button>
-  {{"Dashboard" | translate}}
+<div class="d-flex flex-fill" style="justify-content: space-between;">
+  <div class="text-white pl-3">
+    <button mat-icon-button style="font-size: 28px;">
+      <fa-icon icon="home"></fa-icon>
+    </button>
+    {{"Dashboard" | translate}}
+    
+  </div>
+  
+  <div style="padding-top: 10px; margin-right: 10px;">
+    <form (ngSubmit)="onFileSubmit()" #fileForm="ngForm">
+      <input type="file" name="file" (change)="onFileChange($event)" accept=".xlsx">
+      <button type="submit" [disabled]="!selectedFile">Importer</button>
+    </form>
+  </div>
 </div>
+
+
 <div class="flex-fill d-flex justify-content-center align-items-center overflow-hidden p-2" style="height: 95%">
   <div class="modules-container p-2">
     <ng-container *ngFor="let module of modules" >

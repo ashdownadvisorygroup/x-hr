@@ -18,6 +18,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSortModule } from '@angular/material/sort';
 import { FormEmployeeComponent } from './form-employee/form-employee.component';
+import { DialogPayslipFormComponent } from './dialog-payslip-form/dialog-payslip-form.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { FormEmployeeComponent } from './form-employee/form-employee.component';
     EmployeProfilComponent,
     UpdateComponent,
     CreatedEmployeeComponent,
-    FormEmployeeComponent
+    FormEmployeeComponent,
+    DialogPayslipFormComponent
   ],
   imports: [
     CommonModule,

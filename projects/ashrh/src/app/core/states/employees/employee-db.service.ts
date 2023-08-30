@@ -75,6 +75,23 @@ export class EmployeeDbService {
       .pipe(share());
   }
 
+  public exportFile() {
+    // console.log(`modification of employee ${id}`,params);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      //'Content-Type': 'multipart/form-data',
+      Accept: 'application/json',
+      Authorization: `Token ${JSON.parse(localStorage.getItem('ASHRH-TOKEN'))}`
+    });
+
+    const requestOptions = { headers: headers };
+    return this.httpClient
+      .get(environment.server + `/api/grh/download_template/`, {
+        responseType: 'arraybuffer'
+      })
+      .pipe(share());
+  }
+
   public downloadBadgeEmployee(id: string) {
     // console.log(`modification of employee ${id}`,params);
     const headers = new HttpHeaders({
@@ -89,6 +106,25 @@ export class EmployeeDbService {
 
     return this.httpClient
       .post(environment.server + `/api/grh/badge_pdf/`, params, {
+        responseType: 'arraybuffer'
+      })
+      .pipe(share());
+  }
+
+  public downloadPayslipEmployee(id: string, data: any) {
+    // console.log(`modification of employee ${id}`,params);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      //'Content-Type': 'multipart/form-data',
+      Accept: 'application/json',
+      Authorization: `Token ${JSON.parse(localStorage.getItem('ASHRH-TOKEN'))}`
+    });
+
+    const requestOptions = { headers: headers };
+    let params = { employee_id: id, ...data };
+
+    return this.httpClient
+      .post(environment.server + `/api/grh/download_payslip/`, params, {
         responseType: 'arraybuffer'
       })
       .pipe(share());

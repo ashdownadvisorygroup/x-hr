@@ -24,6 +24,11 @@ import { NotificationService } from '../../core/core.module';
 import { ServerFormatDatePipe } from '../../core/pipes/server-format-date.pipe';
 import { saveAs } from 'file-saver';
 import { TranslateService } from '@ngx-translate/core';
+import { environment } from '../../../environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { DialogPayslipFormComponent } from './dialog-payslip-form/dialog-payslip-form.component';
+import { MatDialog } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'ashrh-employee',
@@ -40,6 +45,8 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class EmployeeComponent implements OnInit, OnDestroy {
   @ViewChild('dialogTemplate') dialogTemplate: ElementRef;
+  selectedFile: File | null = null;
+  directoryPath: string;
   subcription = new Subscription();
   filterExpand = false;
   dataSource: any[] = [];
@@ -53,7 +60,8 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     'actions',
     // 'download',
     'downloadBadge',
-    'regenerateQRCode'
+    'regenerateQRCode',
+    'downloadPayslip'
   ];
   displayedColumnsFilter: string[] = [
     'selection_filter',
@@ -75,6 +83,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     page_size: this.pageSize,
     page: 1
   };
+  payslipForm: FormGroup;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -83,8 +92,21 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     private notiSelect: NotificationService,
     public serverFormatDatePipe: ServerFormatDatePipe,
     private notiservice: NotificationService,
-    private trans: TranslateService
-  ) {}
+    private trans: TranslateService,
+    private http: HttpClient,
+    private fb: FormBuilder,
+    private dialog: MatDialog
+  ) {
+    this.payslipForm = this.fb.group({
+      indemnity: ['', Validators.required],
+      performance: ['', Validators.required],
+      rfs: ['', Validators.required],
+      acompte: ['', Validators.required],
+      internal_number: [null, Validators.required],
+      cat_ech: [null, Validators.required],
+      insured_number: [null, Validators.required]
+    });
+  }
 
   ngOnInit(): void {
     this.query(this.paramSearch); //query renvoie les elements qui se trouve a un numero de page et un nombre d'element a recupere contenu dans paramSearch
@@ -92,6 +114,63 @@ export class EmployeeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subcription.unsubscribe();
+  }
+
+  onFileChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement.files && inputElement.files.length > 0) {
+      this.selectedFile = inputElement.files[0];
+    } else {
+      this.selectedFile = null;
+    }
+  }
+
+  onFileSubmit(): void {
+    if (this.selectedFile) {
+      // Create the JSON data to send in the request
+      const jsonData = {
+        file: this.selectedFile,
+        directory_path: 'storage', // Add other properties as needed
+        sheets: ['Changed Sheet'],
+        exercise: '2023'
+      };
+
+      // Set the headers for the JSON content
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      };
+
+      // Send the JSON data as a POST request
+      this.http
+        .post(
+          environment.server + '/api/grh/import_employee_data/',
+          jsonData,
+          httpOptions
+        )
+        .subscribe(
+          (response) => {
+            this.notiservice.success(
+              this.trans.instant('Fichier importé avec succès')
+            );
+            console.log('File uploaded successfully:', response);
+            // Optionally, display a success message to the user
+          },
+          (error) => {
+            console.error('Error while uploading file:', error);
+            // Display an error message to the user
+          }
+        );
+    }
+  }
+
+  exportFile() {
+    this.employeeDbService.exportFile().subscribe((xlsx: any) => {
+      const blob = new Blob([xlsx], { type: 'application/xlsx' });
+      const fileName = 'document.xlsx';
+      saveAs(blob, fileName);
+    });
   }
 
   //
@@ -287,6 +366,29 @@ export class EmployeeComponent implements OnInit, OnDestroy {
         const fileName = 'BadgeEmployee.pdf';
         saveAs(blob, fileName);
       });
+  }
+
+  downloadPayslip(element: any) {
+    console.log('***********************', this.payslipForm);
+    const dialogRef = this.dialog.open(DialogPayslipFormComponent, {
+      width: '600px',
+      height: '600px',
+      data: this.payslipForm.value
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('RESULT**', result);
+
+      if (result) {
+        this.employeeDbService
+          .downloadPayslipEmployee(element.id, result)
+          .subscribe((pdf) => {
+            const blob = new Blob([pdf], { type: 'application/pdf' });
+            const fileName = 'PayslipEmployee.pdf';
+            saveAs(blob, fileName);
+          });
+      }
+    });
   }
 
   regenerateQRCode(element: any): void {

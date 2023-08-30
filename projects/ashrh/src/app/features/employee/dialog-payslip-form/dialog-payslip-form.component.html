@@ -1,0 +1,35 @@
+<h2 class="mb-3 form-title" style="margin-bottom: 20px;">Formulaire de Fiche de Paie</h2>
+<form [formGroup]="payslipForm" (ngSubmit)="onSubmit(form.value)" #form="ngForm">
+  <div class="form-group row">
+    <label for="indemnity" class="col-sm-3 col-form-label">Indemnity:</label>
+    <input type="number" id="indemnity" name="indemnity" formControlName="indemnity">
+  </div>
+  <div class="form-group row">
+    <label for="acompte" class="col-sm-3 col-form-label">Acompte:</label>
+    <input type="number" id="acompte" name="acompte" formControlName="acompte">
+  </div>
+  <div class="form-group row">
+    <label for="performance" class="col-sm-3 col-form-label">Performance:</label>
+    <input type="number" id="performance" name="performance" formControlName="performance">
+  </div>
+  <div class="form-group row">
+    <label for="rfs" class="col-sm-3 col-form-label">RFS:</label>
+    <input type="number" id="rfs" name="rfs" formControlName="rfs">
+  </div>
+  <div class="form-group row">
+    <label for="internal_number" class="col-sm-3 col-form-label">Internal Number:</label>
+    <input type="text" id="internal_number" name="internal_number" formControlName="internal_number">
+  </div>
+  <div class="form-group row">
+    <label for="cat_ech" class="col-sm-3 col-form-label">CAT/ECH:</label>
+    <input type="text" id="cat_ech" name="cat_ech" formControlName="cat_ech">
+  </div>
+  <div class="form-group row">
+    <label for="insured_number" class="col-sm-3 col-form-label">INSURED NUMBER:</label>
+    <input type="text" id="insured_number" name="insured_number" formControlName="insured_number">
+  </div>
+  <div style="padding-top: 50px; margin-left: 150px; display: flex;">
+      <button mat-raised-button color="primary" class="text-white mr-2" type="button" (click)="onCancel()">Annuler</button>
+      <button mat-raised-button color="primary" class="text-white mr-2" type="submit">Valider</button>
+  </div>
+</form>

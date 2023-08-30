@@ -57,6 +57,9 @@ export class FormEmployeeComponent implements OnInit {
   add_emergency_contact_two = false;
   contractId;
   contract_employee;
+  cat_ech: any;
+  internal_number: any;
+  insured_number: any;
   informationPerso = [
     {
       key: 'first_name',
@@ -83,6 +86,24 @@ export class FormEmployeeComponent implements OnInit {
       key: 'phone',
       validators: [],
       type: 'tel',
+      default: ''
+    },
+    {
+      key: 'cat_ech',
+      validators: [],
+      type: 'text',
+      default: ''
+    },
+    {
+      key: 'internal_number',
+      validators: [],
+      type: 'text',
+      default: ''
+    },
+    {
+      key: 'insured_number',
+      validators: [],
+      type: 'number',
       default: ''
     }
     // {
@@ -347,7 +368,9 @@ export class FormEmployeeComponent implements OnInit {
       );
     }
     this.informationPersoForm.addControl('activate', new FormControl());
-    // this.informationPersoForm.addControl('genre', new FormControl('F'));
+    this.informationPersoForm.addControl('cat_ech', new FormControl());
+    this.informationPersoForm.addControl('insured_number', new FormControl());
+    this.informationPersoForm.addControl('internal_number', new FormControl());
     this.informationPersoForm.addControl('genre', new FormControl());
 
     for (const post of this.poste) {
@@ -397,6 +420,9 @@ export class FormEmployeeComponent implements OnInit {
             console.log('that is user loaded', employee);
             this.user = employee;
             this.activate = employee['data']['activate'];
+            this.cat_ech = employee['data']['cat_ech'];
+            this.insured_number = employee['data']['insured_number'];
+            this.internal_number = employee['data']['internal_number'];
             this.genre = employee['data']['person']['genre'];
 
             // this.informationPersoForm.controls['genre'].value =
@@ -475,6 +501,22 @@ export class FormEmployeeComponent implements OnInit {
       'activate',
       new FormControl(this.activate)
     );
+
+    this.informationPersoForm.addControl(
+      'cat_ech',
+      new FormControl(this.cat_ech)
+    );
+
+    this.informationPersoForm.addControl(
+      'insured_number',
+      new FormControl(this.insured_number)
+    );
+
+    this.informationPersoForm.addControl(
+      'internal_number',
+      new FormControl(this.internal_number)
+    );
+
     this.informationPersoForm.addControl('genre', new FormControl(this.genre));
 
     //this.db_department.getAllDepart().subscribe( data => {this.working_group = data})
@@ -510,6 +552,21 @@ export class FormEmployeeComponent implements OnInit {
       );
 
       formdata.append(
+        'cat_ech',
+        this.informationPersoForm.controls['cat_ech'].value
+      );
+
+      formdata.append(
+        'insured_number',
+        this.informationPersoForm.controls['insured_number'].value
+      );
+
+      formdata.append(
+        'internal_number',
+        this.informationPersoForm.controls['internal_number'].value
+      );
+
+      formdata.append(
         'person_genre',
         this.informationPersoForm.controls['genre'].value
       );
@@ -519,6 +576,17 @@ export class FormEmployeeComponent implements OnInit {
       data['person_activate'] = this.informationPersoForm.controls[
         'activate'
       ].value;
+
+      data['cat_ech'] = this.informationPersoForm.controls['cat_ech'].value;
+
+      data['insured_number'] = this.informationPersoForm.controls[
+        'insured_number'
+      ].value;
+
+      data['internal_number'] = this.informationPersoForm.controls[
+        'internal_number'
+      ].value;
+
       data['person_genre'] = this.informationPersoForm.controls['genre'].value;
 
       if (this.userimage) {
@@ -685,6 +753,16 @@ export class FormEmployeeComponent implements OnInit {
       // formdata.append('activate', this.addressForm.controls['activate'].value);
       data['person_activate'] = this.informationPersoForm.controls[
         'activate'
+      ].value;
+
+      data['cat_ech'] = this.informationPersoForm.controls['cat_ech'].value;
+
+      data['insured_number'] = this.informationPersoForm.controls[
+        'insured_number'
+      ].value;
+
+      data['internal_number'] = this.informationPersoForm.controls[
+        'internal_number'
       ].value;
 
       // for (const contract of this.contractEmployee) {
