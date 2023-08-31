@@ -194,7 +194,15 @@
   "Download Badge": "Télécharger le Badge",
   "RegenerateQRCode": "Regénérer le QR_Code",
   "Regenerate": "Regénérer",
+  "Download Payslip": "Télécharger la fiche de paie",
   "Information For Presence": "Information sur la presence",
   "Presence Date": "Date de présence",
-  "Total Hours": "Nombre d'heure"
+  "Total Hours": "Nombre d'heure",
+  "Indemnity:": "Indemnité",
+  "Acompte:": "Acompte",
+  "Performance:": "Performance",
+  "RFS:": "Retenues Fiscales et Sociales",
+  "Internal Number:": "Numéro Interne",
+  "CAT/ECH:": "CAT/ECH",
+  "INSURED NUMBER:": "Numéro d'assurance"
 }

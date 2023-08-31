@@ -79,7 +79,7 @@
         {{"New Department" | translate}}
       </button>
     </mat-expansion-panel>
-    <mat-expansion-panel>
+    <!-- <mat-expansion-panel>
       <mat-form-field appearance="fill">
         <mat-label style="color: #42a5f5;">{{"Delete contract(s)" | translate}}</mat-label>
         <mat-select [(ngModel)]="selectedContracts" multiple>
@@ -97,14 +97,11 @@
       <ash-table-editable #tb2 [dataSource]="contracts" [colDistribution]="colDistribution_period"
         [filter]="true">
       </ash-table-editable>
-      <!-- <mat-list *ngFor= "let period of working_period">
-        <mat-list-item >{{period.name}}</mat-list-item>
-      </mat-list> -->
       <button (click)="addContract()" mat-raised-button color="primary"
         style="margin: auto; display: flex; margin-top: 3px; color:white;">
         {{"New Contract" | translate}}
       </button>
-    </mat-expansion-panel>
+    </mat-expansion-panel> -->
 
     <mat-expansion-panel>
       <mat-form-field appearance="fill">

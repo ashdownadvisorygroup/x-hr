@@ -195,7 +195,15 @@
   "Download Badge": "Download Badge",
   "RegenerateQRCode": "RegenerateQRCode",
   "Regenerate": "Regenerate",
+  "Download Payslip": "Download Payslip",
   "Information For Presence": "Information For Presence",
   "Presence Date": "Presence Date ",
-  "Total Hours": "Total Hours"
+  "Total Hours": "Total Hours",
+  "Indemnity:": "Indemnity",
+  "Acompte:": "Acompte",
+  "Performance:": "Performance",
+  "RFS:": "RFS",
+  "Internal Number:": "Internal Number",
+  "CAT/ECH:": "CAT/ECH",
+  "INSURED NUMBER:": "INSURED NUMBER"
 }
