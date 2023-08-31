@@ -36,13 +36,22 @@ export class TokenInjectorService implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    req = req.clone({
-      setHeaders: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        Authorization: `Token ${this.localeStorage.getItem('TOKEN')}`
-      }
-    });
+    if (req.body instanceof FormData) {
+      req = req.clone({
+        setHeaders: {
+          Accept: 'application/json',
+          Authorization: `Token ${this.localeStorage.getItem('TOKEN')}`
+        }
+      });
+    } else {
+      req = req.clone({
+        setHeaders: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: `Token ${this.localeStorage.getItem('TOKEN')}`
+        }
+      });
+    }
 
     // req = req.clone(httpOptions);
 

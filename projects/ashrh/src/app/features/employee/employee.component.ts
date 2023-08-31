@@ -25,7 +25,7 @@ import { ServerFormatDatePipe } from '../../core/pipes/server-format-date.pipe';
 import { saveAs } from 'file-saver';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { DialogPayslipFormComponent } from './dialog-payslip-form/dialog-payslip-form.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -127,41 +127,37 @@ export class EmployeeComponent implements OnInit, OnDestroy {
 
   onFileSubmit(): void {
     if (this.selectedFile) {
-      // Create the JSON data to send in the request
-      const jsonData = {
-        file: this.selectedFile,
-        directory_path: 'storage', // Add other properties as needed
-        sheets: ['Changed Sheet'],
-        exercise: '2023'
-      };
+      const formData = new FormData();
+      formData.append('file', this.selectedFile);
 
-      // Set the headers for the JSON content
       const httpOptions = {
         headers: new HttpHeaders({
-          'Content-Type': 'application/json'
+          'Content-Type': 'multipart/form-data'
         })
       };
+      const request = new HttpRequest(
+        'POST',
+        environment.server +
+          '/api/grh/import_employee_data/' +
+          this.selectedFile.name +
+          '/',
+        formData
+      );
 
       // Send the JSON data as a POST request
-      this.http
-        .post(
-          environment.server + '/api/grh/import_employee_data/',
-          jsonData,
-          httpOptions
-        )
-        .subscribe(
-          (response) => {
-            this.notiservice.success(
-              this.trans.instant('Fichier importé avec succès')
-            );
-            console.log('File uploaded successfully:', response);
-            // Optionally, display a success message to the user
-          },
-          (error) => {
-            console.error('Error while uploading file:', error);
-            // Display an error message to the user
-          }
-        );
+      this.http.request(request).subscribe(
+        (response) => {
+          this.notiservice.success(
+            this.trans.instant('Fichier importé avec succès')
+          );
+          console.log('File uploaded successfully:', response);
+          // Optionally, display a success message to the user
+        },
+        (error) => {
+          console.error('Error while uploading file:', error);
+          // Display an error message to the user
+        }
+      );
     }
   }
 

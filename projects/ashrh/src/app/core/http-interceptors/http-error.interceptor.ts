@@ -81,16 +81,28 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     //  console.log('that is token !!!!!!!!!!!!', token);
     if (token != null) {
       // authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
-      authReq = req.clone({
-        setHeaders: {
-          'Content-Type': 'application/json',
-          //  'Accept': '*/*',
-          //  'Accept-Encoding':'gzip, deflate, br',
-          Authorization: `Token ${JSON.parse(
-            localStorage.getItem('ASHRH-TOKEN')
-          )}`
-        }
-      });
+
+      if (authReq.body instanceof FormData) {
+        authReq = req.clone({
+          setHeaders: {
+            Authorization: `Token ${JSON.parse(
+              localStorage.getItem('ASHRH-TOKEN')
+            )}`
+          }
+        });
+      } else {
+        authReq = req.clone({
+          setHeaders: {
+            'Content-Type': 'application/json',
+            //  'Accept': '*/*',
+            //  'Accept-Encoding':'gzip, deflate, br',
+            Authorization: `Token ${JSON.parse(
+              localStorage.getItem('ASHRH-TOKEN')
+            )}`
+          }
+        });
+      }
+
       //  console.log('that is headers :)', `${JSON.parse(localStorage.getItem('ASHRH-TOKEN'))}`);
       //  authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, token) });
       // authReq = req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });

@@ -6,13 +6,6 @@
     {{"Dashboard" | translate}}
     
   </div>
-  
-  <div style="padding-top: 10px; margin-right: 10px;">
-    <form (ngSubmit)="onFileSubmit()" #fileForm="ngForm">
-      <input type="file" name="file" (change)="onFileChange($event)" accept=".xlsx">
-      <button type="submit" [disabled]="!selectedFile">Importer</button>
-    </form>
-  </div>
 </div>
 
 
