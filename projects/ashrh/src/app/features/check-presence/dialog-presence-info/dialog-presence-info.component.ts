@@ -103,7 +103,7 @@ export class DialogPresenceInfoComponent implements OnInit {
 
         this.Groupform.patchValue({
           presence_date: presenceDetails['presence_date'],
-          total_hours: presenceDetails['presence_hours'],
+          // total_hours: presenceDetails['presence_hours'],
           employee:
             employeeDetails['data']['person']['first_name'] +
             ' ' +

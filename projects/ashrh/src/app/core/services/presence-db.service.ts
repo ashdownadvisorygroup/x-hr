@@ -26,14 +26,34 @@ export class PresenceDbService {
       .pipe(share());
   }
 
+  // getPresenceListBetweenDate(params: any) {
+  //   // return this.httpClient.get(environment.server + leaves_url, { params }).pipe(share())
+  //   console.log('that is params ===========>>', params);
+  //   return this.httpClient
+  //     .get(environment.server + '/api/grh/presences_list/', params)
+  //     .pipe(share());
+  // }
+
   getPresenceListBetweenDate(params: any) {
     // return this.httpClient.get(environment.server + leaves_url, { params }).pipe(share())
     console.log('that is params ===========>>', params);
     return this.httpClient
-      .get(environment.server + '/api/grh/presences_list/', params)
+      .get(
+        environment.server + '/api/grh/attendances/presence_by_date/',
+        params
+      )
       .pipe(share());
   }
 
+  // public getPresences(params: any) {
+  //   console.log('that is params ===========>> a', params);
+  //   return this.httpClient
+  //     .get(
+  //       environment.server + `/api/grh/attendances/presence_by_date/`,
+  //       params
+  //     )
+  //     .pipe(share());
+  // }
   public getPresences(id: string, params: any) {
     console.log('that is params ===========>> a', params);
     return this.httpClient

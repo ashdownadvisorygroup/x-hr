@@ -440,7 +440,7 @@ export class FormEmployeeComponent implements OnInit {
             //     this.contract_employee = data;
             //     this.contractEmployeeId = data[0]?.id;
             //     for (const info of this.contractEmployee) {
-            //       info.default = data[0]?.[info.key] || 'none';
+            //       info.default = data[0]?.[info.key] || '';
             //       console.log(info.key + '----------CONTRACT-------' + info);
             //     }
 
@@ -456,7 +456,7 @@ export class FormEmployeeComponent implements OnInit {
               ) {
                 info.default = employee['data']['person'][info.key];
               } else {
-                info.default = 'none';
+                info.default = '';
               }
             }
 
@@ -469,25 +469,25 @@ export class FormEmployeeComponent implements OnInit {
               ) {
                 info.default = employee['data']['emergency_person'][info.key];
               } else {
-                info.default = 'none';
+                info.default = '';
               }
             }
 
             if (employee['data']['emergency_person_2']) {
               for (let info of this.emergency_2) {
                 info.default =
-                  employee['data']['emergency_person_2'][info.key] || 'none';
+                  employee['data']['emergency_person_2'][info.key] || '';
               }
               this.add_emergency_contact_two = true;
             }
 
             for (const info of this.poste) {
-              info.default = employee['data'][info.key]?.id || 'none';
+              info.default = employee['data'][info.key]?.id || '';
             }
             console.log('------------EEEE---------->', this.poste);
 
             for (const info of this.compte) {
-              info.default = employee[info.key] ? employee[info.key] : 'none';
+              info.default = employee[info.key] ? employee[info.key] : '';
             }
             //  console.log('these are the modifications');
             //  console.log(this.user);
@@ -743,7 +743,7 @@ export class FormEmployeeComponent implements OnInit {
       for (const info of this.informationPerso) {
         // console.log('info.key',info.key);
         console.log(`ligne 216`);
-        if (this.informationPersoForm.controls[info.key].value !== 'none') {
+        if (this.informationPersoForm.controls[info.key].value !== '') {
           //  formdata.append(`${info.key}`, this.addressForm.controls[info.key].value);
           data[`person_${info.key}`] = this.informationPersoForm.controls[
             info.key
@@ -766,7 +766,7 @@ export class FormEmployeeComponent implements OnInit {
       ].value;
 
       // for (const contract of this.contractEmployee) {
-      //   if (this.contractEmployeeForm.controls[contract.key].value !== 'none') {
+      //   if (this.contractEmployeeForm.controls[contract.key].value !== '') {
       //     //  formdata.append(`${info.key}`, this.addressForm.controls[info.key].value);
       //     jsonData[`${contract.key}`] = this.contractEmployeeForm.controls[
       //       contract.key
@@ -782,7 +782,7 @@ export class FormEmployeeComponent implements OnInit {
 
       for (const item of this.emergency) {
         if (
-          this.emergencyForm.controls['emergency_' + item.key]?.value !== 'none'
+          this.emergencyForm.controls['emergency_' + item.key]?.value !== ''
         ) {
           data[`emergency_${item.key}`] = this.emergencyForm.controls[
             'emergency_' + item.key
@@ -793,8 +793,7 @@ export class FormEmployeeComponent implements OnInit {
 
       for (const item of this.emergency_2) {
         if (
-          this.emergency_2Form.controls['emergency_2_' + item.key]?.value !==
-          'none'
+          this.emergency_2Form.controls['emergency_2_' + item.key]?.value !== ''
         ) {
           //  console.log(`ligne 263`);
           formdata.append(

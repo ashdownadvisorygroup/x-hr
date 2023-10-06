@@ -59,8 +59,8 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     'status',
     'actions',
     // 'download',
-    'downloadBadge',
-    'regenerateQRCode',
+    // 'downloadBadge',
+    // 'regenerateQRCode',
     'downloadPayslip'
   ];
   displayedColumnsFilter: string[] = [

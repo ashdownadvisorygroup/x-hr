@@ -31,7 +31,7 @@
 
   <div class="w-100 p-2 d-flex flex-column">
     <div class="d-flex justify-content-end">
-      <button
+      <!-- <button
         *ngFor="let module of sections"
         mat-raised-button
         color="primary"
@@ -40,7 +40,7 @@
         [routerLink]="[module.route]"
       >
         {{ module.name | translate }}
-      </button>
+      </button> -->
     </div>
     <div class="p-2">
       <!-- Check presence calendar -->
@@ -67,11 +67,17 @@
           </div>
         </div>
         <div *ngIf="totalWorkDays > 0" style="font-weight: bold">
-          Total Work Day: {{ totalWorkDays }}
+          {{"Total Work Day" | translate}}: {{ totalWorkDays }}
         </div>
         <div *ngIf="totalWorkDays === 0" style="font-weight: bold">
-          Total Work Day: 0
+          {{"Total Work Day" | translate}}: 0   
         </div>
+        <!-- <div *ngIf="totalHours > 0" style="font-weight: bold">
+          Total Hours: {{ totalHours }}
+        </div>
+        <div *ngIf="totalHours === 0" style="font-weight: bold">
+          Total Hours: 0
+        </div> -->
       </div>
       
       <div class=""></div>

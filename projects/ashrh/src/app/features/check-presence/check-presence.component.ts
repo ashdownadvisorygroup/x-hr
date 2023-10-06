@@ -85,6 +85,7 @@ export class CheckPresenceComponent implements OnInit {
   ];
   isEmployeeSelected = false;
   totalWorkDays: number = 0;
+  // totalHours: any;
 
   selectEmployee(event: Event, employee: any) {
     event.preventDefault(); // Empêcher la redirection du lien
@@ -94,6 +95,7 @@ export class CheckPresenceComponent implements OnInit {
     this.activeEmployee = employee;
     this.isEmployeeSelected = true;
     this.totalWorkDays = 0;
+    // this.totalHours = 0;
 
     const getStart: any = {
       month: startOfMonth,
@@ -108,8 +110,8 @@ export class CheckPresenceComponent implements OnInit {
     const date2 = format(getEnd(this.viewDate), 'YYYY-MM-DD');
     //console.log('format(getEnd(this.viewDate) date2', date2);
     var params = {
+      employee_id: `${employee.id}`,
       start_date: `${date1}`,
-      employee__id: `${employee.id}`,
       end_date: `${date2}`
     };
     this.events$ = this.presenceServiceDb
@@ -120,27 +122,21 @@ export class CheckPresenceComponent implements OnInit {
         map((results: any) => {
           console.log('results iss ', results);
           console.log('Type of results:', typeof results);
-          return results.presences.map((event: any) => {
+          return results.map((event: any) => {
             console.log('voici les donnees charges', event);
-            this.totalWorkDays = results.work_days;
-            // console.log('TEST++++++++++', this.totalWorkDays);
+            this.totalWorkDays = results.length;
+            // this.totalHours = event.total;
+            console.log('TEST++++++++++', this.totalWorkDays);
 
-            const formattedArrive = formatDate(
-              event.arrive,
-              'yyyy-MM-dd',
-              'en'
-            );
-            const formattedDepart = formatDate(
-              event.depart,
-              'yyyy-MM-dd',
-              'en'
-            );
+            const formattedArrive = formatDate(event.date, 'yyyy-MM-dd', 'en');
+            const formattedDepart = formatDate(event.date, 'yyyy-MM-dd', 'en');
             return {
               title: `Presence of ${employee?.person.first_name?.toUpperCase()} ${employee?.person.last_name?.toUpperCase()}`,
               // `${event.reason} by ${event.employee?.person.first_name?.toUpperCase()} ${event.employee?.person.last_name?.toUpperCase()}`,
               start: startOfDay(new Date(formattedArrive)),
               end: endOfDay(new Date(formattedDepart)),
               totalWorkDays: this.totalWorkDays,
+              // totalHours: this.totalHours,
               allDay: true,
               resizable: {
                 beforeStart: true,
@@ -153,7 +149,7 @@ export class CheckPresenceComponent implements OnInit {
                 event: {
                   arrive: formattedArrive,
                   depart: formattedDepart,
-                  total_hours: event.total_hours,
+                  total_hours: event.total,
                   id: employee.id
                 }
               }
@@ -167,20 +163,20 @@ export class CheckPresenceComponent implements OnInit {
     });
   }
 
-  sections: any[] = [
-    {
-      name: 'Arrival',
-      image: '/assets/modules/employé.png',
-      route: 'check-arrive',
-      textBgColor: '#FFA500'
-    },
-    {
-      name: 'Departure',
-      image: '/assets/modules/employé.png',
-      route: 'check-depart',
-      textBgColor: '#2a2829'
-    }
-  ];
+  // sections: any[] = [
+  //   {
+  //     name: 'Arrival',
+  //     image: '/assets/modules/employé.png',
+  //     route: 'check-arrive',
+  //     textBgColor: '#FFA500'
+  //   },
+  //   {
+  //     name: 'Departure',
+  //     image: '/assets/modules/employé.png',
+  //     route: 'check-depart',
+  //     textBgColor: '#2a2829'
+  //   }
+  // ];
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -338,7 +334,7 @@ export class CheckPresenceComponent implements OnInit {
         map((results: any) => {
           console.log('results iss ', results);
           console.log('Type of results:', typeof results);
-          return results.presences.map((event: Events) => {
+          return results.map((event: Events) => {
             console.log('voici les donnees charges', event);
             return {
               title: `${
