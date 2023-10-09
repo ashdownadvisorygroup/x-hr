@@ -22,13 +22,8 @@ export class DialogPayslipFormComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.payslipForm = this.fb.group({
-      indemnity: [],
-      performance: [],
-      rfs: [],
-      acompte: [],
-      internal_number: [],
-      cat_ech: [],
-      insured_number: []
+      irpp: [],
+      performence: []
     });
   }
 

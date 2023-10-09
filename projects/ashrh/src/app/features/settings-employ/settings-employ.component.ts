@@ -148,8 +148,8 @@ export class SettingsEmployComponent implements OnInit {
       options: {
         setValue: (event, element) => {
           element.name = event;
-          this.db_list.updatePost(element).subscribe(() => {
-            this.db_list.getPosts().subscribe((data) => {
+          this.db_utily.updatePost(element).subscribe(() => {
+            this.db_utily.getPosts().subscribe((data) => {
               this.working_post = data;
               this.cd.detectChanges();
             });
@@ -214,6 +214,17 @@ export class SettingsEmployComponent implements OnInit {
     {
       header: 'Daily Salary',
       distrib: (el) => el.daily_salary,
+      options: {
+        key: 'daily_salary',
+        type: 'number',
+        setValue: () => {
+          alert('Cannot modify values in this column');
+        }
+      }
+    },
+    {
+      header: 'Indemnity',
+      distrib: (el) => el.indemnity,
       options: {
         key: 'daily_salary',
         type: 'number',

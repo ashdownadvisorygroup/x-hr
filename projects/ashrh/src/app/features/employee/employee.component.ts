@@ -367,8 +367,8 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   downloadPayslip(element: any) {
     console.log('***********************', this.payslipForm);
     const dialogRef = this.dialog.open(DialogPayslipFormComponent, {
-      width: '600px',
-      height: '600px',
+      // width: '600px',
+      // height: '600px',
       data: this.payslipForm.value
     });
 

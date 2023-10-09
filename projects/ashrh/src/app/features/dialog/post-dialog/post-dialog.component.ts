@@ -46,6 +46,12 @@ export class PostDialogComponent implements OnInit {
       validators: [Validators.required],
       type: 'number',
       default: ''
+    },
+    {
+      key: 'indemnity',
+      validators: [Validators.required],
+      type: 'number',
+      default: ''
     }
   ];
   constructor(

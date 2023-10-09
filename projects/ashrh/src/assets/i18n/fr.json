@@ -134,7 +134,7 @@
   "State": "Statut",
   "New Leaves": "Nouvelle permission",
   "Employees": "Employés",
-  "Monthly Salary": "Salaire mensuel",
+  "Monthly Salary": "Salaire de base",
   "Daily Salary": "Salaire journalier",
   "Number work days": "Nombre de jours de travail",
   "LeaveType": "Type de permission",
@@ -205,5 +205,6 @@
   "RFS:": "Retenues Fiscales et Sociales",
   "Internal Number:": "Numéro Interne",
   "CAT/ECH:": "CAT/ECH",
-  "INSURED NUMBER:": "Numéro d'assurance"
+  "INSURED NUMBER:": "Numéro d'assurance",
+  "cnps_number": "Numéro assuré CNPS"
 }

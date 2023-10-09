@@ -31,7 +31,7 @@
       <div class="child-content">
         <ng-container *ngIf="user?.person">
           <ng-container *ngFor="let item of about[0].keys">
-            <span>{{ item.key | translate}}:</span> <span>{{ user.person[item.key]}}</span>
+            <span>{{ item.key | translate}}:</span> <span>{{ item.key == "cnps_number" ? user[item.key] : user.person[item.key]}}</span>
           </ng-container>
           <span>Code:</span> <span>{{ user.code }}</span>
           <span>{{'start_date' | translate}}:</span> <span>{{ _.get(user, 'person.created_at') | date }}</span>

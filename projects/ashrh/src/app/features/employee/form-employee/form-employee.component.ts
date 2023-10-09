@@ -58,8 +58,6 @@ export class FormEmployeeComponent implements OnInit {
   contractId;
   contract_employee;
   cat_ech: any;
-  internal_number: any;
-  insured_number: any;
   informationPerso = [
     {
       key: 'first_name',
@@ -89,21 +87,9 @@ export class FormEmployeeComponent implements OnInit {
       default: ''
     },
     {
-      key: 'cat_ech',
+      key: 'cnps_number',
       validators: [],
       type: 'text',
-      default: ''
-    },
-    {
-      key: 'internal_number',
-      validators: [],
-      type: 'text',
-      default: ''
-    },
-    {
-      key: 'insured_number',
-      validators: [],
-      type: 'number',
       default: ''
     }
     // {
@@ -314,6 +300,7 @@ export class FormEmployeeComponent implements OnInit {
   confipasseye = true;
 
   activate = false;
+  cnps_number = 'any';
   genre = 'F';
   contractEmployeeId;
 
@@ -369,8 +356,7 @@ export class FormEmployeeComponent implements OnInit {
     }
     this.informationPersoForm.addControl('activate', new FormControl());
     this.informationPersoForm.addControl('cat_ech', new FormControl());
-    this.informationPersoForm.addControl('insured_number', new FormControl());
-    this.informationPersoForm.addControl('internal_number', new FormControl());
+    this.informationPersoForm.addControl('cnps_number', new FormControl());
     this.informationPersoForm.addControl('genre', new FormControl());
 
     for (const post of this.poste) {
@@ -417,12 +403,14 @@ export class FormEmployeeComponent implements OnInit {
           .getEmployee(employee_id)
           .pipe(take(1))
           .subscribe((employee: any) => {
-            console.log('that is user loaded', employee);
+            console.log(
+              '++++++++++++++++++++++++>>>>>>>that is user loaded',
+              employee
+            );
             this.user = employee;
             this.activate = employee['data']['activate'];
             this.cat_ech = employee['data']['cat_ech'];
-            this.insured_number = employee['data']['insured_number'];
-            this.internal_number = employee['data']['internal_number'];
+            this.cnps_number = employee['data']['cnps_number'];
             this.genre = employee['data']['person']['genre'];
 
             // this.informationPersoForm.controls['genre'].value =
@@ -430,6 +418,10 @@ export class FormEmployeeComponent implements OnInit {
 
             this.informationPersoForm.controls['genre'].patchValue(
               employee['data']['person']['genre']
+            );
+
+            this.informationPersoForm.controls['cnps_number'].patchValue(
+              employee['data']['cnps_number']
             );
 
             // this.dbUtilityService
@@ -459,6 +451,18 @@ export class FormEmployeeComponent implements OnInit {
                 info.default = '';
               }
             }
+
+            // for (const info of this.informationPerso) {
+            //   if (
+            //     employee &&
+            //     employee['data'] &&
+            //     employee['data']['cnps_number'][info.key]
+            //   ) {
+            //     info.default = employee['data']['cnps_number'][info.key];
+            //   } else {
+            //     info.default = '';
+            //   }
+            // }
 
             for (let info of this.emergency) {
               if (
@@ -508,13 +512,8 @@ export class FormEmployeeComponent implements OnInit {
     );
 
     this.informationPersoForm.addControl(
-      'insured_number',
-      new FormControl(this.insured_number)
-    );
-
-    this.informationPersoForm.addControl(
-      'internal_number',
-      new FormControl(this.internal_number)
+      'cnps_number',
+      new FormControl(this.cnps_number)
     );
 
     this.informationPersoForm.addControl('genre', new FormControl(this.genre));
@@ -557,13 +556,8 @@ export class FormEmployeeComponent implements OnInit {
       );
 
       formdata.append(
-        'insured_number',
-        this.informationPersoForm.controls['insured_number'].value
-      );
-
-      formdata.append(
-        'internal_number',
-        this.informationPersoForm.controls['internal_number'].value
+        'person_cnps_number',
+        this.informationPersoForm.controls['cnps_number'].value
       );
 
       formdata.append(
@@ -579,12 +573,8 @@ export class FormEmployeeComponent implements OnInit {
 
       data['cat_ech'] = this.informationPersoForm.controls['cat_ech'].value;
 
-      data['insured_number'] = this.informationPersoForm.controls[
-        'insured_number'
-      ].value;
-
-      data['internal_number'] = this.informationPersoForm.controls[
-        'internal_number'
+      data['person_cnps_number'] = this.informationPersoForm.controls[
+        'cnps_number'
       ].value;
 
       data['person_genre'] = this.informationPersoForm.controls['genre'].value;
@@ -757,13 +747,14 @@ export class FormEmployeeComponent implements OnInit {
 
       data['cat_ech'] = this.informationPersoForm.controls['cat_ech'].value;
 
-      data['insured_number'] = this.informationPersoForm.controls[
-        'insured_number'
+      data['perso_cnps_number'] = this.informationPersoForm.controls[
+        'cnps_number'
       ].value;
 
-      data['internal_number'] = this.informationPersoForm.controls[
-        'internal_number'
-      ].value;
+      console.log(
+        '+++++++',
+        this.informationPersoForm.controls['cnps_number'].value
+      );
 
       // for (const contract of this.contractEmployee) {
       //   if (this.contractEmployeeForm.controls[contract.key].value !== '') {

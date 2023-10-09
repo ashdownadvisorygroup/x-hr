@@ -39,9 +39,7 @@ export class EmployeProfilComponent implements OnInit {
         { key: 'address' },
         { key: 'birthday' },
         { key: 'phone' },
-        { key: 'cat_ech' },
-        { key: 'insured_number' },
-        { key: 'internal_number' }
+        { key: 'cnps_number' }
 
         // {key: 'created_at'},
       ]
@@ -95,6 +93,8 @@ export class EmployeProfilComponent implements OnInit {
         .getEmployee(employee_id)
         .pipe(take(1))
         .subscribe((user: any) => {
+          console.log('----->', user.data);
+
           this.user = user.data;
           this.picture = user.data.person.picture;
           this.cd.detectChanges();

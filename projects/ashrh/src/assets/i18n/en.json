@@ -206,5 +206,6 @@
   "RFS:": "RFS",
   "Internal Number:": "Internal Number",
   "CAT/ECH:": "CAT/ECH",
-  "INSURED NUMBER:": "INSURED NUMBER"
+  "INSURED NUMBER:": "INSURED NUMBER",
+  "cnps_number": "CNPS NUMBER"
 }
