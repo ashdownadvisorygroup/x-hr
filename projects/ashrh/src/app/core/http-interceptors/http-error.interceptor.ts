@@ -1,5 +1,4 @@
-/*
-import { Injectable, Injector, ErrorHandler } from '@angular/core';
+/*import { Injectable, Injector, ErrorHandler } from '@angular/core';
 import {
   HttpEvent,
   HttpInterceptor,
@@ -31,8 +30,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       })
     );
   }
-}
-*/
+}*/
 import {
   HTTP_INTERCEPTORS,
   HttpEvent,
@@ -48,6 +46,7 @@ import {
 import { LocalStorageService } from '../local-storage/local-storage.service';
 import { Observable } from 'rxjs';
 import { Token } from '@angular/compiler';
+import { environment } from '../../../environments/environment';
 const TOKEN_HEADER_KEY = 'Authorization';
 const TOKEN_HEADER_KEY1 = 'x-access-token';
 
@@ -76,9 +75,55 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    const userDomain = localStorage.getItem('ASHRH-DOMAINS');
     let authReq = req;
+    if (userDomain !== null) {
+      const subdomainArray = JSON.parse(userDomain);
+      const subdomain = subdomainArray[0];
+
+      let originalUrl: URL;
+      try {
+        const fullUrl = req.url.startsWith('/')
+          ? `${window.location.origin}${req.url}`
+          : req.url;
+        originalUrl = new URL(fullUrl);
+      } catch (error) {
+        console.error('Invalid URL:', req.url);
+        return next.handle(req);
+      }
+
+      const originalUrlParts = originalUrl.href.split('//');
+      const apiUrl =
+        originalUrlParts[0] + '//' + subdomain + '.' + originalUrlParts[1];
+
+      authReq = req.clone({ url: `${apiUrl}` });
+      console.log('authReq------------>', authReq);
+      // environment.server = authReq;
+
+      // Modification de l'URL du navigateur
+      const currentUrl = window.location.href;
+      console.log('Current URL:', currentUrl);
+
+      const currentUrlParts = currentUrl.split('//');
+      const protocol = currentUrlParts[0];
+      const hostAndPath = currentUrlParts[1].split('/');
+      const host = hostAndPath.shift();
+      const path = hostAndPath.join('/');
+
+      const newHost = subdomain + '.' + host.split(':')[0];
+      const port = host.includes(':') ? ':' + host.split(':')[1] : '';
+
+      const newUrl = `${protocol}//${newHost}${port}/${path}`;
+
+      // if (window.location.href !== newUrl) {
+      //     window.location.href = newUrl;
+      // }
+
+      return next.handle(authReq);
+    }
+
     const token = this.localStorage.getItem('TOKEN');
-    //  console.log('that is token !!!!!!!!!!!!', token);
+
     if (token != null) {
       // authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
 

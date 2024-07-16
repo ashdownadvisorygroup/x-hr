@@ -3,6 +3,7 @@ export enum AppRoutes {
   employee_profil = 'profil',
   forgotpasswod = 'forgotpasswod',
   login = 'login',
+  select_domain = 'select_domain',
   home = 'home',
   employees = 'employees',
   new_employee = 'new_employee',

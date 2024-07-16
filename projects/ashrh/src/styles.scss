@@ -21,6 +21,7 @@
 @import 'styles-reset.scss-theme';
 @import './app/app/app.component.scss-theme';
 @import './app/features/authentification/login/login.component.scss-theme';
+@import './app/features/authentification/login1/login1.component.scss-theme';
 @import './app/shared/big-input/big-input/big-input.component.scss-theme';
 @import './app/features/about/about/about.component.scss-theme';
 @import './app/features/examples/notifications/components/notifications.component.scss-theme';
@@ -42,6 +43,7 @@
   @include anms-child-component-theme($theme);
   @include anms-examples-component-theme($theme);
   @include ashrh-login-component-theme($theme);
+  @include ashrh-login1-component-theme($theme);
 }
 
 .default-theme {
