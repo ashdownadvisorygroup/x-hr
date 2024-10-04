@@ -12,10 +12,6 @@ import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { TableComponent } from './table/table.component';
 import { TableFilterToogleDirective } from './table/table-filter-toogle.directive';
 import { TableEditableComponent } from './table-editable/table-editable.component';
-import { QrCodeScannerComponent } from './qr-code-scanner/qr-code-scanner.component';
-import { ZXingScannerModule } from '@zxing/ngx-scanner';
-
-
 
 @NgModule({
   declarations: [
@@ -27,14 +23,9 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
     SearchFormFieldContainerComponent,
     TableComponent,
     TableFilterToogleDirective,
-    TableEditableComponent,
-    QrCodeScannerComponent
+    TableEditableComponent
   ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    ZXingScannerModule
-  ],
+  imports: [CommonModule, SharedModule],
   exports: [
     SearchComponent,
     SimpleInputComponent,
@@ -42,14 +33,7 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
     SearchFormFieldContainerComponent,
     TableComponent,
     TableFilterToogleDirective,
-    TableEditableComponent,
-    QrCodeScannerComponent,
+    TableEditableComponent
   ]
 })
-export class FeaturesSharedModule {
-  constructor(faIconLibrary: FaIconLibrary) {
-    faIconLibrary.addIcons(
-      faCaretDown
-    );
-  }
-}
+export class FeaturesSharedModule {}

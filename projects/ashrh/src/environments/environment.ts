@@ -11,9 +11,9 @@ export const environment = {
   production: false,
   test: false,
   i18nPrefix: '',
-  // server: 'https://api-demo.ashscan.org',
+  server: 'https://api.x-manager.org',
   // server: 'https://api-ashscan-demo.ashscan.org',
-  server: 'http://localhost:8000',
+  // server: 'http://localhost:8000',
   // server: 'http://127.0.0.1:8000',
   versions: {
     app: packageJson.version,

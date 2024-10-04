@@ -217,8 +217,9 @@ export class CoreModule {
     if (parentModule) {
       throw new Error('CoreModule is already loaded. Import only in AppModule');
     }
-    faIconLibrary.addIcons(
-      faCog,
+    faIconLibrary
+      .addIcons
+      /* faCog,
       faBars,
       faRocket,
       faPowerOff,
@@ -243,7 +244,7 @@ export class CoreModule {
       faPlus,
       faHome,
       faCaretDown,
-      faSave
-    );
+      faSave*/
+      ();
   }
 }
