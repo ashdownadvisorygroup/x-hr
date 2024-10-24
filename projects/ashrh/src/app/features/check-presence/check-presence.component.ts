@@ -85,7 +85,7 @@ export class CheckPresenceComponent implements OnInit {
   ];
   isEmployeeSelected = false;
   totalWorkDays: number = 0;
-  // totalHours: any;
+  totalHours: any;
 
   selectEmployee(event: Event, employee: any) {
     event.preventDefault(); // Empêcher la redirection du lien
@@ -95,7 +95,7 @@ export class CheckPresenceComponent implements OnInit {
     this.activeEmployee = employee;
     this.isEmployeeSelected = true;
     this.totalWorkDays = 0;
-    // this.totalHours = 0;
+    this.totalHours = 0;
 
     const getStart: any = {
       month: startOfMonth,
@@ -119,14 +119,26 @@ export class CheckPresenceComponent implements OnInit {
         params: params
       })
       .pipe(
-        map((results: any) => {
+        map((response: any) => {
+          const results = response.daily_results;
           console.log('results iss ', results);
           console.log('Type of results:', typeof results);
+
+          this.totalHours = response.monthly_totals;
+          console.log("Total d'heures pour le mois:", this.totalHours);
+
           return results.map((event: any) => {
             console.log('voici les donnees charges', event);
             this.totalWorkDays = results.length;
             // this.totalHours = event.total;
-            console.log('TEST++++++++++', this.totalWorkDays);
+            console.log(
+              '++++++++++++++++++++++TEST++++++++++',
+              this.totalWorkDays
+            );
+            console.log(
+              '++++++++++++++++++++++++++++TEST++++++++++',
+              this.totalHours
+            );
 
             const formattedArrive = formatDate(event.date, 'yyyy-MM-dd', 'en');
             const formattedDepart = formatDate(event.date, 'yyyy-MM-dd', 'en');
@@ -136,7 +148,7 @@ export class CheckPresenceComponent implements OnInit {
               start: startOfDay(new Date(formattedArrive)),
               end: endOfDay(new Date(formattedDepart)),
               totalWorkDays: this.totalWorkDays,
-              // totalHours: this.totalHours,
+              totalHours: this.totalHours,
               allDay: true,
               resizable: {
                 beforeStart: true,

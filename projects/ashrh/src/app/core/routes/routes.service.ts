@@ -17,7 +17,6 @@ export class RoutesService {
   }
 
   public redirectToDomainLogin(protocol: string, host: string, domain: string) {
-    // this.router.navigate([`/${domain}/${AppRoutes.login}`]);
     window.location.href = `${protocol}//${domain}.${host}/` + AppRoutes.login;
   }
 }

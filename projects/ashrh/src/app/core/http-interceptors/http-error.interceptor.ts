@@ -76,48 +76,45 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const userDomain = localStorage.getItem('ASHRH-DOMAINS');
+
     let authReq = req;
     if (userDomain !== null) {
       const subdomainArray = JSON.parse(userDomain);
-      const subdomain = subdomainArray[0];
+      const domain = subdomainArray[0];
+      const part = domain.split('.');
+
+      const subdomain = part[0] + '.api';
 
       let originalUrl: URL;
-      try {
-        const fullUrl = req.url.startsWith('/')
-          ? `${window.location.origin}${req.url}`
-          : req.url;
-        originalUrl = new URL(fullUrl);
-      } catch (error) {
-        console.error('Invalid URL:', req.url);
-        return next.handle(req);
+
+      const pathname = window.location.pathname;
+      if (req.url.startsWith('/')) {
+        return next.handle(authReq);
       }
 
+      if (pathname.includes('/login')) {
+        const apiUrl1 = environment.server + '/login/';
+
+        authReq = req.clone({ url: `${apiUrl1}` });
+
+        return next.handle(authReq);
+      }
+
+      try {
+        originalUrl = new URL(req.url);
+      } catch (error) {
+        console.error('Invalid URL:', req.url);
+        return next.handle(authReq);
+      }
+
+      console.log(pathname);
+
       const originalUrlParts = originalUrl.href.split('//');
+
       const apiUrl =
         originalUrlParts[0] + '//' + subdomain + '.' + originalUrlParts[1];
 
       authReq = req.clone({ url: `${apiUrl}` });
-      console.log('authReq------------>', authReq);
-      // environment.server = authReq;
-
-      // Modification de l'URL du navigateur
-      const currentUrl = window.location.href;
-      console.log('Current URL:', currentUrl);
-
-      const currentUrlParts = currentUrl.split('//');
-      const protocol = currentUrlParts[0];
-      const hostAndPath = currentUrlParts[1].split('/');
-      const host = hostAndPath.shift();
-      const path = hostAndPath.join('/');
-
-      const newHost = subdomain + '.' + host.split(':')[0];
-      const port = host.includes(':') ? ':' + host.split(':')[1] : '';
-
-      const newUrl = `${protocol}//${newHost}${port}/${path}`;
-
-      // if (window.location.href !== newUrl) {
-      //     window.location.href = newUrl;
-      // }
 
       return next.handle(authReq);
     }

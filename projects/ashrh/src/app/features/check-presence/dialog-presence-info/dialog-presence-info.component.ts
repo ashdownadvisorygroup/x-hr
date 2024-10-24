@@ -36,6 +36,7 @@ export class DialogPresenceInfoComponent implements OnInit {
   user: any = {};
   employees: any;
   create_presence_req_msg: string;
+  messages: any;
   submitted = false;
   public has_error = false;
   view = 'day';
@@ -55,6 +56,14 @@ export class DialogPresenceInfoComponent implements OnInit {
       Validators.required
     ),
     employee: new FormControl(
+      { value: '', disabled: true },
+      Validators.required
+    ),
+    arrivals: new FormControl(
+      { value: '', disabled: true },
+      Validators.required
+    ),
+    departures: new FormControl(
       { value: '', disabled: true },
       Validators.required
     )
@@ -80,35 +89,52 @@ export class DialogPresenceInfoComponent implements OnInit {
     console.log('===============================', this.data);
 
     const params = {
-      params: { date: `${this.data.arrive}` }
+      employee_id: this.data.id,
+      date: `${this.data.arrive}`
     };
 
-    const presenceDetails$ = this.PresenceServiceDB.getPresences(
-      this.data.id,
-      params
-    );
+    const presenceDetails$ = this.PresenceServiceDB.getPresences(params);
     const employeeDetails$ = this.employeeDbService.getEmployee(this.data.id);
     console.log('DATA+++++++++++++++++++', this.data);
 
     forkJoin([presenceDetails$, employeeDetails$]).subscribe(
       ([presenceDetails, employeeDetails]) => {
         console.log('+++++++++++++++++++++Presence details:', presenceDetails);
-        // console.log('+++++++++++++++++++++Employee details:', employeeDetails);
 
-        const employeeId = employeeDetails['data']['person'];
-        const employees = Array.isArray(employeeDetails)
-          ? employeeDetails
-          : [employeeDetails];
-        const employee = employees.find((emp) => emp['id'] === employeeId);
+        const presenceDetailsWithData = presenceDetails as {
+          data: any[];
+          messages: string[];
+        };
 
-        this.Groupform.patchValue({
-          presence_date: presenceDetails['presence_date'],
-          // total_hours: presenceDetails['presence_hours'],
-          employee:
-            employeeDetails['data']['person']['first_name'] +
-            ' ' +
-            employeeDetails['data']['person']['last_name']
-        });
+        // Si presenceDetails est un tableau, on accède au premier élément [0]
+        if (
+          presenceDetailsWithData &&
+          Array.isArray(presenceDetailsWithData.data) &&
+          presenceDetailsWithData.data.length > 0
+        ) {
+          const presence = presenceDetailsWithData.data[0]; // Premier élément du tableau
+
+          const employeeId = employeeDetails['data']['person'];
+          const employees = Array.isArray(employeeDetails)
+            ? employeeDetails
+            : [employeeDetails];
+          const employee = employees.find((emp) => emp['id'] === employeeId);
+
+          this.Groupform.patchValue({
+            presence_date: presence['date'],
+            total_hours: presence['total'],
+            employee:
+              employeeDetails['data']['person']['first_name'] +
+              ' ' +
+              employeeDetails['data']['person']['last_name'],
+            arrivals: presence['arrivals'],
+            departures: presence['departures']
+          });
+          this.messages = presenceDetailsWithData.messages;
+        } else {
+          console.log('No presence details found');
+          this.messages = [];
+        }
       },
       (err) => {}
     );

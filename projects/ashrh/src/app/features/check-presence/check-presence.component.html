@@ -72,12 +72,12 @@
         <div *ngIf="totalWorkDays === 0" style="font-weight: bold">
           {{"Total Work Day" | translate}}: 0   
         </div>
-        <!-- <div *ngIf="totalHours > 0" style="font-weight: bold">
-          Total Hours: {{ totalHours }}
+        <div *ngIf="totalHours" style="font-weight: bold">
+          {{"Total Hours" | translate}}: {{ totalHours }}
         </div>
-        <div *ngIf="totalHours === 0" style="font-weight: bold">
-          Total Hours: 0
-        </div> -->
+        <div *ngIf="!totalHours" style="font-weight: bold">
+          {{"Total Hours" | translate}}: 0
+        </div>
       </div>
       
       <div class=""></div>
