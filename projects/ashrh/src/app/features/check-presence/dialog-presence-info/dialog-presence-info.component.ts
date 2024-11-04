@@ -112,7 +112,7 @@ export class DialogPresenceInfoComponent implements OnInit {
           Array.isArray(presenceDetailsWithData.data) &&
           presenceDetailsWithData.data.length > 0
         ) {
-          const presence = presenceDetailsWithData.data[0]; // Premier élément du tableau
+          const presence = presenceDetailsWithData.data[0];
 
           const employeeId = employeeDetails['data']['person'];
           const employees = Array.isArray(employeeDetails)

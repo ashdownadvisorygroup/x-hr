@@ -40,6 +40,7 @@ import { Events } from '../leaves/models/event';
 import { PresenceDbService } from '../../core/services/presence-db.service';
 import { DialogPresenceInfoComponent } from './dialog-presence-info/dialog-presence-info.component';
 import { formatDate } from '@angular/common';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'ashrh-check-presence',
@@ -298,6 +299,15 @@ export class CheckPresenceComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog after closing of dialog result: ${result}`);
     });
+  }
+
+  downloadAttendance() {
+    this.employeeDbService
+      .downloadAttendanceEmployee()
+      .subscribe((pdfBlob: Blob) => {
+        const fileName = 'Attendance_Report_All_Employees.pdf';
+        saveAs(pdfBlob, fileName);
+      });
   }
 
   eventClicked(currEvent: CalendarEvent<{ event: Events }>): void {
