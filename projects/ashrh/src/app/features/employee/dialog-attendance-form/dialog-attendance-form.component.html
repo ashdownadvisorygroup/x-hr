@@ -1,0 +1,16 @@
+<h3 class="mb-3 form-title" style="margin-bottom: 5px;">Sélectionnez une plage</h3>
+<form [formGroup]="attendanceForm" (ngSubmit)="onSubmit(attendanceForm.value)" #form="ngForm">
+    <div class="form-group row">
+      <label for="start_date" class="col-sm-3 col-form-label">{{"Début:" | translate}}</label>
+      <input type="date" id="start_date" name="start_date" formControlName="start_date">
+    </div>
+    <div class="form-group row">
+      <label for="end_date" class="col-sm-3 col-form-label">{{"Fin:" | translate}}</label>
+      <input type="date" id="end_date" name="end_date" formControlName="end_date">
+    </div>
+    
+    <div style="padding-top: 50px; margin-left: 50px; display: flex; margin-top: 10px">
+        <button mat-raised-button color="primary" class="text-white mr-2" type="button" (click)="onCancel()">Annuler</button>
+        <button mat-raised-button color="primary" class="text-white mr-2" type="submit">Télécharger</button>
+    </div>
+  </form>

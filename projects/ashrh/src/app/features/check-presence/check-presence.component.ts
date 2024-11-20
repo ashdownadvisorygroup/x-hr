@@ -41,6 +41,8 @@ import { PresenceDbService } from '../../core/services/presence-db.service';
 import { DialogPresenceInfoComponent } from './dialog-presence-info/dialog-presence-info.component';
 import { formatDate } from '@angular/common';
 import { saveAs } from 'file-saver';
+import { DialogAttendanceFormComponent } from '../employee/dialog-attendance-form/dialog-attendance-form.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'ashrh-check-presence',
@@ -66,6 +68,8 @@ export class CheckPresenceComponent implements OnInit {
   selectedEmployee: any; // Variable pour stocker l'employé sélectionné
   employee: any;
   activeEmployee: any;
+  startDate: string;
+  endDate: string;
   view = 'month';
   viewDate: Date = new Date();
   activeDayIsOpen = false;
@@ -87,7 +91,7 @@ export class CheckPresenceComponent implements OnInit {
   isEmployeeSelected = false;
   totalWorkDays: number = 0;
   totalHours: any;
-
+  attendanceForm: FormGroup;
   selectEmployee(event: Event, employee: any) {
     event.preventDefault(); // Empêcher la redirection du lien
     // console.log('------------------------', employee);
@@ -115,13 +119,17 @@ export class CheckPresenceComponent implements OnInit {
       start_date: `${date1}`,
       end_date: `${date2}`
     };
+
+    console.log("Appel de l'API avec les paramètres :", params);
+
     this.events$ = this.presenceServiceDb
       .getPresenceListBetweenDate({
         params: params
       })
       .pipe(
         map((response: any) => {
-          const results = response.daily_results;
+          console.log("Réponse de l'API reçue :", response);
+          const results = response.daily_results || [];
           console.log('results iss ', results);
           console.log('Type of results:', typeof results);
 
@@ -201,8 +209,14 @@ export class CheckPresenceComponent implements OnInit {
     private trans: TranslateService,
     private LeaveServiceDB: LeaveService,
     public dialog: MatDialog,
-    public presenceServiceDb: PresenceDbService
-  ) {}
+    public presenceServiceDb: PresenceDbService,
+    private fb: FormBuilder
+  ) {
+    this.attendanceForm = this.fb.group({
+      start_date: ['', Validators.required],
+      end_date: ['', Validators.required]
+    });
+  }
 
   ngOnInit(): void {
     this.query(this.paramSearch); //query renvoie les elements qui se trouve a un numero de page et un nombre d'element a recupere contenu dans paramSearch
@@ -302,12 +316,22 @@ export class CheckPresenceComponent implements OnInit {
   }
 
   downloadAttendance() {
-    this.employeeDbService
-      .downloadAttendanceEmployee()
-      .subscribe((pdfBlob: Blob) => {
-        const fileName = 'Attendance_Report_All_Employees.pdf';
-        saveAs(pdfBlob, fileName);
-      });
+    const dialogRef = this.dialog.open(DialogAttendanceFormComponent, {
+      data: this.attendanceForm.value
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('RESULT**', result);
+
+      if (result) {
+        this.employeeDbService
+          .downloadAttendanceEmployee(result)
+          .subscribe((pdfBlob: Blob) => {
+            const fileName = 'Attendance_Report_All_Employees.pdf';
+            saveAs(pdfBlob, fileName);
+          });
+      }
+    });
   }
 
   eventClicked(currEvent: CalendarEvent<{ event: Events }>): void {
