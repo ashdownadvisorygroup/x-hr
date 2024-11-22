@@ -96,6 +96,22 @@ export interface DepartmentData {
   parent?: any;
 }
 
+export interface EnterpriseData {
+  id?: number;
+  name: string;
+  code: string;
+  logo: any;
+  stamp: any;
+  email: string;
+  address: any;
+  website: string;
+  phone: number;
+  description: string;
+  user: any;
+  created_at: any;
+  updated_at: any;
+}
+
 @Component({
   selector: 'ash-settings-employ',
   templateUrl: './settings-employ.component.html',
@@ -124,6 +140,8 @@ export class SettingsEmployComponent implements OnInit {
   //   { name: 'Superviseur coupe', monthly_salary: 100000, number_work_days: 26, daily_salary: Math.round(100000 / 26) },
   // ]
   departments: DepartmentData[];
+  enterprises: EnterpriseData[];
+
   selectedDepartment = [];
   // working_group: any[] = [
   //   {name: 'A1'},
@@ -370,6 +388,26 @@ export class SettingsEmployComponent implements OnInit {
         }
       }
     }
+
+    // {
+    //   header: 'Enterprise',
+    //   distrib: (el) => el.enterprise,
+    //   options: {
+    //     key: 'enterprise',
+    //     type: 'option',
+    //     setValue: (event, element) => {
+    //       element.enterprise = event;
+
+    //         this.db_department.getAllEnterprise().subscribe((data) => {
+    //           this.enterprises = data;
+
+    //           this.cd.detectChanges();
+    //         });
+    //         console.log("+++ENTERPRISE LOG++++", this.enterprises);
+    //     }
+
+    //   }
+    // }
   ];
 
   colDistribution_leaveTypes = [
@@ -426,6 +464,9 @@ export class SettingsEmployComponent implements OnInit {
     });
     this.db_department.getAllDepart().subscribe((datagroup) => {
       this.departments = datagroup;
+    });
+    this.db_department.getAllEnterprise().subscribe((datagroup) => {
+      this.enterprises = datagroup;
     });
     this.db_utily.getContracts().subscribe((dataperiod) => {
       this.contracts = dataperiod;

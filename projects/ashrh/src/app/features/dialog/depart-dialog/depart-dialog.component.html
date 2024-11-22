@@ -4,14 +4,26 @@
   <div mat-dialog-content class="mat-typography">
 
     <ng-container *ngFor="let item of departement">
-        <mat-form-field class="full-width" appearance="outline">
-          <input matInput [placeholder]="(item.key | translate)" [formControlName]="item.key" [type]="item.type" [(ngModel)]="item.default">
-          <mat-error *ngIf="departementForm.controls[item.key].hasError('required')">
-            {{item.key | translate}} is <strong>required</strong>
-          </mat-error>
-        </mat-form-field> 
-        <br>
-      </ng-container>
+      <mat-form-field class="full-width" appearance="outline">
+        <ng-container [ngSwitch]="item.type">
+          <!-- Champ de type 'select' -->
+          <mat-select *ngSwitchCase="'select'" [placeholder]="(item.key | translate)" [formControlName]="item.key">
+            <mat-option *ngFor="let option of item.options" [value]="option.value">
+              {{ option.label }}
+            </mat-option>
+          </mat-select>
+          <!-- Champ de type 'text' -->
+          <input *ngSwitchCase="'text'" matInput [placeholder]="(item.key | translate)" [formControlName]="item.key" [(ngModel)]="item.default">
+          <!-- Champ de type 'textarea' -->
+          <textarea *ngSwitchCase="'textarea'" matInput [placeholder]="(item.key | translate)" [formControlName]="item.key" [(ngModel)]="item.default"></textarea>
+        </ng-container>
+        <mat-error *ngIf="departementForm.controls[item.key]?.hasError('required')">
+          {{item.key | translate}} is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <br>
+    </ng-container>
+    
   </div>
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>{{"Cancel" | translate}}</button>

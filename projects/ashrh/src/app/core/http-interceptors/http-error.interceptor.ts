@@ -83,7 +83,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       const domain = subdomainArray[0];
       const part = domain.split('.');
 
-      const subdomain = part[0] + '.api';
+      const subdomain = part[0]; //online
+
+      // const subdomain = part[0] + '.api';   //local
 
       let originalUrl: URL;
 
