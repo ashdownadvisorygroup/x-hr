@@ -54,10 +54,10 @@ export class PresenceDbService {
   //     )
   //     .pipe(share());
   // }
-  public getPresences(id: string, params: any) {
+  public getPresences(params: any) {
     console.log('that is params ===========>> a', params);
     return this.httpClient
-      .get(environment.server + `/api/grh/presences_details/${id}`, params)
+      .get(environment.server + `/api/grh/presences_details/`, { params })
       .pipe(share());
   }
 }

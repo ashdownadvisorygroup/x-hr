@@ -1,5 +1,4 @@
-/*
-import { Injectable, Injector, ErrorHandler } from '@angular/core';
+/*import { Injectable, Injector, ErrorHandler } from '@angular/core';
 import {
   HttpEvent,
   HttpInterceptor,
@@ -31,8 +30,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       })
     );
   }
-}
-*/
+}*/
 import {
   HTTP_INTERCEPTORS,
   HttpEvent,
@@ -48,6 +46,7 @@ import {
 import { LocalStorageService } from '../local-storage/local-storage.service';
 import { Observable } from 'rxjs';
 import { Token } from '@angular/compiler';
+import { environment } from '../../../environments/environment';
 const TOKEN_HEADER_KEY = 'Authorization';
 const TOKEN_HEADER_KEY1 = 'x-access-token';
 
@@ -76,9 +75,54 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    const userDomain = localStorage.getItem('ASHRH-DOMAINS');
+
     let authReq = req;
+    if (userDomain !== null) {
+      const subdomainArray = JSON.parse(userDomain);
+      const domain = subdomainArray[0];
+      const part = domain.split('.');
+
+      const subdomain = part[0]; //online
+
+      // const subdomain = part[0] + '.api';   //local
+
+      let originalUrl: URL;
+
+      const pathname = window.location.pathname;
+      if (req.url.startsWith('/')) {
+        return next.handle(authReq);
+      }
+
+      if (pathname.includes('/login')) {
+        const apiUrl1 = environment.server + '/login/';
+
+        authReq = req.clone({ url: `${apiUrl1}` });
+
+        return next.handle(authReq);
+      }
+
+      try {
+        originalUrl = new URL(req.url);
+      } catch (error) {
+        console.error('Invalid URL:', req.url);
+        return next.handle(authReq);
+      }
+
+      console.log(pathname);
+
+      const originalUrlParts = originalUrl.href.split('//');
+
+      const apiUrl =
+        originalUrlParts[0] + '//' + subdomain + '.' + originalUrlParts[1];
+
+      authReq = req.clone({ url: `${apiUrl}` });
+
+      return next.handle(authReq);
+    }
+
     const token = this.localStorage.getItem('TOKEN');
-    //  console.log('that is token !!!!!!!!!!!!', token);
+
     if (token != null) {
       // authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
 

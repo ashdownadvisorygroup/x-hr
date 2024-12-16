@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   user_name = '';
   pass_word = '';
   userInfo = null;
+  domains = null;
   error = false;
   subsc = new Subscription();
   hidePass = true;
@@ -68,7 +69,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   login() {
     // this.httpclient.post(environment.server + '/api/enterprise/login/',
     this.httpclient
-      .post(environment.server + '/api/main/login/', {
+      .post(environment.server + '/api/login/', {
         username: this.user_name,
         password: this.pass_word
       })
@@ -79,8 +80,18 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.store.dispatch(authLogin({ user: res.data }));
           this.userInfo = res.data;
 
+          if (res.domains && Array.isArray(res.domains)) {
+            this.domains = res.domains.map((domain) => {
+              return domain.split('.')[0];
+            });
+          } else {
+            this.domains = [];
+          }
+          // console.log("domaine>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", this.domains.length, this.domains);
+
           //console.log('donnees recu du serveur lors du login user :::))))', this.userInfo);
           this.localser.setItem('TOKEN', res.token.access);
+          this.localser.setItem('DOMAINS', this.domains);
           this.localser.setItem('user', res.data);
 
           this.routes.goHome();

@@ -6,12 +6,17 @@ import { AppRoutes } from '../../modeles/app-routes';
   providedIn: 'root'
 })
 export class RoutesService {
+  constructor(private router: Router) {}
 
-  constructor(
-    private router: Router
-  ) { }
+  public goHome() {
+    this.router.navigate(['/' + AppRoutes.home]);
+  }
 
-  public goHome(){
-    this.router.navigate(['/' + AppRoutes.home])
+  public goLogin() {
+    this.router.navigate(['/login' + AppRoutes.login]);
+  }
+
+  public redirectToDomainLogin(protocol: string, host: string, domain: string) {
+    window.location.href = `${protocol}//${domain}.${host}/` + AppRoutes.login;
   }
 }

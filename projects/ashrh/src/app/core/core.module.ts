@@ -79,7 +79,9 @@ import {
   faPlus,
   faHome,
   faCaretDown,
-  faSave
+  faSave,
+  faTimes,
+  faFilter
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faGithub,
@@ -218,32 +220,33 @@ export class CoreModule {
       throw new Error('CoreModule is already loaded. Import only in AppModule');
     }
     faIconLibrary.addIcons(
-      faCog,
-      faBars,
-      faRocket,
-      faPowerOff,
-      faUserCircle,
-      faPlayCircle,
-      faGithub,
-      faMediumM,
-      faTwitter,
-      faInstagram,
-      faYoutube,
-      // new icon
-      faUser,
-      faEye,
-      faEyeSlash,
-      faLock,
-      faAngleDown,
-      faBell,
-      faUsers,
-      faSearch,
-      faTrash,
-      faPencilAlt,
-      faPlus,
-      faHome,
-      faCaretDown,
-      faSave
+      faCog as any,
+      faBars as any,
+      faRocket as any,
+      faPowerOff as any,
+      faUserCircle as any,
+      faPlayCircle as any,
+      faGithub as any,
+      faMediumM as any,
+      faTwitter as any,
+      faInstagram as any,
+      faYoutube as any,
+      faUser as any,
+      faEye as any,
+      faEyeSlash as any,
+      faLock as any,
+      faAngleDown as any,
+      faBell as any,
+      faUsers as any,
+      faSearch as any,
+      faTrash as any,
+      faPencilAlt as any,
+      faPlus as any,
+      faHome as any,
+      faCaretDown as any,
+      faSave as any,
+      faTimes as any,
+      faFilter as any
     );
   }
 }

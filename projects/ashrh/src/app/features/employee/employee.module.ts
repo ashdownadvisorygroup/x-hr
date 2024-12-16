@@ -19,6 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatSortModule } from '@angular/material/sort';
 import { FormEmployeeComponent } from './form-employee/form-employee.component';
 import { DialogPayslipFormComponent } from './dialog-payslip-form/dialog-payslip-form.component';
+import { DialogAttendanceFormComponent } from './dialog-attendance-form/dialog-attendance-form.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { DialogPayslipFormComponent } from './dialog-payslip-form/dialog-payslip
     UpdateComponent,
     CreatedEmployeeComponent,
     FormEmployeeComponent,
-    DialogPayslipFormComponent
+    DialogPayslipFormComponent,
+    DialogAttendanceFormComponent
   ],
   imports: [
     CommonModule,

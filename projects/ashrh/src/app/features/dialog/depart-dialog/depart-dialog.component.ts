@@ -25,6 +25,12 @@ export class DepartDialogComponent implements OnInit {
       validators: [Validators.required],
       type: 'textarea',
       default: ''
+    },
+    {
+      key: 'enterprise',
+      Validators: [Validators.required],
+      options: [],
+      type: 'select'
     }
   ];
   constructor(
@@ -37,6 +43,23 @@ export class DepartDialogComponent implements OnInit {
       this.departementForm.addControl(
         depart.key,
         new FormControl(null, depart.validators)
+      );
+    }
+
+    const enterpriseField = this.departement.find(
+      (field) => field.key === 'enterprise'
+    );
+    console.log('+++ENTERPRISE LOG++++', enterpriseField);
+    if (enterpriseField) {
+      // Appel au service pour obtenir les entreprises
+      this.db_department.getAllEnterprise().subscribe(
+        (data) => {
+          enterpriseField.options = data.map((e: any) => ({
+            value: e.id,
+            label: e.name
+          }));
+        },
+        (error) => this.notiservice.error('Failed to load enterprises.')
       );
     }
   }

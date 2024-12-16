@@ -4,6 +4,7 @@ import { share } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import {
   DepartmentData,
+  EnterpriseData,
   LeaveTypesData,
   SafewareData
 } from '../../features/settings-employ/settings-employ.component';
@@ -14,6 +15,7 @@ import { Observable } from 'rxjs';
 })
 export class DbDepartmentsService {
   department_url: string = '/api/main/departments/';
+  enterprise_url: string = '/api/enterprise/';
   leave_types_url: string = '/api/grh/leaveTypes_list/';
   constructor(private httpclient: HttpClient) {}
   // do not forget to put correct url
@@ -45,6 +47,12 @@ export class DbDepartmentsService {
   public getAllDepart(): Observable<DepartmentData[]> {
     return this.httpclient
       .get<DepartmentData[]>(environment.server + this.department_url)
+      .pipe(share());
+  }
+
+  public getAllEnterprise(): Observable<EnterpriseData[]> {
+    return this.httpclient
+      .get<EnterpriseData[]>(environment.server + '/api/tenant/enterprise/')
       .pipe(share());
   }
 

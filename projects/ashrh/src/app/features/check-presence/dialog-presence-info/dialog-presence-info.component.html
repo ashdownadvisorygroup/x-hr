@@ -8,8 +8,6 @@
     </button>
     <h4 class="mb-3 form-title"> {{"Information For Presence" | translate}}</h4>
   
-  
-    <br />
     <div class="form-group row">
       <label for="date" class="col-sm-3 col-form-label">{{"Presence Date" | translate}}&nbsp;<span class="text-danger"></span></label>
       <div class="col-sm-9">
@@ -23,6 +21,34 @@
         <input type="text" id="employee" formControlName="employee" class="form-control" />
       </div>
     </div>
+
+    <div class="form-group row">
+      <label for="arrivals" class="col-sm-3 col-form-label">{{"Arrival" | translate}}&nbsp;<span class="text-danger"></span></label>
+      <div class="col-sm-9">
+        <input type="time" id="arrivals" formControlName="arrivals" class="form-control" />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="departures" class="col-sm-3 col-form-label">{{"Departure" | translate}}&nbsp;<span class="text-danger"></span></label>
+      <div class="col-sm-9">
+        <input type="time" id="departures" formControlName="departures" class="form-control" />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="total_hours" class="col-sm-3 col-form-label">{{"Number Hours" | translate}}&nbsp;<span class="text-danger"></span></label>
+      <div class="col-sm-9">
+        <input type="text" id="total_hours" formControlName="total_hours" class="form-control" />
+      </div>
+    </div>
+
+    <!-- <div class="form-group row" *ngIf="messages && messages.length > 0">
+      <h4>Messages d'ajustement des heures :</h4>
+      <ul>
+        <li *ngFor="let message of messages">{{ message }}</li>
+      </ul>
+    </div> -->
 
     <!-- <div class="form-group row">
       <label for="total_hours" class="col-sm-3 col-form-label">{{"Total Hours" | translate}}&nbsp;</label>

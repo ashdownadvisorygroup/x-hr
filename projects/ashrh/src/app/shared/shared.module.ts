@@ -132,8 +132,9 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 })
 export class SharedModule {
   constructor(faIconLibrary: FaIconLibrary) {
-    faIconLibrary.addIcons(
-      faGithub,
+    faIconLibrary
+      .addIcons
+      /*faGithub,
       faMediumM,
       faPlus,
       faEdit,
@@ -151,7 +152,7 @@ export class SharedModule {
       faLightbulb,
       faWindowMaximize,
       faStream,
-      faBook
-    );
+      faBook*/
+      ();
   }
 }

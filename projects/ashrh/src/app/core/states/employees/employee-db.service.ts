@@ -75,6 +75,24 @@ export class EmployeeDbService {
       .pipe(share());
   }
 
+  public downloadAttendanceEmployee(data) {
+    const headers = new HttpHeaders({
+      Accept: 'application/pdf',
+      Authorization: `Token ${JSON.parse(localStorage.getItem('ASHRH-TOKEN'))}`
+    });
+    const params = {
+      start_date: data.start_date,
+      end_date: data.end_date
+    };
+
+    return this.httpClient
+      .post(environment.server + `/api/grh/download_attendance/`, params, {
+        headers,
+        responseType: 'blob'
+      }) // Response as blob
+      .pipe(share());
+  }
+
   public exportFile() {
     // console.log(`modification of employee ${id}`,params);
     const headers = new HttpHeaders({
